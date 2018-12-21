@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.quizzy.mrk.quizzy">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_logo_quizzy"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/ic_logo_quizzy"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".ConnexionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".InscriptionActivity"
+            android:parentActivityName=".ConnexionActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity
+            android:name=".NewQuizActivity"
+            android:parentActivityName=".DashboardActivity"></activity>
+        <activity android:name=".PartsActivity"></activity>
+    </application>
+
+</manifest>

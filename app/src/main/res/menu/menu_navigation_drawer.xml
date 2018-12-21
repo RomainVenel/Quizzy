@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_drawer_profil"
+            android:icon="@drawable/ic_profil_24dp"
+            android:title="@string/nav_drawer_profil" />
+
+        <item
+            android:id="@+id/menu_drawer_friend"
+            android:icon="@drawable/ic_friend_24dp"
+            android:title="@string/nav_drawer_friend" />
+
+        <item
+            android:id="@+id/menu_drawer_quiz"
+            android:icon="@drawable/ic_mes_quiz_24dp"
+            android:title="@string/nav_drawer_quiz" />
+
+    </group>
+
+    <item android:title="">
+
+        <group android:checkableBehavior="single">
+
+            <item
+                android:id="@+id/menu_drawer_a_propos"
+                android:icon="@drawable/ic_a_propos_24dp"
+                android:title="@string/nav_drawer_a_propos" />
+
+            <item
+                android:id="@+id/menu_drawer_logout"
+                android:icon="@drawable/ic_logout_24dp"
+                android:title="@string/nav_drawer_logout" />
+
+        </group>
+
+    </item>
+
+</menu>

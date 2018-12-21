@@ -50,8 +50,7 @@ public class InscriptionModele {
                                 birthday,
                                 mdp,
                                 email,
-                                media,
-                                new ArrayList<User>()
+                                media
                         );
                         Session.getSession().ouvrir(user);
                         callBack.onSuccess();

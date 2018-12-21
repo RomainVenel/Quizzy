@@ -20,9 +20,8 @@ public class User implements Parcelable {
     private String password;
     private String email;
     private String media;
-    private List<User> friendsList;
 
-    public User(int id, String firstName, String lastName, String username, GregorianCalendar birth_date, String password, String email, String media, ArrayList<User> friendsList) {
+    public User(int id, String firstName, String lastName, String username, GregorianCalendar birth_date, String password, String email, String media) {
         super();
         this.id = id;
         this.firstName = firstName;
@@ -32,7 +31,6 @@ public class User implements Parcelable {
         this.password = password;
         this.email = email;
         this.media = media;
-        this.friendsList = friendsList;
     }
 
     public int getId() {
@@ -95,14 +93,6 @@ public class User implements Parcelable {
         this.media = media;
     }
 
-    public List<User> getFriendsList() {
-        return friendsList;
-    }
-
-    public void setFriendsList(ArrayList<User> friendsList) {
-        this.friendsList = friendsList;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -113,7 +103,6 @@ public class User implements Parcelable {
                 ", birth_date=" + birth_date.get(Calendar.DAY_OF_MONTH) + "/" + birth_date.get(Calendar.MONTH) + "/" + birth_date.get(Calendar.YEAR) +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", friendsList='" + friendsList.size() +
                 ", media='" + media + '\'' +
                 '}';
     }
@@ -133,7 +122,6 @@ public class User implements Parcelable {
         dest.writeString(this.email);
         dest.writeString(this.password);
         dest.writeString(this.media);
-        dest.writeList(this.friendsList);
     }
 
     public User( Parcel in){
@@ -145,7 +133,6 @@ public class User implements Parcelable {
         this.email = in.readString();
         this.password = in.readString();
         this.media = in.readString();
-        this.friendsList = in.readArrayList(new ArrayList<User>().getClass().getClassLoader());
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

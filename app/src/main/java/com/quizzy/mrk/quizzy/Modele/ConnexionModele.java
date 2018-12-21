@@ -41,26 +41,7 @@ public class ConnexionModele {
                 try {
                     JSONObject json = new JSONObject(response);
                     if (json.getBoolean("status")) { // utilisateur trouvé en bdd
-                        ArrayList<User> friends = new ArrayList<User>();
                         JSONObject birth = json.getJSONObject("birthDate");
-
-                        for (int i = 0; i < json.getJSONArray("friendList").length(); i++) {
-                            JSONObject friend = (JSONObject) json.getJSONArray("friendList").get(i);
-                            JSONObject birthFriend = friend.getJSONObject("birthDate");
-                            friends.add(
-                                    new User(
-                                            friend.getInt("id"),
-                                            friend.getString("firstName"),
-                                            friend.getString("lastName"),
-                                            friend.getString("username"),
-                                            new GregorianCalendar(birthFriend.getInt("year"), birthFriend.getInt("month"), birthFriend.getInt("day")),
-                                            null,
-                                            friend.getString("email"),
-                                            friend.getString("media"),
-                                            new ArrayList<User>()
-                                    )
-                            );
-                        }
 
                         User user = new User(
                                 json.getInt("id"),
@@ -70,8 +51,7 @@ public class ConnexionModele {
                                 new GregorianCalendar(birth.getInt("year"), birth.getInt("month"), birth.getInt("day")),
                                 json.getString("password"),
                                 json.getString("email"),
-                                json.getString("media"),
-                                friends
+                                json.getString("media")
                         );
                         Session.getSession().ouvrir(user);
                         callBack.onSuccess();

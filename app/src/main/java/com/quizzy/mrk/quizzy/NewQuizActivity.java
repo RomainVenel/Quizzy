@@ -79,17 +79,7 @@ public class NewQuizActivity extends AppCompatActivity {
                     newQuizModele.save(etName.getText().toString().trim(), getDataImg(), new NewQuizModele.NewQuizCallBack() {
                         @Override
                         public void onSuccess(int quiz_id) {
-
-                            Log.d("APP" , Session.getSession().getUser().toString());
-
-                            ArrayList<User> friends = new ArrayList<>();
-                            friends.add(new User(1, "test", "test", "test", new GregorianCalendar(), "test", "test", "test", new ArrayList<User>()));
-                            friends.add(new User(3, "test", "test", "test", new GregorianCalendar(), "test", "test", "test", new ArrayList<User>()));
-
-
-                            User testUser = new User(1, "test", "test", "test", new GregorianCalendar(), "test", "test", "test", friends);
-
-                            Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), getDataImg(), testUser, new GregorianCalendar(), 3);
+                            Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), getDataImg(), Session.getSession().getUser(), new GregorianCalendar(), 3);
                             Bundle paquet = new Bundle();
                             paquet.putParcelable("quiz", quiz);
 

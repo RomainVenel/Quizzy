@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="@drawable/img_header_nav_drawer">
 
-    <ImageView
+    <com.dmallcott.dismissibleimageview.DismissibleImageView
         android:id="@+id/header_nav_img"
         android:layout_width="80dp"
         android:layout_height="80dp"

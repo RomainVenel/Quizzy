@@ -18,7 +18,7 @@ public class PartsActivity extends AppCompatActivity {
         this.quiz = getIntent().getExtras().getParcelable("quiz");
 
         TextView tvTest = findViewById(R.id.test);
-        tvTest.setText(String.valueOf(quiz.getUser().getFirstName()));
+        tvTest.setText(quiz.getMedia());
 
     }
 }

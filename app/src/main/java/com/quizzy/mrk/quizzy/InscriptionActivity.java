@@ -1,5 +1,6 @@
 package com.quizzy.mrk.quizzy;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBar;
 import android.app.DatePickerDialog;
@@ -119,7 +120,7 @@ public class InscriptionActivity extends AppCompatActivity {
                             birthdaySelected,
                             etSigninEmail.getText().toString().trim(),
                             Application.md5(etSigninPassword.getText().toString().trim()),
-                            Application.ConvertImgBase64(ivSigninImg),
+                            Application.bitmapToBase64(((BitmapDrawable)ivSigninImg.getDrawable()).getBitmap()),
                             new InscriptionModele.InscriptionCallBack() {
                                 @Override
                                 public void onSuccess() {

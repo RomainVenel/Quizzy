@@ -61,7 +61,7 @@ public class ConnexionActivity extends AppCompatActivity {
                 Application.hideKeyboard(getApplicationContext(), v);
                 if (checkLogin()) {
                     pDialog.setMessage(getString(R.string.dialog_login));
-                    //pDialog.show();
+                    pDialog.show();
                     connexionModele.authentication(etLoginUsername.getText().toString().trim(), Application.md5(etLoginPassword.getText().toString().trim()), new ConnexionModele.ConnexionCallBack() {
                         @Override
                         public void onSuccess() {

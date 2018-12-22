@@ -2,12 +2,12 @@
     <string name="app_name">Quizzy</string>
 
     <!-- login -->
-    <string name="tv_login_username">Username</string>
+    <string name="tv_login_username">Nom d\'utilisateur</string>
     <string name="tv_login_password">Mot de passe</string>
     <string name="btn_login">CONNEXION</string>
     <string name="dialog_login">Connexion ...</string>
-    <string name="error_user_not_found">Username ou mot de passe incorrect</string>
-    <string name="tv_link_inscription">S\'inscrirez-vous !</string>
+    <string name="error_user_not_found">Nom d\'utilisateur ou mot de passe incorrect</string>
+    <string name="tv_link_inscription">Inscrivez-vous !</string>
     <string name="title_activity_login">Connexion</string>
 
     <!-- end login -->
@@ -15,7 +15,7 @@
     <!-- sign in -->
     <string name="tv_sign_in_nom">Nom</string>
     <string name="tv_sign_in_prenom">Prenom</string>
-    <string name="tv_sign_in_username">Username</string>
+    <string name="tv_sign_in_username">Nom d\'utilisateur</string>
     <string name="tv_sign_birthday_label">Date de naissance :</string>
     <string name="btn_sign_in_choose_birthday">Choisir une date</string>
     <string name="tv_sign_in_email">Email</string>
@@ -30,7 +30,7 @@
     <string name="dialog_sign_in_refuse">Refuser</string>
     <string name="choose_img">Sélectionner un image</string>
     <string name="dialog_sign_in">Inscription ...</string>
-    <string name="error_username_exist">Cet username existe deja</string>
+    <string name="error_username_exist">Ce nom d\'utilisateur existe deja</string>
     <string name="error_email_exist">Cet email existe deja</string>
     <string name="title_activity_sign_in">Inscription</string>
     <!-- end sign in -->
@@ -66,4 +66,6 @@
     <string name="btn_new_quiz_delete_img">Supprimer l\'image de mon quiz</string>
     <string name="btn_new_quiz_create">Créer</string>
     <!-- end new quiz -->
+
+    <!-- new  -->
 </resources>

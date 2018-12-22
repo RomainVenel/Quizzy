@@ -2,13 +2,13 @@ package com.quizzy.mrk.quizzy;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,24 +17,20 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
-import com.quizzy.mrk.quizzy.Entities.User;
-import com.quizzy.mrk.quizzy.Modele.ConnexionModele;
-import com.quizzy.mrk.quizzy.Modele.NewQuizModele;
+import com.quizzy.mrk.quizzy.Modele.QuizModele;
 import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.util.List;
 
-public class NewQuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity {
 
     private final int SELECT_IMG = 1;
 
     private RequestQueue requestQueue;
-    private NewQuizModele newQuizModele;
+    private QuizModele newQuizModele;
 
     private EditText etName;
     private TextView tvImg;
@@ -44,13 +40,13 @@ public class NewQuizActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_quiz);
+        setContentView(R.layout.activity_quiz);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_activity_new_quiz));
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
-        this.newQuizModele = new NewQuizModele(this, this.requestQueue);
+        this.newQuizModele = new QuizModele(this, this.requestQueue);
 
         this.etName = findViewById(R.id.et_new_quiz_name);
         this.tvImg = findViewById(R.id.tv_new_quiz_img);
@@ -76,14 +72,15 @@ public class NewQuizActivity extends AppCompatActivity {
 
                 Application.hideKeyboard(getApplicationContext(), v);
                 if (checkName()) {
-                    newQuizModele.save(etName.getText().toString().trim(), getDataImg(), new NewQuizModele.NewQuizCallBack() {
+                    newQuizModele.save(etName.getText().toString().trim(), getBase64Img(), new QuizModele.QuizCallBack() {
                         @Override
-                        public void onSuccess(int quiz_id) {
-                            Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), getDataImg(), Session.getSession().getUser(), new GregorianCalendar(), 3);
+                        public void onSuccess(int quiz_id, String media) {
+                            Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), media,Session.getSession().getUser(), new GregorianCalendar() );
+
                             Bundle paquet = new Bundle();
                             paquet.putParcelable("quiz", quiz);
 
-                            Intent intent = new Intent(NewQuizActivity.this, PartsActivity.class);
+                            Intent intent = new Intent(QuizActivity.this , PartsActivity.class);
                             intent.putExtras(paquet);
 
                             startActivity(intent);
@@ -92,14 +89,14 @@ public class NewQuizActivity extends AppCompatActivity {
                         @Override
                         public void onErrorNetwork() {
                             Snackbar snackbar = Snackbar
-                                    .make(findViewById(R.id.activity_new_quiz), R.string.error_connexion_http, 2500);
+                                    .make(findViewById(R.id.activity_quiz), R.string.error_connexion_http, 2500);
                             snackbar.show();
                         }
 
                         @Override
                         public void onErrorVollet() {
                             Snackbar snackbar = Snackbar
-                                    .make(findViewById(R.id.activity_new_quiz), R.string.error_vollet, 2500);
+                                    .make(findViewById(R.id.activity_quiz), R.string.error_vollet, 2500);
                             snackbar.show();
                         }
                     });
@@ -144,11 +141,11 @@ public class NewQuizActivity extends AppCompatActivity {
         }
     }
 
-    private String getDataImg() {
+    private String getBase64Img() {
         if (this.ivImg.getDrawable() == null) { // si il n'y a pas d'image
             return null;
         } else {
-            return Application.ConvertImgBase64(this.ivImg);
+            return Application.bitmapToBase64(((BitmapDrawable)this.ivImg.getDrawable()).getBitmap()) ;
         }
     }
 }

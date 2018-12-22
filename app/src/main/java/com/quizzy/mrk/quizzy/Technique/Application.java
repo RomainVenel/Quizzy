@@ -2,6 +2,7 @@ package com.quizzy.mrk.quizzy.Technique;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -13,10 +14,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class Application {
 
-    private static String ipServeur = "http://192.168.1.23/QuizzyServer/web/" ;
+    private static String urlServeur = "http://192.168.1.23/QuizzyServer/web/" ;
 
-    public static String getIpServeur() {
-        return ipServeur;
+    public static String getUrlServeur() {
+        return urlServeur;
     }
 
     public static void hideKeyboard(Context context, View v) {
@@ -49,16 +50,20 @@ public class Application {
         return "";
     }
 
-    public static String ConvertImgBase64(ImageView iv) {
-        iv.buildDrawingCache();
-        Bitmap bitmap = iv.getDrawingCache();
+    public static Bitmap base64ToBitmap(String base64Str) throws IllegalArgumentException
+    {
+        byte[] decodedBytes = Base64.decode(
+                base64Str.substring(base64Str.indexOf(",")  + 1),
+                Base64.DEFAULT
+        );
+        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+    }
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream);
-        byte[] image = stream.toByteArray();
-        String base64 = Base64.encodeToString(image, 0);
-
-        return base64;
+    public static String bitmapToBase64(Bitmap bitmap)
+    {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
     }
 
 }

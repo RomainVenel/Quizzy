@@ -1,6 +1,7 @@
 package com.quizzy.mrk.quizzy.Modele;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -27,14 +28,14 @@ public class InscriptionModele {
 
     private Context context;
     private RequestQueue queue;
-    private String URL = Application.getIpServeur() + "inscription";
+    private String URL = Application.getUrlServeur() + "inscription";
 
     public InscriptionModele(Context context, RequestQueue queue) {
         this.context = context;
         this.queue = queue;
     }
 
-    public void inscription(final String nom, final String prenom, final String username, final GregorianCalendar birthday, final String email, final String mdp, final String media, final InscriptionCallBack callBack) {
+    public void inscription(final String nom, final String prenom, final String username, final GregorianCalendar birthday, final String email, final String password, final String media, final InscriptionCallBack callBack) {
         StringRequest request = new StringRequest(Request.Method.POST, this.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -48,9 +49,9 @@ public class InscriptionModele {
                                 nom,
                                 username,
                                 birthday,
-                                mdp,
+                                password,
                                 email,
-                                media
+                                Application.getUrlServeur() + json.getString("media")
                         );
                         Session.getSession().ouvrir(user);
                         callBack.onSuccess();
@@ -82,7 +83,7 @@ public class InscriptionModele {
                 params.put("username", username);
                 params.put("birthday", birthday.get(Calendar.YEAR) + "-" + birthday.get(Calendar.MONTH) + "-" + birthday.get(Calendar.DAY_OF_MONTH));
                 params.put("email", email);
-                params.put("mdp", mdp);
+                params.put("password", password);
                 params.put("media", media);
 
                 return params;

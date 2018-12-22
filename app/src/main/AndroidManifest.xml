@@ -25,7 +25,7 @@
             android:parentActivityName=".ConnexionActivity" />
         <activity android:name=".DashboardActivity" />
         <activity
-            android:name=".NewQuizActivity"
+            android:name=".QuizActivity"
             android:parentActivityName=".DashboardActivity"></activity>
         <activity android:name=".PartsActivity"></activity>
     </application>

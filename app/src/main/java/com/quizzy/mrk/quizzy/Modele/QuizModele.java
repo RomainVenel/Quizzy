@@ -10,37 +10,34 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.quizzy.mrk.quizzy.Entities.User;
 import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.Session;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewQuizModele {
+public class QuizModele {
 
     private Context context;
     private RequestQueue queue;
-    private String URL = Application.getIpServeur() + Session.getSession().getUser().getId() + "/quiz/new";
+    private String URL = Application.getUrlServeur() + Session.getSession().getUser().getId() + "/quiz/new";
 
-    public NewQuizModele(Context context, RequestQueue queue) {
+    public QuizModele(Context context, RequestQueue queue) {
         this.context = context;
         this.queue = queue;
     }
 
-    public void save(final String name, final String media, final NewQuizCallBack callBack) {
+    public void save(final String name, final String media, final QuizCallBack callBack) {
         StringRequest request = new StringRequest(Request.Method.POST, this.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("APP", "Response ==> " + response);
                 try {
                     JSONObject json = new JSONObject(response);
-                    callBack.onSuccess(json.getInt("quiz_id"));
+                    callBack.onSuccess(json.getInt("id"), json.getString("media"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -70,8 +67,8 @@ public class NewQuizModele {
         queue.add(request);
     }
 
-    public interface NewQuizCallBack {
-        void onSuccess(int quiz_id); // quiz insere en bdd
+    public interface QuizCallBack {
+        void onSuccess(int quiz_id, String media); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

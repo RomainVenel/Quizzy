@@ -3,8 +3,6 @@ package com.quizzy.mrk.quizzy;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -12,7 +10,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quizzy.mrk.quizzy.Technique.Session;
+import com.squareup.picasso.Picasso;
+
 
 public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,9 +46,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         View headerView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
         ImageView ivUserImg = headerView.findViewById(R.id.header_nav_img);
-        byte[] decodedString = Base64.decode(Session.getSession().getUser().getMedia(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        ivUserImg.setImageBitmap(decodedByte);
+        Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(ivUserImg);
         TextView tvNameUser = headerView.findViewById(R.id.header_nav_name);
         tvNameUser.setText(Session.getSession().getUser().getFirstName() + " " + Session.getSession().getUser().getLastName());
         TextView tvEmailUser = headerView.findViewById(R.id.header_nav_email);
@@ -59,7 +56,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         this.bNewQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, NewQuizActivity.class);
+                Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
                 startActivity(intent);
             }
         });

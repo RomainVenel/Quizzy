@@ -26,14 +26,14 @@ public class ConnexionModele {
 
     private Context context;
     private RequestQueue queue;
-    private String URL = Application.getIpServeur() + "login";
+    private String URL = Application.getUrlServeur() + "login";
 
     public ConnexionModele(Context context, RequestQueue queue) {
         this.context = context;
         this.queue = queue;
     }
 
-    public void authentication(final String username, final String mdp, final ConnexionCallBack callBack) {
+    public void authentication(final String username, final String password, final ConnexionCallBack callBack) {
         StringRequest request = new StringRequest(Request.Method.POST, this.URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -51,7 +51,7 @@ public class ConnexionModele {
                                 new GregorianCalendar(birth.getInt("year"), birth.getInt("month"), birth.getInt("day")),
                                 json.getString("password"),
                                 json.getString("email"),
-                                json.getString("media")
+                                Application.getUrlServeur() + json.getString("media")
                         );
                         Session.getSession().ouvrir(user);
                         callBack.onSuccess();
@@ -77,7 +77,7 @@ public class ConnexionModele {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", username);
-                params.put("mdp", mdp);
+                params.put("password", password);
 
                 return params;
             }

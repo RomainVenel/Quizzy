@@ -281,7 +281,6 @@ public class InscriptionActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pathUri);
                 this.ivSigninImg.setImageBitmap(bitmap);
-                this.ivSigninImg.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
             }

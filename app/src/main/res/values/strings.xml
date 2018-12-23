@@ -20,7 +20,7 @@
     <string name="btn_sign_in_choose_birthday">Choisir une date</string>
     <string name="tv_sign_in_email">Email</string>
     <string name="tv_sign_in_password">Mot de passe</string>
-    <string name="btn_choose_img_sign_in">Choisir une photo de profil</string>
+    <string name="btn_choose_img_sign_in">Changer</string>
     <string name="tv_sign_in_confirm_password">Mot de passe(2)</string>
     <string name="btn_sign_in">INSCRIPTION</string>
     <string name="et_error_email">Le email doit être valide</string>
@@ -57,15 +57,21 @@
     <!-- dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="btn_dashboard_new_quiz">Créer un quiz</string>
+    <string name="tv_quiz_not_finished">Vos quiz en cour de création : </string>
+
     <!-- end dashboard -->
 
-    <!-- new quiz -->
-    <string name="title_activity_new_quiz">Nouveau quiz</string>
-    <string name="tv_new_quiz_name">Nom de votre quiz</string>
-    <string name="tv_new_quiz_add_img">Ajouter une image a mon quiz</string>
-    <string name="btn_new_quiz_delete_img">Supprimer l\'image de mon quiz</string>
-    <string name="btn_new_quiz_create">Créer</string>
-    <!-- end new quiz -->
+    <!-- quiz -->
+    <string name="title_activity_new_quiz">Quiz</string>
+    <string name="tv_quiz_name">Nom de votre quiz</string>
+    <string name="tv_quiz_add_img">Ajouter une image a mon quiz</string>
+    <string name="btn_quiz_delete_img">Supprimer l\'image de mon quiz</string>
+    <string name="btn_quiz_add_part">Ajouter une partie</string>
+    <string name="btn_quiz_finish">Terminer</string>
+    <!-- end quiz -->
 
-    <!-- new  -->
+    <!-- parts -->
+    <string name="title_activity_parts">Vos parties</string>
+
+    <!-- end parts -->
 </resources>

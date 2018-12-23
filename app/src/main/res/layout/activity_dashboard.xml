@@ -24,6 +24,25 @@
             android:text="@string/btn_dashboard_new_quiz"
             android:textColor="@color/white" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_quiz_not_finished"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <ListView
+            android:id="@+id/list_dashboard_quiz_not_finished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+        </ListView>
+
     </LinearLayout>
 
     <android.support.design.widget.NavigationView

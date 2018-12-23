@@ -21,6 +21,7 @@ import com.quizzy.mrk.quizzy.Modele.QuizModele;
 import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.GregorianCalendar;
@@ -28,6 +29,8 @@ import java.util.GregorianCalendar;
 public class QuizActivity extends AppCompatActivity {
 
     private final int SELECT_IMG = 1;
+    private boolean isNewQuiz;
+    private Quiz quiz;
 
     private RequestQueue requestQueue;
     private QuizModele newQuizModele;
@@ -35,6 +38,7 @@ public class QuizActivity extends AppCompatActivity {
     private EditText etName;
     private TextView tvImg;
     private ImageView ivImg;
+    private TextView tvAddPart;
     private Button btnCreer;
 
     @Override
@@ -45,13 +49,20 @@ public class QuizActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_activity_new_quiz));
 
-        this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
+        this.requestQueue  = VolleySingleton.getInstance(this).getRequestQueue();
         this.newQuizModele = new QuizModele(this, this.requestQueue);
 
-        this.etName = findViewById(R.id.et_new_quiz_name);
-        this.tvImg = findViewById(R.id.tv_new_quiz_img);
-        this.ivImg = findViewById(R.id.iv_new_quiz_img);
-        this.btnCreer = findViewById(R.id.btn_new_quiz);
+        this.etName    = findViewById(R.id.et_quiz_name);
+        this.tvImg     = findViewById(R.id.tv_quiz_img);
+        this.ivImg     = findViewById(R.id.iv_quiz_img);
+        this.tvAddPart = findViewById(R.id.tv_quiz_add_part);
+        this.btnCreer  = findViewById(R.id.btn_quiz);
+
+        this.isNewQuiz = getIntent().getExtras().getBoolean("new_quiz");
+        if (this.isNewQuiz == false) {
+            this.quiz = getIntent().getExtras().getParcelable("quiz");
+            this.updateDataActivity();
+        }
 
         this.tvImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +71,22 @@ public class QuizActivity extends AppCompatActivity {
                     openGallery();
                 } else {
                     ivImg.setImageDrawable(null);
-                    tvImg.setText(R.string.tv_new_quiz_add_img);
+                    tvImg.setText(R.string.tv_quiz_add_img);
                     tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_24dp, 0, 0, 0);
+                }
+            }
+        });
+
+        this.tvAddPart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Application.hideKeyboard(getApplicationContext(), v);
+                if (checkName()) {
+                    if (isNewQuiz) { // Si c'est une nouveau quiz, on sauvegarde
+                        createQuiz();
+                    } else { // on edit
+                        setQuiz();
+                    }
                 }
             }
         });
@@ -71,38 +96,76 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Application.hideKeyboard(getApplicationContext(), v);
-                if (checkName()) {
-                    newQuizModele.save(etName.getText().toString().trim(), getBase64Img(), new QuizModele.QuizCallBack() {
-                        @Override
-                        public void onSuccess(int quiz_id, String media) {
-                            Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), media,Session.getSession().getUser(), new GregorianCalendar() );
+                if (checkName()) { // on valide le quiz
 
-                            Bundle paquet = new Bundle();
-                            paquet.putParcelable("quiz", quiz);
-
-                            Intent intent = new Intent(QuizActivity.this , PartsActivity.class);
-                            intent.putExtras(paquet);
-
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onErrorNetwork() {
-                            Snackbar snackbar = Snackbar
-                                    .make(findViewById(R.id.activity_quiz), R.string.error_connexion_http, 2500);
-                            snackbar.show();
-                        }
-
-                        @Override
-                        public void onErrorVollet() {
-                            Snackbar snackbar = Snackbar
-                                    .make(findViewById(R.id.activity_quiz), R.string.error_vollet, 2500);
-                            snackbar.show();
-                        }
-                    });
                 }
             }
         });
+    }
+
+    private void createQuiz(){
+        newQuizModele.newQuiz(etName.getText().toString().trim(), getBase64Img(), new QuizModele.NewQuizCallBack() {
+            @Override
+            public void onSuccess(int quiz_id, String media) {
+                Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), media,Session.getSession().getUser(), new GregorianCalendar() );
+                Bundle paquet = new Bundle();
+                paquet.putParcelable("quiz", quiz);
+                Intent intent = new Intent(QuizActivity.this , PartsActivity.class);
+                intent.putExtras(paquet);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
+    }
+
+    private void setQuiz(){
+        quiz.setName(etName.getText().toString().trim());
+        newQuizModele.setQuiz(this.quiz, getBase64Img(), new QuizModele.SetQuizCallBack() {
+            @Override
+            public void onSuccess(Quiz quiz) {
+                Bundle paquet = new Bundle();
+                paquet.putParcelable("quiz", quiz);
+                Intent intent = new Intent(QuizActivity.this , PartsActivity.class);
+                intent.putExtras(paquet);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
+    }
+
+    private void updateDataActivity(){
+        this.etName.setText(this.quiz.getName());
+        if (this.quiz.getMedia() != null) {
+            Picasso.with(this).load(this.quiz.getMedia()).into(ivImg);
+            this.tvImg.setText(R.string.btn_quiz_delete_img);
+            this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
+        }
     }
 
     private boolean checkName() {
@@ -133,7 +196,7 @@ public class QuizActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pathUri);
                 this.ivImg.setImageBitmap(bitmap);
-                this.tvImg.setText(R.string.btn_new_quiz_delete_img);
+                this.tvImg.setText(R.string.btn_quiz_delete_img);
                 this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
             } catch (IOException e) {
                 e.printStackTrace();

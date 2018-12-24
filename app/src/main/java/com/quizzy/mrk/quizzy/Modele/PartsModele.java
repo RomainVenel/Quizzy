@@ -6,41 +6,35 @@ import android.util.Log;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
-import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Technique.Application;
-import com.quizzy.mrk.quizzy.Technique.Session;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuizModele {
+public class PartsModele {
 
     private Context context;
     private RequestQueue queue;
 
-    public QuizModele(Context context, RequestQueue queue) {
+    public PartsModele(Context context, RequestQueue queue) {
         this.context = context;
         this.queue = queue;
     }
 
-    public void newQuiz(final String name, final String media, final NewQuizCallBack callBack) {
+    public void newPart(final Quiz quiz, final String name, final String desc, final String media, final NewPartCallBack callBack) {
         StringRequest request = new StringRequest(
                 Request.Method.POST,
-                Application.getUrlServeur() + Session.getSession().getUser().getId() + "/quiz/new",
+                Application.getUrlServeur() + "quiz/" + quiz.getId() + "/part/new",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -67,6 +61,7 @@ public class QuizModele {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", name);
+                params.put("desc", desc);
                 if (media != null) {
                     params.put("media", media);
                 }
@@ -78,10 +73,11 @@ public class QuizModele {
         queue.add(request);
     }
 
-    public void setQuiz(final Quiz quiz, final String media, final SetQuizCallBack callBack) {
+    public void setPart(final Part part, final String media, final SetPartCallBack callBack) {
+        Log.d("APP", part.getName() + " image ==> "+ media);
         StringRequest request = new StringRequest(
                 Request.Method.POST,
-                Application.getUrlServeur() + "quiz/edit/" + quiz.getId(),
+                Application.getUrlServeur() + "part/edit/" + part.getId(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -89,11 +85,11 @@ public class QuizModele {
                         try {
                             JSONObject json = new JSONObject(response);
                             if (json.isNull("media")) {
-                                quiz.setMedia(null);
+                                part.setMedia(null);
                             } else {
-                                quiz.setMedia(Application.getUrlServeur() + json.getString("media"));
+                                part.setMedia(Application.getUrlServeur() + json.getString("media"));
                             }
-                            callBack.onSuccess(quiz);
+                            callBack.onSuccess(part);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -112,10 +108,12 @@ public class QuizModele {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("name", quiz.getName());
+                params.put("name", part.getName());
+                params.put("desc", part.getName());
                 if (media != null) {
                     params.put("media", media);
                 }
+                Log.d("APP", "param ==> " + params);
 
                 return params;
             }
@@ -124,81 +122,16 @@ public class QuizModele {
         queue.add(request);
     }
 
-    public void getParts(final Quiz quiz, final getPartsQuizCallBack callBack) {
-        JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET,
-                Application.getUrlServeur() + "quiz/" + quiz.getId(),
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("APP", "On recup les parties ==> " + response);
-                        ArrayList<Part> parts = new ArrayList<Part>();
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject part = response.getJSONObject(i);
-
-                                String media;
-                                if (part.isNull("media")) {
-                                    media = null;
-                                } else {
-                                    media = Application.getUrlServeur() + part.getString("media");
-                                }
-
-                                String desc;
-                                if (part.isNull("desc")) {
-                                    desc = null;
-                                } else {
-                                    desc = part.getString("desc");
-                                }
-
-                                parts.add(
-                                        new Part(
-                                                part.getInt("id"),
-                                                part.getString("name"),
-                                                desc,
-                                                media,
-                                                quiz
-                                        )
-                                );
-                            }
-                            callBack.onSuccess(parts);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                    callBack.onErrorNetwork();
-                } else if (error instanceof VolleyError) {
-                    Log.d("APP", "bug => " + error.toString());
-                    callBack.onErrorVollet();
-                }
-            }
-        });
-        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
-        queue.add(request);
-    }
-
-    public interface NewQuizCallBack {
-        void onSuccess(int quiz_id, String media); // quiz insere en bdd
+    public interface NewPartCallBack {
+        void onSuccess(int part_id, String media); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 
         void onErrorVollet(); // Erreur de volley
     }
 
-    public interface SetQuizCallBack {
-        void onSuccess(Quiz quiz); // quiz insere en bdd
-
-        void onErrorNetwork(); // Pas de connexion
-
-        void onErrorVollet(); // Erreur de volley
-    }
-
-    public interface getPartsQuizCallBack {
-        void onSuccess(ArrayList<Part> parts); // recuperation des parties d'une quiz
+    public interface SetPartCallBack {
+        void onSuccess(Part part); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

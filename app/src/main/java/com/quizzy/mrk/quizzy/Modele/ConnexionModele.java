@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -82,6 +83,7 @@ public class ConnexionModele {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
         queue.add(request);
     }
 

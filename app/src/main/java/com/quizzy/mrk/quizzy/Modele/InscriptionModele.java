@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -89,6 +90,7 @@ public class InscriptionModele {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
         queue.add(request);
     }
 

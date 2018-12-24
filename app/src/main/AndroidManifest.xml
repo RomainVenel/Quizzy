@@ -24,10 +24,9 @@
             android:name=".InscriptionActivity"
             android:parentActivityName=".ConnexionActivity" />
         <activity android:name=".DashboardActivity" />
-        <activity
-            android:name=".QuizActivity"
-            android:parentActivityName=".DashboardActivity"></activity>
-        <activity android:name=".PartsActivity"></activity>
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".PartsActivity" />
+        <activity android:name=".QuestionActivity"></activity>
     </application>
 
 </manifest>

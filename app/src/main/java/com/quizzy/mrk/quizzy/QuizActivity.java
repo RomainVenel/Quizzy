@@ -9,13 +9,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
+import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Modele.QuizModele;
 import com.quizzy.mrk.quizzy.Technique.Application;
@@ -24,6 +29,7 @@ import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class QuizActivity extends AppCompatActivity {
@@ -31,15 +37,18 @@ public class QuizActivity extends AppCompatActivity {
     private final int SELECT_IMG = 1;
     private boolean isNewQuiz;
     private Quiz quiz;
+    private ArrayList<Part> listParts;
 
     private RequestQueue requestQueue;
-    private QuizModele newQuizModele;
+    private QuizModele quizModele;
 
     private EditText etName;
     private TextView tvImg;
     private ImageView ivImg;
     private TextView tvAddPart;
+    private ListView lvParts;
     private Button btnCreer;
+    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +58,16 @@ public class QuizActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_activity_new_quiz));
 
-        this.requestQueue  = VolleySingleton.getInstance(this).getRequestQueue();
-        this.newQuizModele = new QuizModele(this, this.requestQueue);
+        this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
+        this.quizModele = new QuizModele(this, this.requestQueue);
 
-        this.etName    = findViewById(R.id.et_quiz_name);
-        this.tvImg     = findViewById(R.id.tv_quiz_img);
-        this.ivImg     = findViewById(R.id.iv_quiz_img);
+        this.etName = findViewById(R.id.et_quiz_name);
+        this.tvImg = findViewById(R.id.tv_quiz_img);
+        this.ivImg = findViewById(R.id.iv_quiz_img);
         this.tvAddPart = findViewById(R.id.tv_quiz_add_part);
-        this.btnCreer  = findViewById(R.id.btn_quiz);
+        this.lvParts = findViewById(R.id.lv_quiz_part);
+        this.btnCreer = findViewById(R.id.btn_quiz);
+        this.btnBack = findViewById(R.id.btn_quiz_back);
 
         this.isNewQuiz = getIntent().getExtras().getBoolean("new_quiz");
         if (this.isNewQuiz == false) {
@@ -94,23 +105,31 @@ public class QuizActivity extends AppCompatActivity {
         this.btnCreer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Application.hideKeyboard(getApplicationContext(), v);
                 if (checkName()) { // on valide le quiz
 
                 }
             }
         });
+
+        this.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuizActivity.this, DashboardActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void createQuiz(){
-        newQuizModele.newQuiz(etName.getText().toString().trim(), getBase64Img(), new QuizModele.NewQuizCallBack() {
+    private void createQuiz() {
+        quizModele.newQuiz(etName.getText().toString().trim(), getBase64Img(), new QuizModele.NewQuizCallBack() {
             @Override
             public void onSuccess(int quiz_id, String media) {
-                Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), media,Session.getSession().getUser(), new GregorianCalendar() );
+                Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), media, Session.getSession().getUser(), new GregorianCalendar());
                 Bundle paquet = new Bundle();
+                paquet.putBoolean("new_part", true);
                 paquet.putParcelable("quiz", quiz);
-                Intent intent = new Intent(QuizActivity.this , PartsActivity.class);
+                Intent intent = new Intent(QuizActivity.this, PartsActivity.class);
                 intent.putExtras(paquet);
                 startActivity(intent);
             }
@@ -131,14 +150,15 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    private void setQuiz(){
+    private void setQuiz() {
         quiz.setName(etName.getText().toString().trim());
-        newQuizModele.setQuiz(this.quiz, getBase64Img(), new QuizModele.SetQuizCallBack() {
+        quizModele.setQuiz(this.quiz, getBase64Img(), new QuizModele.SetQuizCallBack() {
             @Override
             public void onSuccess(Quiz quiz) {
                 Bundle paquet = new Bundle();
+                paquet.putBoolean("new_part", true);
                 paquet.putParcelable("quiz", quiz);
-                Intent intent = new Intent(QuizActivity.this , PartsActivity.class);
+                Intent intent = new Intent(QuizActivity.this, PartsActivity.class);
                 intent.putExtras(paquet);
                 startActivity(intent);
             }
@@ -159,13 +179,56 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    private void updateDataActivity(){
+    private void updateDataActivity() {
         this.etName.setText(this.quiz.getName());
         if (this.quiz.getMedia() != null) {
             Picasso.with(this).load(this.quiz.getMedia()).into(ivImg);
             this.tvImg.setText(R.string.btn_quiz_delete_img);
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
+
+        Log.d("APP", "on met a jour la liste des parties");
+
+        this.quizModele.getParts(this.quiz, new QuizModele.getPartsQuizCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Part> parts) {
+                listParts = parts;
+                ArrayAdapter<Part> adaptateur = new ArrayAdapter<Part>(QuizActivity.this, android.R.layout.simple_list_item_1, parts);
+                lvParts.setAdapter(adaptateur);
+
+                lvParts.setOnItemClickListener(
+                        new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Bundle paquet = new Bundle();
+                                paquet.putBoolean("new_part", false);
+                                paquet.putParcelable("quiz", quiz);
+                                paquet.putParcelable("part", listParts.get(position));
+
+                                Intent intent = new Intent(QuizActivity.this, PartsActivity.class);
+                                intent.putExtras(paquet);
+                                startActivity(intent);
+                            }
+                        }
+                );
+
+            }
+
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
+
     }
 
     private boolean checkName() {
@@ -208,7 +271,7 @@ public class QuizActivity extends AppCompatActivity {
         if (this.ivImg.getDrawable() == null) { // si il n'y a pas d'image
             return null;
         } else {
-            return Application.bitmapToBase64(((BitmapDrawable)this.ivImg.getDrawable()).getBitmap()) ;
+            return Application.bitmapToBase64(((BitmapDrawable) this.ivImg.getDrawable()).getBitmap());
         }
     }
 }

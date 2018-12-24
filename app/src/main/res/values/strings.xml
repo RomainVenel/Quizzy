@@ -9,7 +9,6 @@
     <string name="error_user_not_found">Nom d\'utilisateur ou mot de passe incorrect</string>
     <string name="tv_link_inscription">Inscrivez-vous !</string>
     <string name="title_activity_login">Connexion</string>
-
     <!-- end login -->
 
     <!-- sign in -->
@@ -29,7 +28,6 @@
     <string name="dialog_sign_in_autorise">Autoriser</string>
     <string name="dialog_sign_in_refuse">Refuser</string>
     <string name="choose_img">Sélectionner un image</string>
-    <string name="dialog_sign_in">Inscription ...</string>
     <string name="error_username_exist">Ce nom d\'utilisateur existe deja</string>
     <string name="error_email_exist">Cet email existe deja</string>
     <string name="title_activity_sign_in">Inscription</string>
@@ -38,6 +36,8 @@
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>
     <string name="error_vollet">Erreur Vollet - Réessayer de vous connecter</string>
+    <string name="btn_label_back">Retour</string>
+
 
     <!-- navigation drawer -->
     <string name="open_nav_drawer">Ouvrir</string>
@@ -67,11 +67,17 @@
     <string name="tv_quiz_add_img">Ajouter une image a mon quiz</string>
     <string name="btn_quiz_delete_img">Supprimer l\'image de mon quiz</string>
     <string name="btn_quiz_add_part">Ajouter une partie</string>
+    <string name="tv_quiz_list_part">Vos parties :</string>
     <string name="btn_quiz_finish">Terminer</string>
     <!-- end quiz -->
 
     <!-- parts -->
-    <string name="title_activity_parts">Vos parties</string>
+    <string name="title_activity_parts">Parties</string>
+    <string name="tv_part_name">Nom de votre partie</string>
+    <string name="tv_part_desc">Description de votre partie</string>
+    <string name="btn_part_add_img">Ajouter une image a ma partie</string>
+    <string name="btn_part_delete_img">Supprimer l\'image de ma partie</string>
+    <string name="btn_part_add_question">Ajouter une question</string>
 
     <!-- end parts -->
 </resources>

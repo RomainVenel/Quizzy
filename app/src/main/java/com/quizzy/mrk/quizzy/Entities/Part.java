@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.GregorianCalendar;
 
-public class Part implements Parcelable  {
+public class Part implements Parcelable{
 
     private int id;
     private String name;

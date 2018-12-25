@@ -104,7 +104,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                 Bundle paquet = new Bundle();
                                 paquet.putBoolean("new_quiz", false);
                                 paquet.putParcelable("quiz", quizNotFinished.get(position) );
-
                                 Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
                                 intent.putExtras(paquet);
                                 startActivity(intent);

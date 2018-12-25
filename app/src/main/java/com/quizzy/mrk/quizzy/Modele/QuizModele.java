@@ -126,7 +126,7 @@ public class QuizModele {
 
     public void getParts(final Quiz quiz, final getPartsQuizCallBack callBack) {
         JsonArrayRequest request = new JsonArrayRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 Application.getUrlServeur() + "quiz/" + quiz.getId(),
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -190,7 +190,7 @@ public class QuizModele {
     }
 
     public interface SetQuizCallBack {
-        void onSuccess(Quiz quiz); // quiz insere en bdd
+        void onSuccess(Quiz quizUpdate); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

@@ -74,7 +74,6 @@ public class PartsModele {
     }
 
     public void setPart(final Part part, final String media, final SetPartCallBack callBack) {
-        Log.d("APP", part.getName() + " image ==> "+ media);
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 Application.getUrlServeur() + "part/edit/" + part.getId(),
@@ -109,11 +108,10 @@ public class PartsModele {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("name", part.getName());
-                params.put("desc", part.getName());
+                params.put("desc", part.getDesc());
                 if (media != null) {
                     params.put("media", media);
                 }
-                Log.d("APP", "param ==> " + params);
 
                 return params;
             }
@@ -131,7 +129,7 @@ public class PartsModele {
     }
 
     public interface SetPartCallBack {
-        void onSuccess(Part part); // quiz insere en bdd
+        void onSuccess(Part partUpdate); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

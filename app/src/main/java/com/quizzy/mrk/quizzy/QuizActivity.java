@@ -9,7 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,6 +38,7 @@ public class QuizActivity extends AppCompatActivity {
     private boolean isNewQuiz;
     private Quiz quiz;
     private ArrayList<Part> listParts;
+    private Part partSelected;
 
     private RequestQueue requestQueue;
     private QuizModele quizModele;
@@ -48,7 +49,6 @@ public class QuizActivity extends AppCompatActivity {
     private TextView tvAddPart;
     private ListView lvParts;
     private Button btnCreer;
-    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class QuizActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_activity_new_quiz));
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.quizModele = new QuizModele(this, this.requestQueue);
@@ -67,7 +68,6 @@ public class QuizActivity extends AppCompatActivity {
         this.tvAddPart = findViewById(R.id.tv_quiz_add_part);
         this.lvParts = findViewById(R.id.lv_quiz_part);
         this.btnCreer = findViewById(R.id.btn_quiz);
-        this.btnBack = findViewById(R.id.btn_quiz_back);
 
         this.isNewQuiz = getIntent().getExtras().getBoolean("new_quiz");
         if (this.isNewQuiz == false) {
@@ -96,7 +96,7 @@ public class QuizActivity extends AppCompatActivity {
                     if (isNewQuiz) { // Si c'est une nouveau quiz, on sauvegarde
                         createQuiz();
                     } else { // on edit
-                        setQuiz();
+                        setQuiz(2);
                     }
                 }
             }
@@ -111,21 +111,13 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         });
-
-        this.btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(QuizActivity.this, DashboardActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void createQuiz() {
         quizModele.newQuiz(etName.getText().toString().trim(), getBase64Img(), new QuizModele.NewQuizCallBack() {
             @Override
             public void onSuccess(int quiz_id, String media) {
-                Quiz quiz = new Quiz(quiz_id, etName.getText().toString().trim(), media, Session.getSession().getUser(), new GregorianCalendar());
+                quiz = new Quiz(quiz_id, etName.getText().toString().trim(), media, Session.getSession().getUser(), new GregorianCalendar());
                 Bundle paquet = new Bundle();
                 paquet.putBoolean("new_part", true);
                 paquet.putParcelable("quiz", quiz);
@@ -150,17 +142,13 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
-    private void setQuiz() {
+    private void setQuiz(final int key) {
         quiz.setName(etName.getText().toString().trim());
         quizModele.setQuiz(this.quiz, getBase64Img(), new QuizModele.SetQuizCallBack() {
             @Override
-            public void onSuccess(Quiz quiz) {
-                Bundle paquet = new Bundle();
-                paquet.putBoolean("new_part", true);
-                paquet.putParcelable("quiz", quiz);
-                Intent intent = new Intent(QuizActivity.this, PartsActivity.class);
-                intent.putExtras(paquet);
-                startActivity(intent);
+            public void onSuccess(Quiz quizUpdate) {
+                quiz = quizUpdate;
+                postSetQuiz(key);
             }
 
             @Override
@@ -177,6 +165,34 @@ public class QuizActivity extends AppCompatActivity {
                 snackbar.show();
             }
         });
+    }
+
+    private void postSetQuiz(int key) {
+        Intent intent;
+        Bundle paquet;
+        switch (key) {
+            case 1: // redirection dashboard
+                intent = new Intent(QuizActivity.this, DashboardActivity.class);
+                startActivity(intent);
+                break;
+            case 2: // redirection addPart
+                paquet = new Bundle();
+                paquet.putBoolean("new_part", true);
+                paquet.putParcelable("quiz", quiz);
+                intent = new Intent(QuizActivity.this, PartsActivity.class);
+                intent.putExtras(paquet);
+                startActivity(intent);
+                break;
+            case 3: // redirection listView parts
+                paquet = new Bundle();
+                paquet.putBoolean("new_part", false);
+                paquet.putParcelable("quiz", quiz);
+                paquet.putParcelable("part", partSelected);
+                intent = new Intent(QuizActivity.this, PartsActivity.class);
+                intent.putExtras(paquet);
+                startActivity(intent);
+                break;
+        }
     }
 
     private void updateDataActivity() {
@@ -186,8 +202,6 @@ public class QuizActivity extends AppCompatActivity {
             this.tvImg.setText(R.string.btn_quiz_delete_img);
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
-
-        Log.d("APP", "on met a jour la liste des parties");
 
         this.quizModele.getParts(this.quiz, new QuizModele.getPartsQuizCallBack() {
             @Override
@@ -200,18 +214,11 @@ public class QuizActivity extends AppCompatActivity {
                         new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Bundle paquet = new Bundle();
-                                paquet.putBoolean("new_part", false);
-                                paquet.putParcelable("quiz", quiz);
-                                paquet.putParcelable("part", listParts.get(position));
-
-                                Intent intent = new Intent(QuizActivity.this, PartsActivity.class);
-                                intent.putExtras(paquet);
-                                startActivity(intent);
+                                partSelected = listParts.get(position);
+                                setQuiz(3);
                             }
                         }
                 );
-
             }
 
             @Override
@@ -250,6 +257,14 @@ public class QuizActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(picker, getString(R.string.choose_img)), this.SELECT_IMG);
     }
 
+    private String getBase64Img() {
+        if (this.ivImg.getDrawable() == null) { // si il n'y a pas d'image
+            return null;
+        } else {
+            return Application.bitmapToBase64(((BitmapDrawable) this.ivImg.getDrawable()).getBitmap());
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -267,11 +282,19 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
-    private String getBase64Img() {
-        if (this.ivImg.getDrawable() == null) { // si il n'y a pas d'image
-            return null;
-        } else {
-            return Application.bitmapToBase64(((BitmapDrawable) this.ivImg.getDrawable()).getBitmap());
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (!isNewQuiz) {
+                    setQuiz(1);
+                } else {
+                    Intent intent = new Intent(QuizActivity.this, DashboardActivity.class);
+                    startActivity(intent);
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

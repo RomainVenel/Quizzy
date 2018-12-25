@@ -19,8 +19,107 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:text="@string/tv_part_name" />
+            android:text="@string/tv_question_type" />
 
+        <Spinner
+            android:id="@+id/sp_question_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"></Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_question_grade" />
+
+        <Spinner
+            android:id="@+id/sp_question_grade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"></Spinner>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_question_name" />
+
+        <EditText
+            android:id="@+id/et_question_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:maxLength="255" />
+
+        <TextView
+            android:id="@+id/tv_question_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/ic_add_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/darkGray"
+            android:text="@string/btn_question_add_img" />
+
+        <com.dmallcott.dismissibleimageview.DismissibleImageView
+            android:id="@+id/iv_question_img"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp" />
+
+        <LinearLayout
+            android:id="@+id/all_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_question_add_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:drawableLeft="@drawable/ic_add_24dp"
+            android:drawablePadding="5dp"
+            android:drawableTint="@color/colorPrimaryDark"
+            android:text="@string/btn_question_add_answer"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/tv_question_error_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="10dp"
+            android:textColor="#FF0000"/>
+
+        <Button
+            android:id="@+id/btn_question_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/btn_question_save_question"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

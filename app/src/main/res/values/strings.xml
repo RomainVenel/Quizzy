@@ -57,8 +57,7 @@
     <!-- dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="btn_dashboard_new_quiz">Créer un quiz</string>
-    <string name="tv_quiz_not_finished">Vos quiz en cour de création : </string>
-
+    <string name="tv_quiz_not_finished">Vos quiz en cour de création :</string>
     <!-- end dashboard -->
 
     <!-- quiz -->
@@ -72,12 +71,25 @@
     <!-- end quiz -->
 
     <!-- parts -->
-    <string name="title_activity_parts">Parties</string>
+    <string name="title_activity_parts">Partie</string>
     <string name="tv_part_name">Nom de votre partie</string>
     <string name="tv_part_desc">Description de votre partie</string>
     <string name="btn_part_add_img">Ajouter une image a ma partie</string>
     <string name="btn_part_delete_img">Supprimer l\'image de ma partie</string>
     <string name="btn_part_add_question">Ajouter une question</string>
-
     <!-- end parts -->
+
+    <!-- question -->
+    <string name="title_activity_question">Question</string>
+    <string name="tv_question_type">Type de question</string>
+    <string name="tv_question_grade">Note à votre question</string>
+    <string name="tv_question_name">Nom de votre question</string>
+    <string name="btn_question_add_img">Ajouter une image a ma question</string>
+    <string name="btn_question_delete_img">Supprimer l\'image de ma question</string>
+    <string name="btn_question_add_answer">Ajouter une réponse</string>
+    <string name="btn_question_save_question">Sauvegarder</string>
+    <string name="et_question_empty_answer">Il doit y avoir au moin 1 réponse</string>
+    <string name="et_question_empty_good_answer">Il doit y avoir au moin 1 bonne réponse</string>
+    <string name="et_question_empty_name_answer">Tous les champs des réponse ne sont pas renseignés</string>
+    <!-- end question -->
 </resources>

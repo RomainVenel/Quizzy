@@ -12,13 +12,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.quizzy.mrk.quizzy.Entities.Part;
+import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Modele.PartsModele;
 import com.quizzy.mrk.quizzy.Technique.Application;
@@ -36,6 +40,8 @@ public class PartsActivity extends AppCompatActivity {
     private boolean isNewPart;
     private Part part;
     private Quiz quiz;
+    private ArrayList<Question> listQuestions;
+    private Question questionSelected;
 
     private RequestQueue requestQueue;
     private PartsModele partsModele;
@@ -44,6 +50,7 @@ public class PartsActivity extends AppCompatActivity {
     private EditText etDesc;
     private TextView tvImg;
     private ImageView ivImg;
+    private ListView lvQuestions;
     private TextView tvAddQuestion;
 
     @Override
@@ -63,6 +70,7 @@ public class PartsActivity extends AppCompatActivity {
         this.tvImg = findViewById(R.id.tv_quiz_img);
         this.ivImg = findViewById(R.id.iv_part_img);
         this.tvAddQuestion = findViewById(R.id.tv_part_add_question);
+        this.lvQuestions = findViewById(R.id.lv_part_question);
 
         this.quiz = getIntent().getExtras().getParcelable("quiz");
         this.isNewPart = getIntent().getExtras().getBoolean("new_part");
@@ -178,7 +186,13 @@ public class PartsActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             case 3: // redirection listView question
-
+                paquet = new Bundle();
+                paquet.putBoolean("new_question", false);
+                paquet.putParcelable("part", part);
+                paquet.putParcelable("question", questionSelected);
+                intent = new Intent(PartsActivity.this, QuestionActivity.class);
+                intent.putExtras(paquet);
+                startActivity(intent);
                 break;
         }
     }
@@ -192,7 +206,38 @@ public class PartsActivity extends AppCompatActivity {
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
 
-        // mettre a jour la liste
+        this.partsModele.getQuestions(this.part, new PartsModele.getQuestionsCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Question> questions) {
+                listQuestions = questions;
+                ArrayAdapter<Question> adaptateur = new ArrayAdapter<Question>(PartsActivity.this, android.R.layout.simple_list_item_1, questions);
+                lvQuestions.setAdapter(adaptateur);
+
+                lvQuestions.setOnItemClickListener(
+                        new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                questionSelected = listQuestions.get(position);
+                                setPart(3);
+                            }
+                        }
+                );
+            }
+
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_parts), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_parts), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
     }
 
     private boolean checkName() {

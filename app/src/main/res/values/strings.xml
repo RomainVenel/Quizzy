@@ -76,6 +76,7 @@
     <string name="tv_part_desc">Description de votre partie</string>
     <string name="btn_part_add_img">Ajouter une image a ma partie</string>
     <string name="btn_part_delete_img">Supprimer l\'image de ma partie</string>
+    <string name="tv_part_list_question">Vos questions :</string>
     <string name="btn_part_add_question">Ajouter une question</string>
     <!-- end parts -->
 

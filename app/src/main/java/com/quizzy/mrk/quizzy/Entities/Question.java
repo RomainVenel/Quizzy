@@ -91,6 +91,14 @@ public class Question implements Parcelable{
     }
 
     @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
@@ -113,7 +121,8 @@ public class Question implements Parcelable{
         this.name = in.readString();
         this.media = in.readString();
         this.part = (Part) in.readValue(Part.class.getClassLoader());
-        this.answers = in.readArrayList(null);
+        this.answers = new ArrayList<Answer>();
+        in.readList(this.answers, getClass().getClassLoader());
     }
 
     public static final Parcelable.Creator<Question> CREATOR = new Parcelable.Creator<Question>() {

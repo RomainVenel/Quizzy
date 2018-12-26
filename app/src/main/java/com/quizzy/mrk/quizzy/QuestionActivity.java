@@ -41,6 +41,7 @@ import com.quizzy.mrk.quizzy.Modele.PartsModele;
 import com.quizzy.mrk.quizzy.Modele.QuestionModele;
 import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -118,8 +119,8 @@ public class QuestionActivity extends AppCompatActivity {
         this.part = getIntent().getExtras().getParcelable("part");
         this.isNewQuestion = getIntent().getExtras().getBoolean("new_question");
         if (this.isNewQuestion == false) {
-            // recup la question
-            // lancer la function pour mettrre a jour le visu
+            this.question = getIntent().getExtras().getParcelable("question");
+            this.updateDataActivity();
         }
 
         this.tvImg.setOnClickListener(new View.OnClickListener() {
@@ -276,6 +277,39 @@ public class QuestionActivity extends AppCompatActivity {
         });
     }
 
+    private void updateDataActivity() {
+        int posType = 0;
+        if (this.question.getType().equals("QCM")) {
+            posType = 1;
+        }
+        this.spType.setSelection(posType);
+        this.spGrade.setSelection(this.question.getGrade() - 1);
+        this.etName.setText(this.question.getName());
+        if (this.question.getMedia() != null) {
+            Picasso.with(this).load(this.question.getMedia()).into(ivImg);
+            this.tvImg.setText(R.string.btn_question_delete_img);
+            this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
+        }
+
+//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        for (Answer answer : this.question.getAnswers()) {
+//            View rowView;
+//            if (this.question.getType().equals("QCM")) {
+//                rowView = inflater.inflate(R.layout.question_qcm_row, null);
+//                CheckBox cbAnswer = rowView.findViewById(R.id.ck_answer);
+//                cbAnswer.setChecked(answer.isCorrect());
+//            } else {
+//                rowView = inflater.inflate(R.layout.question_qcu_row, null);
+//                RadioButton rbAnswer = rowView.findViewById(R.id.rb_answer);
+//                rbAnswer.setChecked(answer.isCorrect());
+//            }
+//            EditText etAnswer = rowView.findViewById(R.id.et_answer);
+//            etAnswer.setText(answer.getName());
+//            llAllAnswer.addView(rowView, llAllAnswer.getChildCount());
+//        }
+        //revoir ca pour afficher les réponses
+
+    }
 
     private void openGallery() {
         Intent picker = new Intent(Intent.ACTION_GET_CONTENT);

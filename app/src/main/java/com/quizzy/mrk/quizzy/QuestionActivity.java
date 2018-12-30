@@ -1,43 +1,33 @@
 package com.quizzy.mrk.quizzy;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.SoundPool;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.quizzy.mrk.quizzy.Entities.Answer;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Question;
-import com.quizzy.mrk.quizzy.Entities.Quiz;
-import com.quizzy.mrk.quizzy.Modele.PartsModele;
 import com.quizzy.mrk.quizzy.Modele.QuestionModele;
 import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
@@ -53,6 +43,7 @@ public class QuestionActivity extends AppCompatActivity {
     private boolean isNewQuestion;
     private Part part;
     private Question question;
+    private LayoutInflater layoutInflater;
 
     private RequestQueue requestQueue;
     private QuestionModele questionModele;
@@ -116,6 +107,8 @@ public class QuestionActivity extends AppCompatActivity {
         aaGrade.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spGrade.setAdapter(aaGrade);
 
+        this.layoutInflater = getLayoutInflater();
+
         this.part = getIntent().getExtras().getParcelable("part");
         this.isNewQuestion = getIntent().getExtras().getBoolean("new_question");
         if (this.isNewQuestion == false) {
@@ -139,15 +132,13 @@ public class QuestionActivity extends AppCompatActivity {
         this.tvAddAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                View rowView;
                 if (spType.getSelectedItem().toString().equals("QCM")) {
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View rowView = inflater.inflate(R.layout.question_qcm_row, null);
-                    llAllAnswer.addView(rowView, llAllAnswer.getChildCount());
+                    rowView = layoutInflater.inflate(R.layout.question_qcm_row, llAllAnswer, false);
                 } else {
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View rowView = inflater.inflate(R.layout.question_qcu_row, null);
-                    llAllAnswer.addView(rowView, llAllAnswer.getChildCount());
+                    rowView = layoutInflater.inflate(R.layout.question_qcu_row, llAllAnswer, false);
                 }
+                llAllAnswer.addView(rowView);
             }
         });
 
@@ -156,11 +147,11 @@ public class QuestionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Application.hideKeyboard(getApplicationContext(), v);
                 if (checkQuestion()) {
+                    updateQuestion();
                     if (isNewQuestion) {
-                        updateQuestion();
                         createQuestion();
                     } else {
-
+                        setQuestion();
                     }
                 }
             }
@@ -255,10 +246,45 @@ public class QuestionActivity extends AppCompatActivity {
     }
 
     private void createQuestion() {
-        questionModele.newQuestion(question, getBase64Img(), new QuestionModele.NewQuestionCallBack() {
+        questionModele.newQuestion(question, getBase64Img(), new QuestionModele.QuestionCallBack() {
             @Override
             public void onSuccess(Question questionCreate) {
-                Log.d("APP", "question saved done");
+                Bundle paquet = new Bundle();
+                paquet.putBoolean("new_part", false);
+                paquet.putParcelable("quiz", part.getQuiz());
+                paquet.putParcelable("part", part);
+                Intent intent = new Intent(QuestionActivity.this, PartsActivity.class);
+                intent.putExtras(paquet);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_question), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_question), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
+    }
+
+    private void setQuestion() {
+        this.questionModele.setQuestion(question, getBase64Img(), new QuestionModele.QuestionCallBack() {
+            @Override
+            public void onSuccess(Question questionCreate) {
+                Bundle paquet = new Bundle();
+                paquet.putBoolean("new_part", false);
+                paquet.putParcelable("quiz", part.getQuiz());
+                paquet.putParcelable("part", part);
+                Intent intent = new Intent(QuestionActivity.this, PartsActivity.class);
+                intent.putExtras(paquet);
+                startActivity(intent);
             }
 
             @Override
@@ -291,24 +317,26 @@ public class QuestionActivity extends AppCompatActivity {
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
 
-//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        for (Answer answer : this.question.getAnswers()) {
+        for (Answer answer : this.question.getAnswers()) {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
+            View rowView = inflater.inflate(R.layout.question_qcm_row, this.llAllAnswer, false);
+            this.llAllAnswer.addView(rowView, 0);
+            Log.d("APP", "on rajoute une reponse ============");
+
 //            View rowView;
 //            if (this.question.getType().equals("QCM")) {
-//                rowView = inflater.inflate(R.layout.question_qcm_row, null);
+//                rowView = this.layoutInflater.inflate(R.layout.question_qcm_row, this.llAllAnswer, false);
 //                CheckBox cbAnswer = rowView.findViewById(R.id.ck_answer);
 //                cbAnswer.setChecked(answer.isCorrect());
 //            } else {
-//                rowView = inflater.inflate(R.layout.question_qcu_row, null);
+//                rowView = this.layoutInflater.inflate(R.layout.question_qcu_row, this.llAllAnswer, false);
 //                RadioButton rbAnswer = rowView.findViewById(R.id.rb_answer);
 //                rbAnswer.setChecked(answer.isCorrect());
 //            }
 //            EditText etAnswer = rowView.findViewById(R.id.et_answer);
 //            etAnswer.setText(answer.getName());
-//            llAllAnswer.addView(rowView, llAllAnswer.getChildCount());
-//        }
-        //revoir ca pour afficher les réponses
-
+//            this.llAllAnswer.addView(rowView);
+        }
     }
 
     private void openGallery() {
@@ -371,7 +399,8 @@ public class QuestionActivity extends AppCompatActivity {
                     intent.putExtras(paquet);
                     startActivity(intent);
                 } else {
-                    // on set
+                    updateQuestion();
+                    setQuestion();
                 }
                 return true;
             default:

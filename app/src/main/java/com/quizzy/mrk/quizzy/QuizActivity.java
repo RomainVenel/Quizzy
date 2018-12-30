@@ -1,20 +1,31 @@
 package com.quizzy.mrk.quizzy;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -167,6 +178,29 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    private void deletePart(Part part) {
+        this.quizModele.deletePart(part, new QuizModele.deletePartQuizCallBack() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_quiz), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
+    }
+
     private void postSetQuiz(int key) {
         Intent intent;
         Bundle paquet;
@@ -207,18 +241,8 @@ public class QuizActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<Part> parts) {
                 listParts = parts;
-                ArrayAdapter<Part> adaptateur = new ArrayAdapter<Part>(QuizActivity.this, android.R.layout.simple_list_item_1, parts);
+                ItemPartsAdapteur adaptateur = new ItemPartsAdapteur(QuizActivity.this);
                 lvParts.setAdapter(adaptateur);
-
-                lvParts.setOnItemClickListener(
-                        new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                partSelected = listParts.get(position);
-                                setQuiz(3);
-                            }
-                        }
-                );
             }
 
             @Override
@@ -295,6 +319,52 @@ public class QuizActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    class ItemPartsAdapteur extends ArrayAdapter<Part> {
+        public ItemPartsAdapteur(Activity context) {
+            super(context, R.layout.adapter_iv_tv_btn, listParts);
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View vItem = convertView;
+            if (vItem == null) {
+                vItem = getLayoutInflater().inflate(R.layout.adapter_iv_tv_btn, parent, false);
+            }
+
+            ImageView ivList = vItem.findViewById(R.id.iv_list);
+            if (listParts.get(position).getMedia() != null) {
+                Picasso.with(getContext()).load(listParts.get(position).getMedia()).into(ivList);
+            }
+
+            TextView tvList = vItem.findViewById(R.id.tv_list);
+            String namePart = listParts.get(position).getName();
+            if (namePart.length() > 60) {
+                namePart = listParts.get(position).getName().substring(0, 60) + "...";
+            }
+            tvList.setText(namePart);
+
+            ImageButton btnEdit = vItem.findViewById(R.id.btn_edit_list);
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    partSelected = listParts.get(position);
+                    setQuiz(3);
+                }
+            });
+
+            ImageButton btnDelete = vItem.findViewById(R.id.btn_delete_list);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deletePart(listParts.get(position));
+                    listParts.remove(position);
+                    notifyDataSetInvalidated();
+                }
+            });
+            return vItem;
         }
     }
 }

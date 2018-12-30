@@ -65,8 +65,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         View headerView = navigationView.getHeaderView(0);
         navigationView.setNavigationItemSelectedListener(this);
         ImageView ivUserImg = headerView.findViewById(R.id.header_nav_img);
-        Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(ivUserImg);
-        TextView tvNameUser = headerView.findViewById(R.id.header_nav_name);
+         TextView tvNameUser = headerView.findViewById(R.id.header_nav_name);
         tvNameUser.setText(Session.getSession().getUser().getFirstName() + " " + Session.getSession().getUser().getLastName());
         TextView tvEmailUser = headerView.findViewById(R.id.header_nav_email);
         tvEmailUser.setText(Session.getSession().getUser().getEmail());

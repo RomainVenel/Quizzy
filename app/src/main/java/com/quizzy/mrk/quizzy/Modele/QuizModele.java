@@ -181,6 +181,32 @@ public class QuizModele {
         queue.add(request);
     }
 
+    public void deletePart(final Part part, final deletePartQuizCallBack callBack) {
+        StringRequest request = new StringRequest(
+                Request.Method.DELETE,
+                Application.getUrlServeur() + "part/delete/" + part.getId(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("APP", "Response ==> " + response);
+                        callBack.onSuccess();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
+
     public interface NewQuizCallBack {
         void onSuccess(int quiz_id, String media); // quiz insere en bdd
 
@@ -199,6 +225,14 @@ public class QuizModele {
 
     public interface getPartsQuizCallBack {
         void onSuccess(ArrayList<Part> parts); // recuperation des parties d'une quiz
+
+        void onErrorNetwork(); // Pas de connexion
+
+        void onErrorVollet(); // Erreur de volley
+    }
+
+    public interface deletePartQuizCallBack {
+        void onSuccess();
 
         void onErrorNetwork(); // Pas de connexion
 

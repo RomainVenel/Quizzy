@@ -1,5 +1,6 @@
 package com.quizzy.mrk.quizzy;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,10 +13,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -197,6 +200,29 @@ public class PartsActivity extends AppCompatActivity {
         }
     }
 
+    private void deleteQuestion(Question question) {
+        this.partsModele.deleteQuestion(question, new PartsModele.deleteQuestionCallBack() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_parts), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_parts), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
+    }
+
     private void updateDataActivity() {
         this.etName.setText(this.part.getName());
         this.etDesc.setText(this.part.getDesc());
@@ -210,18 +236,8 @@ public class PartsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<Question> questions) {
                 listQuestions = questions;
-                ArrayAdapter<Question> adaptateur = new ArrayAdapter<Question>(PartsActivity.this, android.R.layout.simple_list_item_1, questions);
+                ItemQuestionsAdapteur adaptateur = new ItemQuestionsAdapteur(PartsActivity.this);
                 lvQuestions.setAdapter(adaptateur);
-
-                lvQuestions.setOnItemClickListener(
-                        new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                questionSelected = listQuestions.get(position);
-                                setPart(3);
-                            }
-                        }
-                );
             }
 
             @Override
@@ -300,6 +316,53 @@ public class PartsActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    class ItemQuestionsAdapteur extends ArrayAdapter<Question> {
+        public ItemQuestionsAdapteur(Activity context) {
+            super(context, R.layout.adapter_iv_tv_btn, listQuestions);
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            View vItem = convertView;
+            if (vItem == null) {
+                vItem = getLayoutInflater().inflate(R.layout.adapter_iv_tv_btn, parent, false);
+            }
+
+            ImageView ivList = vItem.findViewById(R.id.iv_list);
+            if (listQuestions.get(position).getMedia() != null) {
+                Picasso.with(getContext()).load(listQuestions.get(position).getMedia()).into(ivList);
+            }
+
+            TextView tvList = vItem.findViewById(R.id.tv_list);
+            String namePart = listQuestions.get(position).getName();
+            if (namePart.length() > 60) {
+                namePart = listQuestions.get(position).getName().substring(0, 60) + "...";
+            }
+            tvList.setText(namePart);
+
+            ImageButton btnEdit = vItem.findViewById(R.id.btn_edit_list);
+            btnEdit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    questionSelected = listQuestions.get(position);
+                    setPart(3);
+                }
+            });
+
+            ImageButton btnDelete = vItem.findViewById(R.id.btn_delete_list);
+            btnDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteQuestion(listQuestions.get(position));
+                    listQuestions.remove(position);
+                    notifyDataSetChanged();
+                    notifyDataSetInvalidated();
+                }
+            });
+            return vItem;
         }
     }
 }

@@ -13,7 +13,7 @@
 
     <!-- sign in -->
     <string name="tv_sign_in_nom">Nom</string>
-    <string name="tv_sign_in_prenom">Prenom</string>
+    <string name="tv_sign_in_prenom">Prénom</string>
     <string name="tv_sign_in_username">Nom d\'utilisateur</string>
     <string name="tv_sign_birthday_label">Date de naissance :</string>
     <string name="btn_sign_in_choose_birthday">Choisir une date</string>
@@ -22,20 +22,20 @@
     <string name="btn_choose_img_sign_in">Changer</string>
     <string name="tv_sign_in_confirm_password">Mot de passe(2)</string>
     <string name="btn_sign_in">INSCRIPTION</string>
-    <string name="et_error_email">Le email doit être valide</string>
+    <string name="et_error_email">L\'email doit être valide</string>
     <string name="et_error_mdp_diff">Les mots de passe sont different</string>
-    <string name="dialog_sign_in_title">Autorisez vous Quizzy a accèder a vos photos ?</string>
+    <string name="dialog_sign_in_title">Autorisez vous Quizzy à accéder à vos photos ?</string>
     <string name="dialog_sign_in_autorise">Autoriser</string>
     <string name="dialog_sign_in_refuse">Refuser</string>
-    <string name="choose_img">Sélectionner un image</string>
-    <string name="error_username_exist">Ce nom d\'utilisateur existe deja</string>
-    <string name="error_email_exist">Cet email existe deja</string>
+    <string name="choose_img">Selectionner un image</string>
+    <string name="error_username_exist">Ce nom d\'utilisateur existe déjà</string>
+    <string name="error_email_exist">Cet email existe déjà</string>
     <string name="title_activity_sign_in">Inscription</string>
     <!-- end sign in -->
 
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>
-    <string name="error_vollet">Erreur Vollet - Réessayer de vous connecter</string>
+    <string name="error_vollet">Erreur Volley - Réessayer de vous connecter</string>
     <string name="btn_label_back">Retour</string>
 
 
@@ -50,20 +50,20 @@
     <!-- navigation drawer -->
 
     <!-- dialog a propos -->
-    <string name="txt_a_propos_title">A propos ...</string>
+    <string name="txt_a_propos_title">À propos ...</string>
     <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL \nKenzy SUONG \nECE Tech 2018-2019</string>
     <!-- end dialog a propos -->
 
     <!-- dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="btn_dashboard_new_quiz">Créer un quiz</string>
-    <string name="tv_quiz_not_finished">Vos quiz en cour de création :</string>
+    <string name="tv_quiz_not_finished">Vos quiz en cours de création :</string>
     <!-- end dashboard -->
 
     <!-- quiz -->
     <string name="title_activity_new_quiz">Quiz</string>
     <string name="tv_quiz_name">Nom de votre quiz</string>
-    <string name="tv_quiz_add_img">Ajouter une image a mon quiz</string>
+    <string name="tv_quiz_add_img">Ajouter une image à mon quiz</string>
     <string name="btn_quiz_delete_img">Supprimer l\'image de mon quiz</string>
     <string name="btn_quiz_add_part">Ajouter une partie</string>
     <string name="tv_quiz_list_part">Vos parties :</string>
@@ -74,7 +74,7 @@
     <string name="title_activity_parts">Partie</string>
     <string name="tv_part_name">Nom de votre partie</string>
     <string name="tv_part_desc">Description de votre partie</string>
-    <string name="btn_part_add_img">Ajouter une image a ma partie</string>
+    <string name="btn_part_add_img">Ajouter une image à ma partie</string>
     <string name="btn_part_delete_img">Supprimer l\'image de ma partie</string>
     <string name="tv_part_list_question">Vos questions :</string>
     <string name="btn_part_add_question">Ajouter une question</string>
@@ -85,12 +85,12 @@
     <string name="tv_question_type">Type de question</string>
     <string name="tv_question_grade">Note à votre question</string>
     <string name="tv_question_name">Nom de votre question</string>
-    <string name="btn_question_add_img">Ajouter une image a ma question</string>
+    <string name="btn_question_add_img">Ajouter une image à ma question</string>
     <string name="btn_question_delete_img">Supprimer l\'image de ma question</string>
     <string name="btn_question_add_answer">Ajouter une réponse</string>
     <string name="btn_question_save_question">Sauvegarder</string>
-    <string name="et_question_empty_answer">Il doit y avoir au moin 1 réponse</string>
-    <string name="et_question_empty_good_answer">Il doit y avoir au moin 1 bonne réponse</string>
-    <string name="et_question_empty_name_answer">Tous les champs des réponse ne sont pas renseignés</string>
+    <string name="et_question_empty_answer">Il doit y avoir au moins 1 réponse</string>
+    <string name="et_question_empty_good_answer">Il doit y avoir au moins 1 bonne réponse</string>
+    <string name="et_question_empty_name_answer">Tous les champs des réponses ne sont pas renseignés</string>
     <!-- end question -->
 </resources>

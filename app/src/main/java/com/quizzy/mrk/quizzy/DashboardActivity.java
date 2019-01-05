@@ -93,8 +93,18 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         this.dashboardModele.getQuizNotFinished(Session.getSession().getUser(), new DashboardModele.DashboardCallBack() {
             @Override
             public void onSuccess(ArrayList<Quiz> listQuizNotFinished) {
+
+                // Liste contenant les noms des quiz
+                ArrayList<String> listItems = new ArrayList<String>();
+
                 quizNotFinished = listQuizNotFinished;
-                ArrayAdapter<Quiz> adaptateur = new ArrayAdapter<Quiz>(DashboardActivity.this, android.R.layout.simple_list_item_1, quizNotFinished) ;
+
+                // Boucle pour afficher seulement le nom des quiz dans le dashboard
+                for(Quiz quiz : quizNotFinished) {
+                    String quizName = quiz.getName();
+                    listItems.add(quizName);
+                }
+                ArrayAdapter<String> adaptateur = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, listItems) ;
                 lvQuizNotFinish.setAdapter(adaptateur);
 
                 lvQuizNotFinish.setOnItemClickListener(

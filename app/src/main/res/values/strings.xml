@@ -33,12 +33,6 @@
     <string name="title_activity_sign_in">Inscription</string>
     <!-- end sign in -->
 
-    <string name="et_error_empty">Le champ doit être renseigné</string>
-    <string name="error_connexion_http">Erreur connexion HTTP</string>
-    <string name="error_vollet">Erreur Volley - Réessayer de vous connecter</string>
-    <string name="btn_label_back">Retour</string>
-
-
     <!-- navigation drawer -->
     <string name="open_nav_drawer">Ouvrir</string>
     <string name="close_nav_drawer">Fermer</string>
@@ -67,6 +61,7 @@
     <string name="btn_quiz_delete_img">Supprimer l\'image de mon quiz</string>
     <string name="btn_quiz_add_part">Ajouter une partie</string>
     <string name="tv_quiz_list_part">Vos parties :</string>
+    <string name="message_dialog_delete_part">Êtes-vous sûr de vouloir supprimer cette partie ?</string>
     <string name="btn_quiz_finish">Terminer</string>
     <!-- end quiz -->
 
@@ -77,6 +72,7 @@
     <string name="btn_part_add_img">Ajouter une image à ma partie</string>
     <string name="btn_part_delete_img">Supprimer l\'image de ma partie</string>
     <string name="tv_part_list_question">Vos questions :</string>
+    <string name="message_dialog_delete_question">Êtes-vous sûr de vouloir supprimer cette question ?</string>
     <string name="btn_part_add_question">Ajouter une question</string>
     <!-- end parts -->
 
@@ -93,4 +89,13 @@
     <string name="et_question_empty_good_answer">Il doit y avoir au moins 1 bonne réponse</string>
     <string name="et_question_empty_name_answer">Tous les champs des réponses ne sont pas renseignés</string>
     <!-- end question -->
+
+
+    <string name="et_error_empty">Le champ doit être renseigné</string>
+    <string name="error_connexion_http">Erreur connexion HTTP</string>
+    <string name="error_vollet">Erreur Volley - Réessayer de vous connecter</string>
+    <string name="btn_label_back">Retour</string>
+    <string name="dialog_btn_yes">Oui</string>
+    <string name="dialog_btn_no">Non</string>
+
 </resources>

@@ -318,24 +318,22 @@ public class QuestionActivity extends AppCompatActivity {
         }
 
         for (Answer answer : this.question.getAnswers()) {
-            LayoutInflater inflater = (LayoutInflater) getSystemService(getApplicationContext().LAYOUT_INFLATER_SERVICE);
-            View rowView = inflater.inflate(R.layout.question_qcm_row, this.llAllAnswer, false);
-            this.llAllAnswer.addView(rowView, 0);
             Log.d("APP", "on rajoute une reponse ============");
 
-//            View rowView;
-//            if (this.question.getType().equals("QCM")) {
-//                rowView = this.layoutInflater.inflate(R.layout.question_qcm_row, this.llAllAnswer, false);
-//                CheckBox cbAnswer = rowView.findViewById(R.id.ck_answer);
-//                cbAnswer.setChecked(answer.isCorrect());
-//            } else {
-//                rowView = this.layoutInflater.inflate(R.layout.question_qcu_row, this.llAllAnswer, false);
-//                RadioButton rbAnswer = rowView.findViewById(R.id.rb_answer);
-//                rbAnswer.setChecked(answer.isCorrect());
-//            }
-//            EditText etAnswer = rowView.findViewById(R.id.et_answer);
-//            etAnswer.setText(answer.getName());
-//            this.llAllAnswer.addView(rowView);
+            View rowView;
+            if (this.question.getType().equals("QCM")) {
+                rowView = this.layoutInflater.inflate(R.layout.question_qcm_row, this.llAllAnswer, false);
+                CheckBox cbAnswer = rowView.findViewById(R.id.ck_answer);
+                cbAnswer.setChecked(answer.isCorrect());
+            } else {
+                rowView = this.layoutInflater.inflate(R.layout.question_qcu_row, this.llAllAnswer, false);
+                RadioButton rbAnswer = rowView.findViewById(R.id.rb_answer);
+                rbAnswer.setChecked(answer.isCorrect());
+            }
+            EditText etAnswer = rowView.findViewById(R.id.et_answer);
+            etAnswer.setText(answer.getName());
+            rowView.setId(answer.getId());
+            this.llAllAnswer.addView(rowView);
         }
     }
 

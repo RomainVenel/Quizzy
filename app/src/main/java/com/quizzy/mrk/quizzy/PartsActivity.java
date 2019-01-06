@@ -1,6 +1,7 @@
 package com.quizzy.mrk.quizzy;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -8,6 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -319,6 +322,34 @@ public class PartsActivity extends AppCompatActivity {
         }
     }
 
+    public void deleteQuestionDialog(final int position) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.message_dialog_delete_question);
+        alertDialogBuilder.setPositiveButton(
+                R.string.dialog_btn_yes,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteQuestion(listQuestions.get(position));
+                        listQuestions.remove(position);
+                        ((BaseAdapter) lvQuestions.getAdapter()).notifyDataSetChanged();
+                        ((BaseAdapter) lvQuestions.getAdapter()).notifyDataSetInvalidated();
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton(
+                R.string.dialog_btn_no,
+                new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+        });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     class ItemQuestionsAdapteur extends ArrayAdapter<Question> {
         public ItemQuestionsAdapteur(Activity context) {
             super(context, R.layout.adapter_iv_tv_btn, listQuestions);
@@ -356,10 +387,7 @@ public class PartsActivity extends AppCompatActivity {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteQuestion(listQuestions.get(position));
-                    listQuestions.remove(position);
-                    notifyDataSetChanged();
-                    notifyDataSetInvalidated();
+                    deleteQuestionDialog(position);
                 }
             });
             return vItem;

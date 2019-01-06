@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -289,6 +290,34 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    public void deletePartDialog(final int position) {
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage(R.string.message_dialog_delete_part);
+        alertDialogBuilder.setPositiveButton(
+                R.string.dialog_btn_yes,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deletePart(listParts.get(position));
+                        listParts.remove(position);
+                        ((BaseAdapter) lvParts.getAdapter()).notifyDataSetInvalidated();
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton(
+                R.string.dialog_btn_no,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -359,9 +388,7 @@ public class QuizActivity extends AppCompatActivity {
             btnDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deletePart(listParts.get(position));
-                    listParts.remove(position);
-                    notifyDataSetInvalidated();
+                    deletePartDialog(position);
                 }
             });
             return vItem;

@@ -12,9 +12,6 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
+import com.google.android.material.snackbar.Snackbar;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Modele.QuizModele;
@@ -43,6 +41,9 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -291,7 +292,7 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void deletePartDialog(final int position) {
-        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
         alertDialogBuilder.setMessage(R.string.message_dialog_delete_part);
         alertDialogBuilder.setPositiveButton(
                 R.string.dialog_btn_yes,
@@ -313,7 +314,7 @@ public class QuizActivity extends AppCompatActivity {
                         dialog.cancel();
                     }
                 });
-        android.support.v7.app.AlertDialog alertDialog = alertDialogBuilder.create();
+        androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 

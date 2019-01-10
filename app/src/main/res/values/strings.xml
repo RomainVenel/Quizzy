@@ -41,7 +41,14 @@
     <string name="nav_drawer_quiz">Mes quiz</string>
     <string name="nav_drawer_a_propos">À propos</string>
     <string name="nav_drawer_logout">Déconnection</string>
-    <!-- navigation drawer -->
+    <!-- end navigation drawer -->
+
+    <!-- navigation profil -->
+    <string name="tv_profil_firstName">Prénom</string>
+    <string name="tv_profil_lastName">Nom</string>
+    <string name="tv_profil_email">Email</string>
+    <string name="b_profil_return">Retour</string>
+    <!-- end navigation profil -->
 
     <!-- dialog a propos -->
     <string name="txt_a_propos_title">À propos ...</string>
@@ -89,7 +96,6 @@
     <string name="et_question_empty_good_answer">Il doit y avoir au moins 1 bonne réponse</string>
     <string name="et_question_empty_name_answer">Tous les champs des réponses ne sont pas renseignés</string>
     <!-- end question -->
-
 
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>

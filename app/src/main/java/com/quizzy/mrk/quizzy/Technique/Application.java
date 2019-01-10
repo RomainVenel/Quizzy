@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Application {
 
-    private static String urlServeur = "http://192.168.1.23/QuizzyServer/web/" ;
+    private static String urlServeur = "http://10.9.176.12/QuizzyServer/web/" ;
 
     public static String getUrlServeur() {
         return urlServeur;

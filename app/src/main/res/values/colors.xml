@@ -6,4 +6,5 @@
     <color name="darkGray">#6C6C6C</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
+    <color name="buttonReturn">#b5ffb303</color>
 </resources>

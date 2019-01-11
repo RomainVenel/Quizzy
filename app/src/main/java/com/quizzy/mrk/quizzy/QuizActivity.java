@@ -2,6 +2,7 @@ package com.quizzy.mrk.quizzy;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -27,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.google.android.material.snackbar.Snackbar;
@@ -120,8 +122,48 @@ public class QuizActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Application.hideKeyboard(getApplicationContext(), v);
                 if (checkName()) { // on valide le quiz
+                    quizModele.checkQuizValidate(quiz, new QuizModele.checkQuizCallBack() {
+                        @Override
+                        public void onSuccess(boolean status) {
+                            if (status) {
+                                Intent intent = new Intent(QuizActivity.this, DashboardActivity.class);
+                                startActivity(intent);
+                            } else {
+                                dialogQuizNotValidated();
+                            }
+                        }
 
+                        @Override
+                        public void onErrorNetwork() {
+                            Snackbar snackbar = Snackbar
+                                    .make(findViewById(R.id.activity_quiz), R.string.error_connexion_http, 2500);
+                            snackbar.show();
+                        }
+
+                        @Override
+                        public void onErrorVollet() {
+                            Snackbar snackbar = Snackbar
+                                    .make(findViewById(R.id.activity_quiz), R.string.error_vollet, 2500);
+                            snackbar.show();
+                        }
+                    });
                 }
+            }
+        });
+    }
+
+
+    public void dialogQuizNotValidated() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setTitle("Player");
+        dialog.setContentView(R.layout.dialog_check_quiz);
+        Button closeDialog = dialog.findViewById(R.id.btn_close_dialog_check_quiz);
+        dialog.show();
+
+        closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
             }
         });
     }

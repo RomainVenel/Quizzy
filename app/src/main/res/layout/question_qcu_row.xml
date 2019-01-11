@@ -7,22 +7,24 @@
 
     <RadioButton
         android:id="@+id/rb_answer"
-        android:layout_width="10dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight=".10"
         android:gravity="center"
         android:inputType="text"
         android:onClick="uncheckQcuAnswer"/>
 
     <EditText
         android:id="@+id/et_answer"
-        android:layout_width="300dp"
-        android:layout_height="match_parent" />
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight=".80" />
 
     <TextView
         android:id="@+id/tv_delete_answer"
-        android:layout_width="40dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight=".10"
         android:drawableLeft="@drawable/ic_cross_24dp"
         android:gravity="center"
         android:onClick="deleteAnswer" />

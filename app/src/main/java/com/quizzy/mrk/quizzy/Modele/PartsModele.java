@@ -46,7 +46,7 @@ public class PartsModele {
                         Log.d("APP", "Response ==> " + response);
                         try {
                             JSONObject json = new JSONObject(response);
-                            callBack.onSuccess(json.getInt("id"), json.getString("media"));
+                            callBack.onSuccess(json.getInt("id"), Application.getUrlServeur() + json.getString("media"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

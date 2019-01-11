@@ -68,6 +68,12 @@
     <string name="btn_quiz_delete_img">Supprimer l\'image de mon quiz</string>
     <string name="btn_quiz_add_part">Ajouter une partie</string>
     <string name="tv_quiz_list_part">Vos parties :</string>
+    <string name="message_dialog_check_quiz_validator">Pour valider votre quiz, vous devez obligatoirement avoir :</string>
+    <string name="message_dialog_check_quiz_quiz">Un nom d\'utilisateur et au moins une partie à votre quiz</string>
+    <string name="message_dialog_check_quiz_part">Un nom et au moins une question pour chaque partie</string>
+    <string name="message_dialog_check_quiz_question">Une nom et au moins une réponse pour chaque questions</string>
+    <string name="message_dialog_check_quiz_answer">Une nom et au moins une bonne réponse sur l\'ensemble des réponses</string>
+
     <string name="message_dialog_delete_part">Êtes-vous sûr de vouloir supprimer cette partie ?</string>
     <string name="btn_quiz_finish">Terminer</string>
     <!-- end quiz -->

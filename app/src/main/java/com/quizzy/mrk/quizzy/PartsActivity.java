@@ -114,7 +114,6 @@ public class PartsActivity extends AppCompatActivity {
         });
     }
 
-
     private void createPart() {
         partsModele.newPart(this.quiz, this.etName.getText().toString().trim(), this.etDesc.getText().toString().trim(), getBase64Img(), new PartsModele.NewPartCallBack() {
             @Override

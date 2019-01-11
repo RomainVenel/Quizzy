@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.os.Bundle;
 import android.util.Log;
@@ -318,24 +319,29 @@ public class QuestionActivity extends AppCompatActivity {
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
 
-        for (Answer answer : this.question.getAnswers()) {
-            Log.d("APP", "on rajoute une reponse ============");
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                for (Answer answer : question.getAnswers()) {
+                    Log.d("APP", "on rajoute une reponse ============");
 
-            View rowView;
-            if (this.question.getType().equals("QCM")) {
-                rowView = this.layoutInflater.inflate(R.layout.question_qcm_row, this.llAllAnswer, false);
-                CheckBox cbAnswer = rowView.findViewById(R.id.ck_answer);
-                cbAnswer.setChecked(answer.isCorrect());
-            } else {
-                rowView = this.layoutInflater.inflate(R.layout.question_qcu_row, this.llAllAnswer, false);
-                RadioButton rbAnswer = rowView.findViewById(R.id.rb_answer);
-                rbAnswer.setChecked(answer.isCorrect());
+                    View rowView;
+                    if (question.getType().equals("QCM")) {
+                        rowView = layoutInflater.inflate(R.layout.question_qcm_row, llAllAnswer, false);
+                        CheckBox cbAnswer = rowView.findViewById(R.id.ck_answer);
+                        cbAnswer.setChecked(answer.isCorrect());
+                    } else {
+                        rowView = layoutInflater.inflate(R.layout.question_qcu_row, llAllAnswer, false);
+                        RadioButton rbAnswer = rowView.findViewById(R.id.rb_answer);
+                        rbAnswer.setChecked(answer.isCorrect());
+                    }
+                    EditText etAnswer = rowView.findViewById(R.id.et_answer);
+                    etAnswer.setText(answer.getName());
+                    rowView.setId(answer.getId());
+                    llAllAnswer.addView(rowView);
+                }
             }
-            EditText etAnswer = rowView.findViewById(R.id.et_answer);
-            etAnswer.setText(answer.getName());
-            rowView.setId(answer.getId());
-            this.llAllAnswer.addView(rowView);
-        }
+        }, 250);   //0.25 seconds
     }
 
     private void openGallery() {

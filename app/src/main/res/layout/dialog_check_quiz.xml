@@ -71,6 +71,7 @@
             android:id="@+id/btn_close_dialog_check_quiz"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/saumon"
             android:text="ok" />
 
     </LinearLayout>

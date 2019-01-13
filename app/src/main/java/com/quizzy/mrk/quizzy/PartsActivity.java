@@ -8,14 +8,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,13 +26,11 @@ import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Modele.PartsModele;
 import com.quizzy.mrk.quizzy.Technique.Application;
-import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -282,6 +277,15 @@ public class PartsActivity extends AppCompatActivity {
             return null;
         } else {
             return Application.bitmapToBase64(((BitmapDrawable) this.ivImg.getDrawable()).getBitmap());
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!isNewPart) {
+            setPart(1);
+        } else {
+            super.onBackPressed();
         }
     }
 

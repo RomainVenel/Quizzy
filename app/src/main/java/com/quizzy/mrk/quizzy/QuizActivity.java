@@ -1,25 +1,17 @@
 package com.quizzy.mrk.quizzy;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -28,7 +20,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.google.android.material.snackbar.Snackbar;
@@ -360,6 +351,14 @@ public class QuizActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!isNewQuiz) {
+            setQuiz(1);
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

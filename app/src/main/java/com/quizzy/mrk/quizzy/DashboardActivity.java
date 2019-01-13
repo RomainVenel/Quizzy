@@ -158,7 +158,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else if (menuItem.getItemId() == R.id.menu_drawer_friend) { // item mes amis
 
         } else if (menuItem.getItemId() == R.id.menu_drawer_quiz) { // item mes quiz
-
+            intent = new Intent(DashboardActivity.this, MesQuizActivity.class);
+            startActivity(intent);
         } else if (menuItem.getItemId() == R.id.menu_drawer_a_propos) { // item à propos
             mDrawerLayout.closeDrawers();
             AlertDialog alertDialog = new AlertDialog.Builder(this).create();

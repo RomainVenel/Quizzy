@@ -1,6 +1,8 @@
 package com.quizzy.mrk.quizzy;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.squareup.picasso.Picasso;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfilActivity extends AppCompatActivity {
@@ -24,6 +27,10 @@ public class ProfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.title_activity_profil));
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         ImageView ivUserImg = this.findViewById(R.id.profil_img);
         Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(ivUserImg);
 
@@ -37,6 +44,18 @@ public class ProfilActivity extends AppCompatActivity {
         etLastName.setText(Session.getSession().getUser().getLastName());
         etFirstName.setText(Session.getSession().getUser().getFirstName());
         etEmail.setText(Session.getSession().getUser().getEmail());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(ProfilActivity.this, DashboardActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

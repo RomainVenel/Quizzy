@@ -26,8 +26,9 @@
         <activity android:name=".DashboardActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".PartsActivity" />
-        <activity android:name=".QuestionActivity"></activity>
-        <activity android:name=".ProfilActivity"></activity>
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".ProfilActivity" />
+        <activity android:name=".MesQuizActivity"></activity>
     </application>
 
 </manifest>

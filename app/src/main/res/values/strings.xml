@@ -44,6 +44,7 @@
     <!-- end navigation drawer -->
 
     <!-- navigation profil -->
+    <string name="title_activity_profil">Profil</string>
     <string name="tv_profil_firstName">Prénom</string>
     <string name="tv_profil_lastName">Nom</string>
     <string name="tv_profil_email">Email</string>
@@ -102,6 +103,12 @@
     <string name="et_question_empty_good_answer">Il doit y avoir au moins 1 bonne réponse</string>
     <string name="et_question_empty_name_answer">Tous les champs des réponses ne sont pas renseignés</string>
     <!-- end question -->
+
+    <!-- mes quiz -->
+    <string name="title_activity_mes_quiz">Mes quiz</string>
+    <string name="tv_mes_quiz_empty">Vous n\'avez aucun quiz</string>
+    <string name="tv_mes_quiz_adapteur_date">Validé le</string>
+    <!-- end mes quiz -->
 
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>

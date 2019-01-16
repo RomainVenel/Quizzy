@@ -3,6 +3,8 @@ package com.quizzy.mrk.quizzy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class ProfilActivity extends AppCompatActivity {
     private EditText etLastName;
     private EditText etFirstName;
     private EditText etEmail;
+    private Button bReturn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +43,18 @@ public class ProfilActivity extends AppCompatActivity {
         this.etLastName = findViewById(R.id.et_profil_lastName);
         this.etFirstName = findViewById(R.id.et_profil_firstName);
         this.etEmail = findViewById(R.id.et_profil_email);
+        this.bReturn = findViewById(R.id.b_profil_return);
 
         etLastName.setText(Session.getSession().getUser().getLastName());
         etFirstName.setText(Session.getSession().getUser().getFirstName());
         etEmail.setText(Session.getSession().getUser().getEmail());
+        this.bReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ProfilActivity.this, DashboardActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

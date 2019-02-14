@@ -44,6 +44,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private ArrayList<Quiz> quizNotFinished;
     private Button bNewQuiz;
 
+    private ListView lvQuizShared;
+    private ArrayList<Quiz> quizShared;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +76,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         tvEmailUser.setText(Session.getSession().getUser().getEmail());
 
         this.lvQuizNotFinish = findViewById(R.id.list_dashboard_quiz_not_finished);
+        this.lvQuizShared = findViewById(R.id.list_dashboard_quiz_shared);
         this.manageQuizNotFinished();
+        this.manageQuizShared();
 
         this.bNewQuiz = findViewById(R.id.btn_dashboard_new_quiz);
         this.bNewQuiz.setOnClickListener(new View.OnClickListener() {
@@ -132,9 +137,58 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             @Override
             public void onErrorVollet() {
+
+            }
+        });
+
+
+    }
+
+    private void manageQuizShared(){
+
+        this.dashboardModele.getQuizShared(Session.getSession().getUser(), new DashboardModele.DashboardCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Quiz> listQuizNotFinished) {
+
+                // Liste contenant les noms des quiz
+                ArrayList<String> listItems = new ArrayList<String>();
+
+                quizShared = listQuizNotFinished;
+
+                // Boucle pour afficher seulement le nom des quiz dans le dashboard
+                for(Quiz quiz : quizShared) {
+                    String quizName = quiz.getName();
+                    listItems.add(quizName);
+                }
+                ArrayAdapter<String> adaptateur = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, listItems) ;
+                lvQuizShared.setAdapter(adaptateur);
+
+                lvQuizShared.setOnItemClickListener(
+                        new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Bundle paquet = new Bundle();
+                                paquet.putBoolean("new_quiz", false);
+                                paquet.putParcelable("quiz", quizShared.get(position) );
+                                Intent intent = new Intent(DashboardActivity.this, TransitionPassageQuizActivity.class);
+                                intent.putExtras(paquet);
+                                startActivity(intent);
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            }
+                        }
+                );
+            }
+
+            @Override
+            public void onErrorNetwork() {
                 Snackbar snackbar = Snackbar
-                        .make(findViewById(R.id.activity_connexion), R.string.error_vollet, 2500);
+                        .make(findViewById(R.id.activity_connexion), R.string.error_connexion_http, 2500);
                 snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+
             }
         });
 

@@ -53,13 +53,14 @@
 
     <!-- dialog a propos -->
     <string name="txt_a_propos_title">À propos ...</string>
-    <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL \nKenzy SUONG \nECE Tech 2018-2019</string>
+    <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL 2018-2019</string>
     <!-- end dialog a propos -->
 
     <!-- dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="btn_dashboard_new_quiz">Créer un quiz</string>
     <string name="tv_quiz_not_finished">Vos quiz en cours de création :</string>
+    <string name="tv_quiz_shared">Les quiz partagés avec vous :</string>
     <!-- end dashboard -->
 
     <!-- quiz -->
@@ -74,6 +75,7 @@
     <string name="message_dialog_check_quiz_part">Un nom et au moins une question pour chaque partie</string>
     <string name="message_dialog_check_quiz_question">Une nom et au moins une réponse pour chaque questions</string>
     <string name="message_dialog_check_quiz_answer">Une nom et au moins une bonne réponse sur l\'ensemble des réponses</string>
+    <string name="tv_debut_quiz">Début du quiz dans</string>
 
     <string name="message_dialog_delete_part">Êtes-vous sûr de vouloir supprimer cette partie ?</string>
     <string name="btn_quiz_finish">Terminer</string>

@@ -81,6 +81,56 @@ public class DashboardModele {
         queue.add(request);
     }
 
+    public void getQuizShared(final User user, final DashboardCallBack callBack) {
+        JsonArrayRequest  request = new JsonArrayRequest(
+                Request.Method.GET,
+                Application.getUrlServeur() + user.getId() + "/quiz/shared",
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("APP", "on recup les quiz partagés ==> " + response);
+                        ArrayList<Quiz> listQuiz = new ArrayList<Quiz>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject quiz = response.getJSONObject(i);
+
+                                String media;
+                                if (quiz.isNull("media")) {
+                                    media = null;
+                                } else {
+                                    media = Application.getUrlServeur() + quiz.getString("media");
+                                }
+
+                                listQuiz.add(new Quiz(
+                                                quiz.getInt("id"),
+                                                quiz.getString("name"),
+                                                media,
+                                                user,
+                                                null,
+                                                0
+                                        )
+                                );
+                            }
+                            callBack.onSuccess(listQuiz);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
     public interface DashboardCallBack {
         void onSuccess(ArrayList<Quiz> listQuizNotFinished); // utilisateur trouvé en bdd
 

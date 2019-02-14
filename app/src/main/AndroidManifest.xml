@@ -29,6 +29,8 @@
         <activity android:name=".QuestionActivity" />
         <activity android:name=".ProfilActivity" />
         <activity android:name=".MesQuizActivity"></activity>
+        <activity android:name=".PassageQuizActivity"></activity>
+        <activity android:name=".TransitionPassageQuizActivity"></activity>
     </application>
 
 </manifest>

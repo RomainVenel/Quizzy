@@ -13,8 +13,10 @@
         android:roundIcon="@drawable/ic_logo_quizzy"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".MonQuizOptionsActivity">
         </activity>
+        <activity android:name=".ListeAmisActivity"></activity>
         <activity android:name=".ConnexionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -24,16 +26,15 @@
         </activity>
         <activity
             android:name=".InscriptionActivity"
-            android:parentActivityName=".ConnexionActivity"/>
-        <activity android:name=".DashboardActivity"/>
-        <activity android:name=".QuizActivity"/>
-        <activity android:name=".PartsActivity"/>
-        <activity android:name=".QuestionActivity"/>
-        <activity android:name=".ProfilActivity"/>
-        <activity android:name=".MesQuizActivity"/>
-        <activity android:name=".PassageQuizActivity"/>
-        <activity android:name=".TransitionPassageQuizActivity"/>
-        <activity android:name=".PartTransitionQuizActivity"/>
+            android:parentActivityName=".ConnexionActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".PartsActivity" />
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".ProfilActivity" />
+        <activity android:name=".MesQuizActivity" />
+        <activity android:name=".PassageQuizActivity" />
+        <activity android:name=".TransitionPassageQuizActivity" />
     </application>
 
 </manifest>

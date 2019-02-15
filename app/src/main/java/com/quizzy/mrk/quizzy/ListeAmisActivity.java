@@ -9,18 +9,20 @@ import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ListeAmisActivity extends AppCompatActivity {
 
     private EditText etSearch;
     private TextView tvMessage;
     private ListView lvFriend;
-    private Boolean searchAccess = true;
-    private Handler handler = new android.os.Handler();
-
+    private Timer timerSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,16 @@ public class ListeAmisActivity extends AppCompatActivity {
         this.tvMessage = findViewById(R.id.tv_friends_list);
         this.lvFriend = findViewById(R.id.lv_friends_list);
 
-        TextWatcher fieldValidatorTextWatcher = new TextWatcher() {
+        TextWatcher searchWatcher = new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable arg0) {
+                timerSearch = new Timer();
+                timerSearch.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        //tvMessage.setText(etSearch.getText().toString().trim());
+                    }
+                }, 600);
             }
 
             @Override
@@ -46,30 +55,13 @@ public class ListeAmisActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (filterLongEnough()) {
-                    Runnable runnable = new Runnable() {
-                        public void run() {
-                            tvMessage.setText(etSearch.getText().toString().trim());
-                            searchAccess = true;
-                        }
-                    };
-
-                    if (searchAccess) {
-                        searchAccess = false;
-                        handler.postDelayed(runnable, 2000);
-                    } else {
-                        handler.removeCallbacks(runnable);
-                        handler.postDelayed(runnable, 2000);
-                    }
-
+                if (timerSearch != null) {
+                    timerSearch.cancel();
                 }
             }
-
-            private boolean filterLongEnough() {
-                return etSearch.getText().toString().trim().length() > 3;
-            }
         };
-        this.etSearch.addTextChangedListener(fieldValidatorTextWatcher);
+        this.etSearch.addTextChangedListener(searchWatcher);
+
     }
 
     @Override

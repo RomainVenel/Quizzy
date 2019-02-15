@@ -112,11 +112,17 @@
     <string name="tv_mes_quiz_adapteur_date">Validé le</string>
     <!-- end mes quiz -->
 
+    <!-- mes quiz -->
+    <string name="title_activity_mes_amis">Mes amis</string>
+    <!-- end mes quiz -->
+
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>
     <string name="error_vollet">Erreur Volley - Réessayer de vous connecter</string>
     <string name="btn_label_back">Retour</string>
     <string name="dialog_btn_yes">Oui</string>
     <string name="dialog_btn_no">Non</string>
+    <string name="tv_search">Rechercher</string>
+
 
 </resources>

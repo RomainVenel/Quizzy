@@ -210,7 +210,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             intent = new Intent(DashboardActivity.this, ProfilActivity.class);
             startActivity(intent);
         } else if (menuItem.getItemId() == R.id.menu_drawer_friend) { // item mes amis
-
+            intent = new Intent(DashboardActivity.this, ListeAmisActivity.class);
+            startActivity(intent);
         } else if (menuItem.getItemId() == R.id.menu_drawer_quiz) { // item mes quiz
             intent = new Intent(DashboardActivity.this, MesQuizActivity.class);
             startActivity(intent);

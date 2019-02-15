@@ -57,7 +57,6 @@ public class ListeAmisActivity extends AppCompatActivity {
     private Handler handler;
     private Boolean canSearch;
     private Runnable runnable;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

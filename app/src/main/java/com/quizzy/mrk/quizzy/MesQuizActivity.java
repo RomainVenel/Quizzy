@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -62,6 +63,19 @@ public class MesQuizActivity extends AppCompatActivity {
                 } else {
                     ItemMesQuizAdapteur adapteur = new ItemMesQuizAdapteur(MesQuizActivity.this);
                     lvQuiz.setAdapter(adapteur);
+                    lvQuiz.setOnItemClickListener(
+                            new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    Bundle paquet = new Bundle();
+                                    paquet.putParcelable("quiz", listQuiz.get(position) );
+                                    Intent intent = new Intent(MesQuizActivity.this, MonQuizOptionsActivity.class);
+                                    intent.putExtras(paquet);
+                                    startActivity(intent);
+                                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                }
+                            }
+                    );
                 }
             }
 

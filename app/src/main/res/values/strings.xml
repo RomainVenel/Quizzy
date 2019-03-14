@@ -112,6 +112,10 @@
     <string name="tv_mes_quiz_adapteur_date">Validé le</string>
     <!-- end mes quiz -->
 
+    <!-- mes quiz -->
+    <string name="btn_mon_quiz_delete">Supprimer ce quiz</string>
+    <!-- end mes quiz -->
+
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>
     <string name="error_vollet">Erreur Volley - Réessayer de vous connecter</string>

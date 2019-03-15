@@ -3,10 +3,12 @@ package com.quizzy.mrk.quizzy;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 
 import com.android.volley.RequestQueue;
@@ -40,27 +42,47 @@ public class MonQuizOptionsActivity extends AppCompatActivity {
         this.bDeleteQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mQuizModele.deleteQuiz(quiz, new QuizModele.deleteQuizCallBack() {
-                    @Override
-                    public void onSuccess() {
-                        Intent intent = new Intent(MonQuizOptionsActivity.this, MesQuizActivity.class);
-                        startActivity(intent);
-                    }
+                androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(MonQuizOptionsActivity.this);
+                alertDialogBuilder.setMessage(R.string.message_dialog_delete_quiz);
+                alertDialogBuilder.setPositiveButton(
+                        R.string.dialog_btn_yes,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mQuizModele.deleteQuiz(quiz, new QuizModele.deleteQuizCallBack() {
+                                    @Override
+                                    public void onSuccess() {
+                                        Intent intent = new Intent(MonQuizOptionsActivity.this, MesQuizActivity.class);
+                                        startActivity(intent);
+                                    }
 
-                    @Override
-                    public void onErrorNetwork() {
-                        Snackbar snackbar = Snackbar
-                                .make(findViewById(R.id.activity_mes_quiz), R.string.error_connexion_http, 2500);
-                        snackbar.show();
-                    }
+                                    @Override
+                                    public void onErrorNetwork() {
+                                        Snackbar snackbar = Snackbar
+                                                .make(findViewById(R.id.activity_mes_quiz), R.string.error_connexion_http, 2500);
+                                        snackbar.show();
+                                    }
 
-                    @Override
-                    public void onErrorVollet() {
-                        Snackbar snackbar = Snackbar
-                                .make(findViewById(R.id.activity_mes_quiz), R.string.error_vollet, 2500);
-                        snackbar.show();
-                    }
-                });
+                                    @Override
+                                    public void onErrorVollet() {
+                                        Snackbar snackbar = Snackbar
+                                                .make(findViewById(R.id.activity_mes_quiz), R.string.error_vollet, 2500);
+                                        snackbar.show();
+                                    }
+                                });
+                            }
+                        });
+
+                alertDialogBuilder.setNegativeButton(
+                        R.string.dialog_btn_no,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
     }

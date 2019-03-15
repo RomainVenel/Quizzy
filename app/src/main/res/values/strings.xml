@@ -112,9 +112,11 @@
     <string name="tv_mes_quiz_adapteur_date">Validé le</string>
     <!-- end mes quiz -->
 
-    <!-- mes quiz -->
+    <!-- mon quiz -->
     <string name="btn_mon_quiz_delete">Supprimer ce quiz</string>
-    <!-- end mes quiz -->
+    <string name="btn_mon_quiz_share">Partager ce quiz</string>
+    <string name="message_dialog_delete_quiz">Êtes-vous sûr de vouloir supprimer ce quiz ?</string>
+    <!-- end mon quiz -->
 
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>

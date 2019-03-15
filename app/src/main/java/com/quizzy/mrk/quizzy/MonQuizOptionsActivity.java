@@ -1,9 +1,11 @@
 package com.quizzy.mrk.quizzy;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -31,6 +33,10 @@ public class MonQuizOptionsActivity extends AppCompatActivity {
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.mQuizModele = new QuizModele(this, this.requestQueue);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(quiz.getName());
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         this.bDeleteQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +63,17 @@ public class MonQuizOptionsActivity extends AppCompatActivity {
                 });
             }
         });
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(MonQuizOptionsActivity.this, MesQuizActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

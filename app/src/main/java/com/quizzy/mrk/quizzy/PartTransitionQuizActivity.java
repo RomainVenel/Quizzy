@@ -8,24 +8,24 @@ import android.widget.TextView;
 
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
+import com.quizzy.mrk.quizzy.Fragments.PageAdapter;
+import com.quizzy.mrk.quizzy.Fragments.QuestionPassageQuizFragment;
 
 import java.util.ArrayList;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 public class PartTransitionQuizActivity extends AppCompatActivity {
 
     private Quiz quiz;
-    private TextView tv_passage_test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_passage_quiz);
-
-        this.tv_passage_test = findViewById(R.id.tv_passage_test);
+        setContentView(R.layout.activity_part_transition_quiz);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("PARTIE 1 !");
@@ -38,14 +38,18 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
             Log.d("APP", "On recup les parties de test ==> " + part.getName());
         }
 
-        tv_passage_test.setText(parts.get(0).getName());
+        Intent intent = new Intent(PartTransitionQuizActivity.this, QuestionPassageQuizFragment.class);
+
+        intent.putExtra("listParts" ,parts);
+
+        this.configureViewPager(parts);
 
     }
 
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
-                .setTitle("Voulez-vous vraiment quitter??")
+                .setTitle("Voulez-vous vraiment quitter?")
                 .setMessage("Vous ne pourrez plus repasser le quiz?")
                 .setNegativeButton(android.R.string.no, null)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -55,5 +59,13 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                 }).create().show();
+    }
+
+    private void configureViewPager(ArrayList<Part> parts){
+        // 1 - Get ViewPager from layout
+        ViewPager pager = findViewById(R.id.viewpager);
+        // 2 - Set Adapter PageAdapter and glue it together
+        pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts) {
+        });
     }
 }

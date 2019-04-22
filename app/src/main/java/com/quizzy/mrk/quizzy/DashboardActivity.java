@@ -154,7 +154,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                                 Bundle paquet = new Bundle();
                                 paquet.putBoolean("new_quiz", false);
                                 paquet.putParcelable("quiz", quizShared.get(position) );
-                                Intent intent = new Intent(DashboardActivity.this, TransitionPassageQuizActivity.class);
+                                Intent intent = new Intent(DashboardActivity.this, ResumQuizActivity.class);
                                 intent.putExtras(paquet);
                                 startActivity(intent);
                                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);

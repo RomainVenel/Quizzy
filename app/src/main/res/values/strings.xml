@@ -118,6 +118,10 @@
     <string name="btn_mon_quiz_delete">Supprimer ce quiz</string>
     <string name="btn_mon_quiz_share">Partager ce quiz</string>
     <string name="message_dialog_delete_quiz">Êtes-vous sûr de vouloir supprimer ce quiz ?</string>
+    <string name="tv_resum_parts">Parties</string>
+    <string name="tv_resum_questions">Questions</string>
+    <string name="tv_resum_timer">Temps moyen du Quiz</string>
+    <string name="btn_resum_run_quiz">Lancer le quiz</string>
     <!-- end mon quiz -->
 
     <!-- mes quiz -->

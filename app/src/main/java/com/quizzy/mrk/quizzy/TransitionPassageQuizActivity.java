@@ -76,6 +76,7 @@ public class TransitionPassageQuizActivity extends AppCompatActivity {
                     Intent intent = new Intent(TransitionPassageQuizActivity.this, PartPassageQuizActivity.class);
 
                     intent.putExtra("listParts" ,listParts);
+                    Log.d("APP", "REAL PART ==> " + listParts);
                     startActivity(intent);
 
                     TransitionPassageQuizActivity.this.finish();

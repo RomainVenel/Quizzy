@@ -59,6 +59,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         args.putInt(KEY_COLOR, color);
         args.putParcelableArrayList(KEY_QUESTIONS, questions);
         args.putParcelableArrayList(KEY_PARTS, parts);
+        args.putParcelableArrayList(KEY_QUESTIONS, questions);
         frag.setArguments(args);
 
         return(frag);

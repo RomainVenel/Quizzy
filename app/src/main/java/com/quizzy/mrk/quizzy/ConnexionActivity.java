@@ -34,7 +34,7 @@ public class ConnexionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_connexion);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_activity_login));
+        actionBar.hide();
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.connexionModele = new ConnexionModele(this, this.requestQueue);

@@ -2,13 +2,12 @@
     <string name="app_name">Quizzy</string>
 
     <!-- login -->
-    <string name="tv_login_username">Nom d\'utilisateur</string>
-    <string name="tv_login_password">Mot de passe</string>
+    <string name="ed_username">Username</string>
+    <string name="ed_password">Password</string>
     <string name="btn_login">CONNEXION</string>
     <string name="dialog_login">Connexion ...</string>
     <string name="error_user_not_found">Nom d\'utilisateur ou mot de passe incorrect</string>
     <string name="tv_link_inscription">Inscrivez-vous !</string>
-    <string name="title_activity_login">Connexion</string>
     <!-- end login -->
 
     <!-- sign in -->

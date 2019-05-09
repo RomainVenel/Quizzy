@@ -16,38 +16,44 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_gravity="center"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:text="@string/tv_login_username" />
+        android:layout_gravity="center"
+        android:text="Quizzy"
+        android:textColor="@color/graywhite"
+        />
 
     <EditText
         android:id="@+id/et_login_username"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/custome_edit_text_dark"
+        android:drawableLeft="@drawable/ic_et_username"
+        android:textColor="@color/graywhite"
+        android:hint="@string/ed_username"
+        android:textColorHint="@color/graywhite"
+        android:drawablePadding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:inputType="text" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/tv_login_password" />
 
     <EditText
         android:id="@+id/et_login_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custome_edit_text_dark"
+        android:drawableLeft="@drawable/ic_et_password"
+        android:textColor="@color/graywhite"
+        android:hint="@string/ed_password"
+        android:textColorHint="@color/graywhite"
+        android:drawablePadding="10dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:inputType="textPassword" />
 
     <com.google.android.material.button.MaterialButton

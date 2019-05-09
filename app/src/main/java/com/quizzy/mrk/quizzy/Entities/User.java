@@ -61,11 +61,11 @@ public class User implements Parcelable {
         this.username = username;
     }
 
-    public GregorianCalendar getBirth_date() {
+    public GregorianCalendar getBirthDate() {
         return birth_date;
     }
 
-    public void setBirth_date(GregorianCalendar birth_date) {
+    public void setBirthDate(GregorianCalendar birth_date) {
         this.birth_date = birth_date;
     }
 

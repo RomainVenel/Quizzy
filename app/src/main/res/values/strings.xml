@@ -114,6 +114,7 @@
 
     <!-- mes quiz -->
     <string name="title_activity_mes_amis">Mes amis</string>
+    <string name="message_dialog_delete_friend">Êtes-vous sûr de vouloir supprimer cet ami ?</string>
     <!-- end mes quiz -->
 
     <string name="et_error_empty">Le champ doit être renseigné</string>

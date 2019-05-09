@@ -5,24 +5,25 @@
     android:id="@+id/activity_connexion"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundDark"
     android:orientation="vertical"
     tools:context=".ConnexionActivity">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="100dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_logo_quizzy" />
+        android:src="@drawable/logo" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginRight="70dp"
         android:text="@string/tv_login_username" />
 
     <EditText

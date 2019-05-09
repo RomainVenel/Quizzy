@@ -8,4 +8,5 @@
     <color name="red">#FF0000</color>
     <color name="buttonReturn">#b5ffb303</color>
     <color name="saumon">#DA5F6A</color>
+    <color name="backgroundDark">#343B3B</color>
 </resources>

@@ -169,6 +169,7 @@ public class PartsModele {
                                                 answers
                                         )
                                 );
+                                //Log.d("APP", "QUESTIONMODELE ==> " + questions);
                             }
                             callBack.onSuccess(questions);
                         } catch (JSONException e) {
@@ -187,6 +188,7 @@ public class PartsModele {
             }
         });
         request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        Log.d("APP", "REQUEST ==> " + request);
         queue.add(request);
     }
 

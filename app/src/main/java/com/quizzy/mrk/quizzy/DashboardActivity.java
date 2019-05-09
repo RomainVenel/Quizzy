@@ -166,9 +166,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             @Override
             public void onErrorNetwork() {
-                Snackbar snackbar = Snackbar
-                        .make(findViewById(R.id.activity_connexion), R.string.error_connexion_http, 2500);
-                snackbar.show();
             }
 
             @Override

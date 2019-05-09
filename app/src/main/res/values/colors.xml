@@ -7,7 +7,8 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
     <color name="buttonReturn">#b5ffb303</color>
-    <color name="saumon">#DA5F6A</color>
+    <color name="saumon">#EEEEEE</color>
+    <color name="greyPrincipal">#FFEEEEEE</color>
 
     <array name="colorPagesViewPager">
         <item>#EDD9CF</item>
@@ -15,5 +16,11 @@
         <item>#ADCEB7</item>
         <item>#F7CF8B</item>
         <item>#FD96A2</item>
+        <item>#558B2F</item>
+        <item>#9E9D24</item>
+        <item>#F9A825</item>
+        <item>#FF8F00</item>
+        <item>#EF6C00</item>
+        <item>#D84315</item>
     </array>
 </resources>

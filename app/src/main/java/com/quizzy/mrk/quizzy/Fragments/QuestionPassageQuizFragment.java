@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.quizzy.mrk.quizzy.Entities.Part;
+import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.R;
 
 import java.util.ArrayList;
@@ -27,13 +28,14 @@ public class QuestionPassageQuizFragment extends Fragment {
     private static final String KEY_POSITION="position";
     private static final String KEY_COLOR="color";
     private static final String KEY_PARTS="parts";
+    private static final String KEY_QUESTIONS="questions";
 
 
     public QuestionPassageQuizFragment() { }
 
 
     // 2 - Method that will create a new instance of PageFragment, and add data to its bundle.
-    public static QuestionPassageQuizFragment newInstance(int position, int color, ArrayList<Part> parts) {
+    public static QuestionPassageQuizFragment newInstance(int position, int color, ArrayList<Part> parts, ArrayList<Question> questions) {
 
         // 2.1 Create new fragment
         QuestionPassageQuizFragment frag = new QuestionPassageQuizFragment();
@@ -43,6 +45,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         args.putInt(KEY_POSITION, position);
         args.putInt(KEY_COLOR, color);
         args.putParcelableArrayList(KEY_PARTS, parts);
+        args.putParcelableArrayList(KEY_QUESTIONS, questions);
         frag.setArguments(args);
 
         return(frag);
@@ -69,12 +72,14 @@ public class QuestionPassageQuizFragment extends Fragment {
         int position = getArguments().getInt(KEY_POSITION, -1);
         int color = getArguments().getInt(KEY_COLOR, -1);
         ArrayList<Part> parts = getArguments().getParcelableArrayList(KEY_PARTS);
+        ArrayList<Question> questions = getArguments().getParcelableArrayList(KEY_QUESTIONS);
 
         // 6 - Update widgets with it
         rootView.setBackgroundColor(color);
-        textView.setText(parts.get(position).getName());
+        //textView.setText(parts.get(position).getName());
+        textView.setText(questions.get(position).getName());
 
-        Log.e(getClass().getSimpleName(), "onCreateView called for fragment number "+position);
+        //Log.e(getClass().getSimpleName(), "onCreateView called for fragment number "+position);
 
         return result;
     }

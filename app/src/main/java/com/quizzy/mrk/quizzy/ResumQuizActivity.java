@@ -59,7 +59,6 @@ public class ResumQuizActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Bundle paquet = new Bundle();
-                paquet.putBoolean("new_quiz", false);
                 paquet.putParcelable("quiz", quiz );
                 Intent intent = new Intent(ResumQuizActivity.this, TransitionPassageQuizActivity.class);
                 intent.putExtras(paquet);
@@ -110,16 +109,10 @@ public class ResumQuizActivity extends AppCompatActivity {
 
                 @Override
                 public void onErrorNetwork() {
-                    Snackbar snackbar = Snackbar
-                            .make(findViewById(R.id.activity_parts), R.string.error_connexion_http, 2500);
-                    snackbar.show();
                 }
 
                 @Override
                 public void onErrorVollet() {
-                    Snackbar snackbar = Snackbar
-                            .make(findViewById(R.id.activity_parts), R.string.error_vollet, 2500);
-                    snackbar.show();
                 }
             });
 

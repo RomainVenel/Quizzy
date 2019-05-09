@@ -73,6 +73,9 @@ public class ListeAmisActivity extends AppCompatActivity {
         this.etSearch = findViewById(R.id.et_search);
         this.tvFriendsFound = findViewById(R.id.tv_friends_list);
         this.lvFriend = findViewById(R.id.lv_friends_list);
+         
+
+        this.showFriendList();
 
         this.btnAddFriend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +108,7 @@ public class ListeAmisActivity extends AppCompatActivity {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //ListeAmisActivity.this.adapter.getFilter().filter(s);
             }
 
             @Override
@@ -116,6 +120,7 @@ public class ListeAmisActivity extends AppCompatActivity {
 
     private void showFriendList() {
         this.mesAmisModele.getFriendsList(Session.getSession().getUser(), etSearch.getText().toString().trim(), new MesAmisModele.FriendListCallBack() {
+
             @Override
             public void onSuccess(ArrayList<User> friends) {
                 friendList = friends;

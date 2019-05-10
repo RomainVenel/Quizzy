@@ -16,7 +16,10 @@
 
         <activity android:name=".PartPassageQuizActivity">
         </activity>
-        <activity android:name=".ConnexionActivity">
+        <activity android:name=".ConnexionActivity"></activity>
+        <activity android:name=".MonQuizOptionsActivity"></activity>
+        <activity android:name=".ListeAmisActivity" />
+        <activity android:name=".LoadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,8 +41,6 @@
         <activity android:name=".AddFriendActivity"></activity>
         <activity android:name=".ResumQuizActivity"></activity>
         <activity android:name=".PartTransitionQuizActivity"></activity>
-        <activity android:name=".ListeAmisActivity"></activity>
-        <activity android:name=".MonQuizOptionsActivity"></activity>
     </application>
 
 </manifest>

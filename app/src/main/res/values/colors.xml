@@ -6,7 +6,7 @@
     <color name="darkGray">#6C6C6C</color>
     <color name="white">#FFFFFF</color>
     <color name="red">#FF0000</color>
-    <color name="buttonReturn">#b5ffb303</color>
+    <color name="yellowBtn">#FFB842</color>
     <color name="saumon">#DA5F6A</color>
     <color name="backgroundDark">#343B3B</color>
     <color name="grayColorEditText">#2E3339</color>

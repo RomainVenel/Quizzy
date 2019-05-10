@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:orientation="vertical"
-    android:background="@drawable/img_header_nav_drawer">
+    android:background="@drawable/background_drawer">
 
     <com.dmallcott.dismissibleimageview.DismissibleImageView
         android:id="@+id/header_nav_img"

@@ -47,15 +47,14 @@ public class InscriptionActivity extends AppCompatActivity {
     private GregorianCalendar birthdaySelected = new GregorianCalendar();
 
     private ImageView ivSigninImg;
-    private Button bChooseImg;
     private EditText etSigninNom;
     private EditText etSigninPrenom;
     private EditText etSigninUsername;
-    private TextView tvSigninBirthday;
-    private Button bSigninBirthday;
+    private EditText etSigninBirthday;
     private EditText etSigninEmail;
     private EditText etSigninPassword;
     private EditText etSigninConfirmPassword;
+    private Button bBack;
     private Button bSignin;
 
     @Override
@@ -64,26 +63,26 @@ public class InscriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inscription);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_activity_sign_in));
+        actionBar.hide();
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.inscriptionModele = new InscriptionModele(this, this.requestQueue);
 
         this.ivSigninImg = findViewById(R.id.iv_sign_in_img);
-        this.bChooseImg = findViewById(R.id.btn_sign_in_choose_img);
         this.etSigninNom = findViewById(R.id.et_sign_in_nom);
         this.etSigninPrenom = findViewById(R.id.et_sign_in_prenom);
         this.etSigninUsername = findViewById(R.id.et_sign_in_username);
-        this.tvSigninBirthday = findViewById(R.id.tv_sign_in_birthday);
-        this.bSigninBirthday = findViewById(R.id.btn_sign_in_birthday);
+        this.etSigninBirthday = findViewById(R.id.et_sign_in_birthday);
         this.etSigninEmail = findViewById(R.id.et_sign_in_email);
         this.etSigninPassword = findViewById(R.id.et_sign_in_password);
         this.etSigninConfirmPassword = findViewById(R.id.et_sign_in_confirm_password);
+        this.bBack = findViewById(R.id.btn_login_back);
         this.bSignin = findViewById(R.id.btn_login_inscription);
 
-        this.bSigninBirthday.setOnClickListener(new View.OnClickListener() {
+        this.etSigninBirthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Application.hideKeyboard(getApplicationContext(), v);
                 DatePickerDialog dialog = new DatePickerDialog(
                         InscriptionActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
@@ -103,16 +102,23 @@ public class InscriptionActivity extends AppCompatActivity {
         this.birthdayListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                tvSigninBirthday.setText(day + "/" + (month + 1) + "/" + year);
+                etSigninBirthday.setText(day + "/" + (month + 1) + "/" + year);
                 birthdaySelected = new GregorianCalendar(year, month, day);
-                tvSigninBirthday.setError(null);
+                etSigninBirthday.setError(null);
             }
         };
+
+        this.bBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(InscriptionActivity.this, ConnexionActivity.class);
+                startActivity(intent);
+            }
+        });
 
         this.bSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Application.hideKeyboard(getApplicationContext(), v);
                 if (checkSignin()) {
                     inscriptionModele.inscription(
@@ -164,7 +170,7 @@ public class InscriptionActivity extends AppCompatActivity {
             }
         });
 
-        this.bChooseImg.setOnClickListener(new View.OnClickListener() {
+        this.ivSigninImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 changeImgProfil();
@@ -195,11 +201,11 @@ public class InscriptionActivity extends AppCompatActivity {
             this.etSigninUsername.setError(null);
         }
 
-        if (this.tvSigninBirthday.getText().toString().matches("")) {
-            this.tvSigninBirthday.setError(getString(R.string.et_error_empty));
+        if (this.etSigninBirthday.getText().toString().matches("")) {
+            this.etSigninBirthday.setError(getString(R.string.et_error_empty));
             check = false;
         } else {
-            this.tvSigninBirthday.setError(null);
+            this.etSigninBirthday.setError(null);
         }
 
         if (this.etSigninEmail.getText().toString().matches("")) {

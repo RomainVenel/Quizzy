@@ -97,9 +97,6 @@ public class ConnexionActivity extends AppCompatActivity {
                             snackbar.show();
                         }
                     });
-
-                } else {
-                    Log.d("APP", "Tous les champs ne sont pas remplis partie login");
                 }
             }
         });

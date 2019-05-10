@@ -19,10 +19,9 @@
         <activity android:name=".ConnexionActivity"></activity>
         <activity android:name=".MonQuizOptionsActivity"></activity>
         <activity android:name=".ListeAmisActivity" />
-        <activity android:name=".LoadActivity">
+        <activity android:name=".LoadActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

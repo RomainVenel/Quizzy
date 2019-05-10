@@ -5,25 +5,20 @@
     <string name="ed_username">Username</string>
     <string name="ed_password">Password</string>
     <string name="login">LOGIN</string>
-    <string name="dialog_login">Connexion ...</string>
-    <string name="error_user_not_found">Nom d\'utilisateur ou mot de passe incorrect</string>
+    <string name="dialog_login">Connection ...</string>
+    <string name="error_user_not_found">Username or password incorrect</string>
     <string name="register">REGISTER</string>
     <string name="forgotPassword">Forgot password?</string>
     <!-- end login -->
 
     <!-- sign in -->
-    <string name="tv_sign_in_nom">Nom</string>
-    <string name="tv_sign_in_prenom">Prénom</string>
-    <string name="tv_sign_in_username">Nom d\'utilisateur</string>
-    <string name="tv_sign_birthday_label">Date de naissance :</string>
-    <string name="btn_sign_in_choose_birthday">Choisir une date</string>
+    <string name="tv_sign_in_last_name">Last name</string>
+    <string name="tv_sign_in_first_name">First name</string>
+    <string name="ed_sign_birthday">Birthday</string>
     <string name="tv_sign_in_email">Email</string>
-    <string name="tv_sign_in_password">Mot de passe</string>
-    <string name="btn_choose_img_sign_in">Changer</string>
-    <string name="tv_sign_in_confirm_password">Mot de passe(2)</string>
-    <string name="btn_sign_in">INSCRIPTION</string>
-    <string name="et_error_email">L\'email doit être valide</string>
-    <string name="et_error_mdp_diff">Les mots de passe sont different</string>
+    <string name="tv_sign_in_confirm_password">Confirm password</string>
+    <string name="et_error_email">The email must be valid</string>
+    <string name="et_error_mdp_diff">Passwords are not the same</string>
     <string name="dialog_sign_in_title">Autorisez vous Quizzy à accéder à vos photos ?</string>
     <string name="dialog_sign_in_autorise">Autoriser</string>
     <string name="dialog_sign_in_refuse">Refuser</string>
@@ -143,16 +138,16 @@
     <string name="message_dialog_accept_add_friend">Are you sure you want to add this friend ?</string>
     <!-- end add friend -->
 
-    <string name="et_error_empty">Le champ doit être renseigné</string>
-    <string name="error_connexion_http">Erreur connexion HTTP</string>
-    <string name="error_vollet">Erreur Volley - Réessayer de vous connecter</string>
-    <string name="btn_label_back">Retour</string>
-    <string name="dialog_btn_yes">Oui</string>
-    <string name="dialog_btn_no">Non</string>
+    <string name="et_error_empty">The field cannot be empty</string>
+    <string name="error_connexion_http">HTTP connection error</string>
+    <string name="error_vollet">Volley error</string>
+    <string name="btn_label_back">Back</string>
+    <string name="btn_label_back_maj">BACK</string>
+    <string name="dialog_btn_yes">Yes</string>
+    <string name="dialog_btn_no">No</string>
     <string name="tv_search">Rechercher</string>
     <string name="friends_found">Friend(s) found</string>
-
+    
     <!-- fragment question -->
     <string name="btn_next_part">Partie suivante</string>
-
 </resources>

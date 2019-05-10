@@ -11,7 +11,6 @@ import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Fragments.PageAdapter;
-import com.quizzy.mrk.quizzy.Fragments.QuestionPassageQuizFragment;
 import com.quizzy.mrk.quizzy.Modele.PartsModele;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 
@@ -40,49 +39,40 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.partsModele = new PartsModele(this, this.requestQueue);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("PARTIE 1 !");
-        actionBar.setDisplayHomeAsUpEnabled(false);
-
         Bundle data = getIntent().getExtras();
-        ArrayList<Part> parts  = data.getParcelableArrayList("listParts");
-        listParts = parts;
+        final ArrayList<Part> parts = data.getParcelableArrayList("listParts");
         listQuestions = new ArrayList<>();
 
-        for (Part part : parts) {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(parts.get(0).getName());
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
-            partsModele.getQuestions(part, new PartsModele.getQuestionsCallBack() {
-                @Override
-                public void onSuccess(ArrayList<Question> questions) {
-                    for (Question question : questions) {
+        partsModele.getQuestions(parts.get(0), new PartsModele.getQuestionsCallBack() {
+            @Override
+            public void onSuccess(ArrayList<Question> questions) {
+                for (Question question : questions) {
 
-                        listQuestions.add(question);
-                    }
-
-                    Collections.sort(listQuestions, new QuestionIdComparator());
+                    listQuestions.add(question);
                 }
 
-                @Override
-                public void onErrorNetwork() {
+                Collections.sort(listQuestions, new QuestionIdComparator());
+            }
 
-                }
+            @Override
+            public void onErrorNetwork() {
 
-                @Override
-                public void onErrorVollet() {
+            }
 
-                }
-            });
+            @Override
+            public void onErrorVollet() {
 
-        }
-
-        Intent intent = new Intent(PartTransitionQuizActivity.this, QuestionPassageQuizFragment.class);
-
-        intent.putExtra("listParts" ,listParts);
+            }
+        });
 
         Runnable r = new Runnable() {
             @Override
             public void run(){
-                configureViewPager(listParts, listQuestions); //<-- put your code in here.
+                configureViewPager(parts, listQuestions); //<-- put your code in here.
             }
         };
 
@@ -120,5 +110,7 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
         // 2 - Set Adapter PageAdapter and glue it together
         pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions) {
         });
+
+        Log.d("App", "Test => " + pager.getCurrentItem());
     }
 }

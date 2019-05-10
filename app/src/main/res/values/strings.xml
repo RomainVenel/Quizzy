@@ -153,7 +153,7 @@
     <string name="friends_found">Friend(s) found</string>
 
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- fragment question -->
+    <string name="btn_next_part">Partie suivante</string>
 
 </resources>

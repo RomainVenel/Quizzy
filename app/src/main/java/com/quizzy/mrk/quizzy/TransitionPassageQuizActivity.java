@@ -44,7 +44,6 @@ public class TransitionPassageQuizActivity extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<Part> parts) {
                 for (Part part : parts) {
-                    Log.d("APP", "PART ==> " + part);
                     listParts.add(part);
                 }
             }
@@ -74,10 +73,9 @@ public class TransitionPassageQuizActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                    Intent intent = new Intent(TransitionPassageQuizActivity.this, PartTransitionQuizActivity.class);
+                    Intent intent = new Intent(TransitionPassageQuizActivity.this, PartPassageQuizActivity.class);
 
                     intent.putExtra("listParts" ,listParts);
-                    Log.d("APP", "REAL PART ==> " + listParts);
                     startActivity(intent);
 
                     TransitionPassageQuizActivity.this.finish();

@@ -13,8 +13,13 @@
         android:roundIcon="@drawable/ic_logo_quizzy"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MonQuizOptionsActivity"></activity>
-        <activity android:name=".ListeAmisActivity" />
+
+        <activity android:name=".PartPassageQuizActivity">
+        </activity>
+        <activity android:name=".ResumQuizActivity">
+        </activity>
+        <activity android:name=".MonQuizOptionsActivity">
+        </activity>
         <activity android:name=".ConnexionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

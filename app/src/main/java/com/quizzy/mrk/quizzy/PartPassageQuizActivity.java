@@ -40,7 +40,6 @@ public class PartPassageQuizActivity extends AppCompatActivity {
         }else {
             this.ivPart.setVisibility(View.INVISIBLE);
         }
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -60,6 +60,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         args.putParcelableArrayList(KEY_QUESTIONS, questions);
         args.putParcelableArrayList(KEY_PARTS, parts);
         args.putParcelableArrayList(KEY_QUESTIONS, questions);
+        args.putParcelableArrayList(KEY_PARTS, parts);
         frag.setArguments(args);
 
         return(frag);

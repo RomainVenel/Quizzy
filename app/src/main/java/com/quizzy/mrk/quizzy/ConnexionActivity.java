@@ -26,7 +26,8 @@ public class ConnexionActivity extends AppCompatActivity {
     private EditText etLoginUsername;
     private EditText etLoginPassword;
     private Button bLogin;
-    private TextView tvLinkSignIn;
+    private Button bSignIn;
+    private TextView tvForgotMdp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +43,13 @@ public class ConnexionActivity extends AppCompatActivity {
         this.etLoginUsername = findViewById(R.id.et_login_username);
         this.etLoginPassword = findViewById(R.id.et_login_password);
         this.bLogin = findViewById(R.id.btn_login_valider);
-        this.tvLinkSignIn = findViewById(R.id.tv_login_link);
+        this.bSignIn = findViewById(R.id.btn_login_register);
+        this.tvForgotMdp = findViewById(R.id.tv_login_forgot_mdp);
 
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        this.tvLinkSignIn.setOnClickListener(new View.OnClickListener() {
+        this.bSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentionEnvoyer = new Intent(ConnexionActivity.this, InscriptionActivity.class);

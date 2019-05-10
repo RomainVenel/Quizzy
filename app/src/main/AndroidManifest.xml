@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MonQuizOptionsActivity"></activity>
         <activity android:name=".ListeAmisActivity" />
-        <activity android:name=".ConnexionActivity">
+        <activity android:name=".LoadActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +25,7 @@
         <activity
             android:name=".InscriptionActivity"
             android:parentActivityName=".ConnexionActivity" />
+        <activity android:name=".ConnexionActivity"></activity>
         <activity android:name=".DashboardActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".PartsActivity" />
@@ -35,6 +36,7 @@
         <activity android:name=".TransitionPassageQuizActivity" />
         <activity android:name=".FriendsRequestActivity" />
         <activity android:name=".AddFriendActivity"></activity>
+        <activity android:name=".PartTransitionQuizActivity" />
     </application>
 
 </manifest>

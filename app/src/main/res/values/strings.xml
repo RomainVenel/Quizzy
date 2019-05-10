@@ -4,10 +4,11 @@
     <!-- login -->
     <string name="ed_username">Username</string>
     <string name="ed_password">Password</string>
-    <string name="btn_login">CONNEXION</string>
+    <string name="login">LOGIN</string>
     <string name="dialog_login">Connexion ...</string>
     <string name="error_user_not_found">Nom d\'utilisateur ou mot de passe incorrect</string>
-    <string name="tv_link_inscription">Inscrivez-vous !</string>
+    <string name="register">REGISTER</string>
+    <string name="forgotPassword">Forgot password?</string>
     <!-- end login -->
 
     <!-- sign in -->

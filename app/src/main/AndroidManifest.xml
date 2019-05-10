@@ -15,17 +15,14 @@
         android:theme="@style/AppTheme">
         <activity android:name=".MonQuizOptionsActivity"></activity>
         <activity android:name=".ListeAmisActivity" />
-        <activity android:name=".LoadActivity">
+        <activity android:name=".LoadActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".InscriptionActivity"
-            android:parentActivityName=".ConnexionActivity" />
-        <activity android:name=".ConnexionActivity"></activity>
+        <activity android:name=".InscriptionActivity" />
+        <activity android:name=".ConnexionActivity" />
         <activity android:name=".DashboardActivity" />
         <activity android:name=".QuizActivity" />
         <activity android:name=".PartsActivity" />

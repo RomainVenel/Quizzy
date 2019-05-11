@@ -53,14 +53,16 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
                 for (Question question : questions) {
 
                     listQuestions.add(question);
+                    Log.d("APP", "SUCCESS");
                 }
 
                 Collections.sort(listQuestions, new QuestionIdComparator());
+                configureViewPager(parts, listQuestions);
             }
 
             @Override
             public void onErrorNetwork() {
-
+                Log.d("APP", "ERROR NETWORK");
             }
 
             @Override
@@ -68,16 +70,6 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
             }
         });
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run(){
-                configureViewPager(parts, listQuestions); //<-- put your code in here.
-            }
-        };
-
-        Handler h = new Handler();
-        h.postDelayed(r, 1000); // <-- the "1000" is the delay time in miliseconds.
 
     }
 
@@ -105,12 +97,11 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
     }
 
     private void configureViewPager(ArrayList<Part> parts, ArrayList<Question> questions){
+        Log.d("APP", "configureVIEWPAGER=> " + questions);
         // 1 - Get ViewPager from layout
         ViewPager pager = findViewById(R.id.viewpager);
         // 2 - Set Adapter PageAdapter and glue it together
         pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions) {
         });
-
-        Log.d("App", "Test => " + pager.getCurrentItem());
     }
 }

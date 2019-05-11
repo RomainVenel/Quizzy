@@ -147,6 +147,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                             }
                         }
                 );
+
                 lvQuizShared.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
                             @Override

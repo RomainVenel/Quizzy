@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.quizzy.mrk.quizzy.DashboardActivity;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.PartPassageQuizActivity;
@@ -91,16 +92,29 @@ public class QuestionPassageQuizFragment extends Fragment {
         Log.d("APP", "SIZE ==> " + questions.size());
 
         if ((position + 1) == questions.size()) {
-            btnNextPart.setVisibility(View.VISIBLE);
-            btnNextPart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    parts.remove(0);
-                    Intent intent = new Intent(getActivity(), PartPassageQuizActivity.class);
-                    intent.putExtra("listParts" ,parts);
-                    startActivity(intent);
-                }
-            });
+            if (parts.size() > 1) {
+                btnNextPart.setVisibility(View.VISIBLE);
+                btnNextPart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        parts.remove(0);
+                        Intent intent = new Intent(getActivity(), PartPassageQuizActivity.class);
+                        intent.putExtra("listParts", parts);
+                        startActivity(intent);
+                    }
+                });
+            }else {
+                btnNextPart.setVisibility(View.VISIBLE);
+                btnNextPart.setText("Finir le Quiz !");
+                btnNextPart.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), DashboardActivity.class);
+                        intent.putExtra("listParts", parts);
+                        startActivity(intent);
+                    }
+                });
+            }
         }else {
             btnNextPart.setVisibility(View.INVISIBLE);
         }

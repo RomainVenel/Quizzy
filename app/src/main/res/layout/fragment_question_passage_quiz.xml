@@ -6,16 +6,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.QuestionPassageQuizFragment"
-    android:gravity="center">
+    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/fragment_page_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dip"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:textColor="#111"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="151dp"
+        android:background="@drawable/gradient"
+        android:gravity="center">
+
+    </FrameLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="248dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="10dp"
+        android:background="#fff"
+        app:cardElevation="6dp"
+        app:cardCornerRadius="6dp"
+        app:cardUseCompatPadding="true">
+
+        <TextView
+            android:id="@+id/fragment_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dip"
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#111"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <TableLayout
+        android:id="@+id/answers_view"
+        android:layout_width="match_parent"
+        android:layout_height="818dp"
+        android:layout_marginTop="300dp">
+
+    </TableLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"

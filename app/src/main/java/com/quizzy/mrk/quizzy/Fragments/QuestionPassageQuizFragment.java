@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -15,14 +16,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.google.android.material.tabs.TabLayout;
 import com.quizzy.mrk.quizzy.DashboardActivity;
+import com.quizzy.mrk.quizzy.Entities.Answer;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.PartPassageQuizActivity;
 import com.quizzy.mrk.quizzy.PartTransitionQuizActivity;
 import com.quizzy.mrk.quizzy.R;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -74,6 +81,12 @@ public class QuestionPassageQuizFragment extends Fragment {
 
         // 4 - Get widgets from layout and serialise it
         FrameLayout rootView= (FrameLayout) result.findViewById(R.id.fragment_page_rootview);
+        TableLayout answersView= (TableLayout) result.findViewById(R.id.answers_view);
+        TableLayout.LayoutParams params = new TableLayout.LayoutParams(
+                TabLayout.LayoutParams.WRAP_CONTENT,
+                TabLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(50, 30, 50, 10);
         TextView textView= (TextView) result.findViewById(R.id.fragment_page_title);
         Button btnNextPart = (Button) result.findViewById(R.id.btn_next_part);
 
@@ -83,8 +96,20 @@ public class QuestionPassageQuizFragment extends Fragment {
         ArrayList<Question> questions = getArguments().getParcelableArrayList(KEY_QUESTIONS);
         final ArrayList<Part> parts = getArguments().getParcelableArrayList(KEY_PARTS);
 
+
+
+        for (Answer answer : questions.get(position).getAnswers()) {
+            Button buttonAnswer = new Button(getActivity());
+            TextView answerText = new TextView(getActivity());
+            buttonAnswer.setText(answer.getName());
+            buttonAnswer.setBackgroundColor(getResources().getColor(R.color.white));
+            buttonAnswer.setBackground(getResources().getDrawable(R.drawable.rounded_shape));
+            buttonAnswer.setLayoutParams(params);
+            answersView.addView(buttonAnswer);
+        }
+
         // 6 - Update widgets with it
-        rootView.setBackgroundColor(color);
+        //rootView.setBackgroundColor(color);FrameLayout rootView= (FrameLayout) result.findViewById(R.id.fragment_page_rootview);
         //textView.setText(parts.get(position).getName());
         textView.setText(questions.get(position).getName());
 

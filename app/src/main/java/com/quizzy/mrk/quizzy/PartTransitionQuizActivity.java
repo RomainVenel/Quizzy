@@ -44,8 +44,7 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
         listQuestions = new ArrayList<>();
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(parts.get(0).getName());
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.hide();
 
         partsModele.getQuestions(parts.get(0), new PartsModele.getQuestionsCallBack() {
             @Override
@@ -97,7 +96,6 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
     }
 
     private void configureViewPager(ArrayList<Part> parts, ArrayList<Question> questions){
-        Log.d("APP", "configureVIEWPAGER=> " + questions);
         // 1 - Get ViewPager from layout
         ViewPager pager = findViewById(R.id.viewpager);
         // 2 - Set Adapter PageAdapter and glue it together

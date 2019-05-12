@@ -9,6 +9,7 @@
     <color name="buttonReturn">#b5ffb303</color>
     <color name="saumon">#EEEEEE</color>
     <color name="greyPrincipal">#FFEEEEEE</color>
+    <color name="green">#3F9945</color>
 
     <array name="colorPagesViewPager">
         <item>#EDD9CF</item>

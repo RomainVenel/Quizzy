@@ -1,6 +1,8 @@
 package com.quizzy.mrk.quizzy.Fragments;
 
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -98,14 +100,27 @@ public class QuestionPassageQuizFragment extends Fragment {
 
 
 
-        for (Answer answer : questions.get(position).getAnswers()) {
-            Button buttonAnswer = new Button(getActivity());
+        for (final Answer answer : questions.get(position).getAnswers()) {
+            final Button buttonAnswer = new Button(getActivity());
+            final ObjectAnimator anim = ObjectAnimator.ofObject(buttonAnswer, "backgroundColor", new ArgbEvaluator(), getResources().getColor(R.color.white), getResources().getColor(R.color.green));
+            anim.setDuration(1000);
+
             TextView answerText = new TextView(getActivity());
             buttonAnswer.setText(answer.getName());
             buttonAnswer.setBackgroundColor(getResources().getColor(R.color.white));
             buttonAnswer.setBackground(getResources().getDrawable(R.drawable.rounded_shape));
             buttonAnswer.setLayoutParams(params);
             answersView.addView(buttonAnswer);
+
+            buttonAnswer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (answer.isCorrect() == false) {
+                        anim.setIntValues(getResources().getColor(R.color.white), getResources().getColor(R.color.red));
+                    }
+                    anim.start();
+                }
+            });
         }
 
         // 6 - Update widgets with it

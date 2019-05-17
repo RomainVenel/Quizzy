@@ -1,19 +1,28 @@
-<LinearLayout
+<RelativeLayout
     android:id="@+id/activity_parts_passage"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PartPassageQuizActivity"
+    android:orientation="vertical"
     android:gravity="center">
 
+    <ImageView
+        android:id="@+id/iv_part_quiz"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_launcher_background" />
+
     <TextView
-        android:id="@+id/tv_part_activity_title"
+        android:id="@+id/tv_part_quiz"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dip"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:textColor="#111"/>
+        android:layout_below="@id/iv_part_quiz"
+        android:layout_centerInParent="true"
+        android:singleLine="true"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-</LinearLayout>
+</RelativeLayout>

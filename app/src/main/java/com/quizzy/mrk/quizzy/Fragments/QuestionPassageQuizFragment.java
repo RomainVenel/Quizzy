@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TableLayout;
@@ -32,6 +33,7 @@ import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.PartPassageQuizActivity;
 import com.quizzy.mrk.quizzy.PartTransitionQuizActivity;
 import com.quizzy.mrk.quizzy.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -86,6 +88,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         // 4 - Get widgets from layout and serialise it
         FrameLayout rootView= (FrameLayout) result.findViewById(R.id.fragment_page_rootview);
         final TableLayout answersView= (TableLayout) result.findViewById(R.id.answers_view);
+        ImageView ivQuestion = result.findViewById(R.id.iv_question_quiz);
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(
                 TabLayout.LayoutParams.WRAP_CONTENT,
                 TabLayout.LayoutParams.WRAP_CONTENT
@@ -139,6 +142,12 @@ public class QuestionPassageQuizFragment extends Fragment {
         //rootView.setBackgroundColor(color);FrameLayout rootView= (FrameLayout) result.findViewById(R.id.fragment_page_rootview);
         //textView.setText(parts.get(position).getName());
         textView.setText(questions.get(position).getName());
+
+        if (questions.get(position).getMedia() != null) {
+            Picasso.with(getActivity()).load(questions.get(position).getMedia()).into(ivQuestion);
+        }else {
+            ivQuestion.setVisibility(View.INVISIBLE);
+        }
 
         if ((position + 1) == questions.size()) {
             if (parts.size() > 1) {

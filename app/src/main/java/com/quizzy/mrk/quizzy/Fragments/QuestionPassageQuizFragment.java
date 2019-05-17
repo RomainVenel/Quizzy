@@ -16,8 +16,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -83,7 +85,7 @@ public class QuestionPassageQuizFragment extends Fragment {
 
         // 4 - Get widgets from layout and serialise it
         FrameLayout rootView= (FrameLayout) result.findViewById(R.id.fragment_page_rootview);
-        TableLayout answersView= (TableLayout) result.findViewById(R.id.answers_view);
+        final TableLayout answersView= (TableLayout) result.findViewById(R.id.answers_view);
         TableLayout.LayoutParams params = new TableLayout.LayoutParams(
                 TabLayout.LayoutParams.WRAP_CONTENT,
                 TabLayout.LayoutParams.WRAP_CONTENT
@@ -101,35 +103,42 @@ public class QuestionPassageQuizFragment extends Fragment {
 
 
         for (final Answer answer : questions.get(position).getAnswers()) {
-            final Button buttonAnswer = new Button(getActivity());
-            final ObjectAnimator anim = ObjectAnimator.ofObject(buttonAnswer, "backgroundColor", new ArgbEvaluator(), getResources().getColor(R.color.white), getResources().getColor(R.color.green));
-            anim.setDuration(1000);
+            View rowView;
+            if (questions.get(position).getType().equals("QCM")) {
 
-            TextView answerText = new TextView(getActivity());
-            buttonAnswer.setText(answer.getName());
-            buttonAnswer.setBackgroundColor(getResources().getColor(R.color.white));
-            buttonAnswer.setBackground(getResources().getDrawable(R.drawable.rounded_shape));
-            buttonAnswer.setLayoutParams(params);
-            answersView.addView(buttonAnswer);
+                rowView = inflater.inflate(R.layout.answer_qcm_row, answersView, false);
+                TextView answerText = rowView.findViewById(R.id.tv_qcm_answer);
+                answerText.setText(answer.getName());
+                answersView.addView(rowView);
 
-            buttonAnswer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (answer.isCorrect() == false) {
-                        anim.setIntValues(getResources().getColor(R.color.white), getResources().getColor(R.color.red));
+            }else{
+
+                rowView = inflater.inflate(R.layout.answer_qcu_row, answersView, false);
+                TextView answerText = rowView.findViewById(R.id.tv_qcu_answer);
+                RadioButton radioAnswer = rowView.findViewById(R.id.rb_qcu_answer);
+                answerText.setText(answer.getName());
+                answersView.addView(rowView);
+
+                radioAnswer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        for (int i = 0; i < answersView.getChildCount(); i++) {
+                            View llAnswer = answersView.getChildAt(i);
+                            RadioButton rbAnswer = llAnswer.findViewById(R.id.rb_qcu_answer);
+                            rbAnswer.setChecked(false);
+                        }
+                        RadioButton rbAnswerClicked = view.findViewById(R.id.rb_qcu_answer);
+                        rbAnswerClicked.setChecked(true);
                     }
-                    anim.start();
-                }
-            });
+                });
+
+            }
         }
 
         // 6 - Update widgets with it
         //rootView.setBackgroundColor(color);FrameLayout rootView= (FrameLayout) result.findViewById(R.id.fragment_page_rootview);
         //textView.setText(parts.get(position).getName());
         textView.setText(questions.get(position).getName());
-
-        Log.d("APP", "POSITION ==> " + position);
-        Log.d("APP", "SIZE ==> " + questions.size());
 
         if ((position + 1) == questions.size()) {
             if (parts.size() > 1) {

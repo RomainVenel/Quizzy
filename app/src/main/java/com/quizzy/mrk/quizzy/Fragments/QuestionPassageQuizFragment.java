@@ -1,14 +1,9 @@
 package com.quizzy.mrk.quizzy.Fragments;
 
-
-import android.animation.ArgbEvaluator;
-import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -19,10 +14,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
@@ -31,7 +24,6 @@ import com.quizzy.mrk.quizzy.Entities.Answer;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.PartPassageQuizActivity;
-import com.quizzy.mrk.quizzy.PartTransitionQuizActivity;
 import com.quizzy.mrk.quizzy.R;
 import com.squareup.picasso.Picasso;
 
@@ -98,27 +90,42 @@ public class QuestionPassageQuizFragment extends Fragment {
         Button btnNextPart = (Button) result.findViewById(R.id.btn_next_part);
 
         // 5 - Get data from Bundle (created in method newInstance)
-        int position = getArguments().getInt(KEY_POSITION, -1);
-        int color = getArguments().getInt(KEY_COLOR, -1);
-        ArrayList<Question> questions = getArguments().getParcelableArrayList(KEY_QUESTIONS);
+        final int position = getArguments().getInt(KEY_POSITION, -1);
+        final ArrayList<Question> questions = getArguments().getParcelableArrayList(KEY_QUESTIONS);
         final ArrayList<Part> parts = getArguments().getParcelableArrayList(KEY_PARTS);
+
+        final ArrayList<Answer> listAnswersChecked = new ArrayList<>();
 
 
 
         for (final Answer answer : questions.get(position).getAnswers()) {
+            listAnswersChecked.clear();
             View rowView;
             if (questions.get(position).getType().equals("QCM")) {
 
                 rowView = inflater.inflate(R.layout.answer_qcm_row, answersView, false);
                 TextView answerText = rowView.findViewById(R.id.tv_qcm_answer);
+                final CheckBox checkAnswer = rowView.findViewById(R.id.ck_qcm_answer);
                 answerText.setText(answer.getName());
                 answersView.addView(rowView);
+
+                checkAnswer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (checkAnswer.isChecked()) {
+                            listAnswersChecked.add(answer);
+                            continueIfAnswers(questions.get(position), listAnswersChecked);
+                        }else{
+                            listAnswersChecked.remove(answer);
+                        }
+                    }
+                });
 
             }else{
 
                 rowView = inflater.inflate(R.layout.answer_qcu_row, answersView, false);
                 TextView answerText = rowView.findViewById(R.id.tv_qcu_answer);
-                RadioButton radioAnswer = rowView.findViewById(R.id.rb_qcu_answer);
+                final RadioButton radioAnswer = rowView.findViewById(R.id.rb_qcu_answer);
                 answerText.setText(answer.getName());
                 answersView.addView(rowView);
 
@@ -132,10 +139,17 @@ public class QuestionPassageQuizFragment extends Fragment {
                         }
                         RadioButton rbAnswerClicked = view.findViewById(R.id.rb_qcu_answer);
                         rbAnswerClicked.setChecked(true);
+
+                        if (radioAnswer.isChecked()) {
+                            listAnswersChecked.clear();
+                            listAnswersChecked.add(answer);
+                            continueIfAnswers(questions.get(position), listAnswersChecked);
+                        }
+
                     }
                 });
-
             }
+
         }
 
         // 6 - Update widgets with it
@@ -180,4 +194,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         return result;
     }
 
+    private void continueIfAnswers(Question question , ArrayList<Answer> answers) {
+        Log.d("APP", "LISTANSWERS => " + answers);
+    }
 }

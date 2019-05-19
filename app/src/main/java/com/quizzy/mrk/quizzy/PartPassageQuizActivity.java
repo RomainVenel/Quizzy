@@ -2,7 +2,6 @@ package com.quizzy.mrk.quizzy;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.quizzy.mrk.quizzy.Entities.Part;
-import com.quizzy.mrk.quizzy.Entities.Question;
-import com.quizzy.mrk.quizzy.Fragments.PageAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

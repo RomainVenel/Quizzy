@@ -10,6 +10,8 @@ import com.android.volley.RequestQueue;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
+import com.quizzy.mrk.quizzy.Enum.SwipeDirection;
+import com.quizzy.mrk.quizzy.Fragments.CustomViewPager;
 import com.quizzy.mrk.quizzy.Fragments.PageAdapter;
 import com.quizzy.mrk.quizzy.Modele.PartsModele;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
@@ -97,9 +99,12 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
     private void configureViewPager(ArrayList<Part> parts, ArrayList<Question> questions){
         // 1 - Get ViewPager from layout
-        ViewPager pager = findViewById(R.id.viewpager);
+        CustomViewPager pager = findViewById(R.id.customViewPager);
         // 2 - Set Adapter PageAdapter and glue it together
         pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions) {
         });
+
+        pager.setAllowedSwipeDirection(SwipeDirection.right);
+
     }
 }

@@ -113,20 +113,99 @@ public class MesAmisModele {
         queue.add(request);
     }
 
+    public void getFriendsRequest(final User user, final friendsRequestCallBack callBack) {
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.POST,
+                Application.getUrlServeur() + "friend/" + user.getId() + "/request",
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("APP", "On recup les demandes d'amis ==> " + response);
+                        ArrayList<User> friendsRequest = new ArrayList<User>();
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject friend = response.getJSONObject(i);
+                                JSONObject birth = friend.getJSONObject("birthDate");
+
+                                friendsRequest.add(new User(
+                                        friend.getInt("id"),
+                                        friend.getString("firstName"),
+                                        friend.getString("lastName"),
+                                        friend.getString("username"),
+                                        new GregorianCalendar(birth.getInt("year"), birth.getInt("month"), birth.getInt("day")),
+                                        friend.getString("password"),
+                                        friend.getString("email"),
+                                        friend.isNull("media") ? null : Application.getUrlServeur() + friend.getString("media")
+                                ));
+                            }
+                            callBack.onSuccess(friendsRequest);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.toString());
+                    callBack.onErrorVollet();
+                }
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
+    public void choiceFriendRequest(final User currentUser, final User userSender, final boolean choice, final choiceFriendCallBack callBack) {
+        int choiceUser = choice == true ? 1 : 0;
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Application.getUrlServeur() + "friend/request/" + currentUser.getId() + "/" + userSender.getId() + "/" + choiceUser,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("APP", "Response ==> " + response);
+                        callBack.onSuccess();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
 
     public interface FriendListCallBack {
         void onSuccess(ArrayList<User> friends);
-
         void onErrorNetwork(); // Pas de connexion
+        void onErrorVollet(); // Erreur de volley
+    }
 
+    public  interface friendsRequestCallBack {
+        void onSuccess(ArrayList<User> friends);
+        void onErrorNetwork(); // Pas de connexion
         void onErrorVollet(); // Erreur de volley
     }
 
     public interface deleteFriendCallBack {
         void onSuccess();
-
         void onErrorNetwork(); // Pas de connexion
+        void onErrorVollet(); // Erreur de volley
+    }
 
+    public interface choiceFriendCallBack {
+        void onSuccess();
+        void onErrorNetwork(); // Pas de connexion
         void onErrorVollet(); // Erreur de volley
     }
 }

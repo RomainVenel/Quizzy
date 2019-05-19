@@ -124,6 +124,13 @@
     <string name="message_dialog_delete_friend">Êtes-vous sûr de vouloir supprimer cet ami ?</string>
     <!-- end mes quiz -->
 
+    <!-- friends request -->
+    <string name="title_activity_friends_request">Mes demandes d\'amis</string>
+    <string name="counter_friend_requests">friend requests</string>
+    <string name="message_dialog_accept_friend_request">Are you sure you want to accept this friend ?</string>
+    <string name="message_dialog_refuse_friend_request">Are you sure you want to refuse this friend ?</string>
+    <!-- end friends request -->
+
     <string name="et_error_empty">Le champ doit être renseigné</string>
     <string name="error_connexion_http">Erreur connexion HTTP</string>
     <string name="error_vollet">Erreur Volley - Réessayer de vous connecter</string>

@@ -261,7 +261,6 @@ public class MesAmisModele {
         queue.add(request);
     }
 
-
     public interface FriendListCallBack {
         void onSuccess(ArrayList<User> friends);
         void onErrorNetwork(); // Pas de connexion

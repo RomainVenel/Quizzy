@@ -57,6 +57,7 @@ public class ListeAmisActivity extends AppCompatActivity {
     private Handler handler;
     private Boolean canSearch;
     private Runnable runnable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +74,15 @@ public class ListeAmisActivity extends AppCompatActivity {
         this.etSearch = findViewById(R.id.et_search);
         this.tvFriendsFound = findViewById(R.id.tv_friends_list);
         this.lvFriend = findViewById(R.id.lv_friends_list);
-         
+
+        this.handler = new android.os.Handler();
+        this.canSearch = true;
+        this.runnable = new Runnable() {
+            public void run() {
+                showFriendList();
+                canSearch = true;
+            }
+        };
 
         this.showFriendList();
 
@@ -108,7 +117,6 @@ public class ListeAmisActivity extends AppCompatActivity {
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //ListeAmisActivity.this.adapter.getFilter().filter(s);
             }
 
             @Override
@@ -120,7 +128,6 @@ public class ListeAmisActivity extends AppCompatActivity {
 
     private void showFriendList() {
         this.mesAmisModele.getFriendsList(Session.getSession().getUser(), etSearch.getText().toString().trim(), new MesAmisModele.FriendListCallBack() {
-
             @Override
             public void onSuccess(ArrayList<User> friends) {
                 friendList = friends;

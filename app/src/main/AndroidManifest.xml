@@ -35,6 +35,7 @@
         <activity android:name=".MesQuizActivity" />
         <activity android:name=".PassageQuizActivity" />
         <activity android:name=".TransitionPassageQuizActivity" />
+        <activity android:name=".FriendsRequestActivity"></activity>
     </application>
 
 </manifest>

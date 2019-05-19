@@ -10,6 +10,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Entities.User;
 import com.quizzy.mrk.quizzy.Technique.Application;
@@ -32,86 +33,52 @@ public class DashboardModele {
     }
 
     public void getQuizNotFinished(final User user, final DashboardCallBack callBack) {
-        JsonArrayRequest  request = new JsonArrayRequest(
+        StringRequest request = new StringRequest(
                 Request.Method.GET,
-                Application.getUrlServeur() + user.getId() + "/quiz/status/" + 0,
-                new Response.Listener<JSONArray>() {
+                Application.getUrlServeur() + user.getId() + "/quiz",
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("APP", "on recup les quiz non fini ==> " + response);
-                        ArrayList<Quiz> listQuiz = new ArrayList<Quiz>();
+                    public void onResponse(String response) {
+                        Log.d("APP", "on recup les quiz ==> " + response);
+                        ArrayList<Quiz> quizNotFinished = new ArrayList<>();
+                        ArrayList<Quiz> quizShared = new ArrayList<>();
+
                         try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject quiz = response.getJSONObject(i);
+                            JSONObject json = new JSONObject(response);
+                            JSONArray jQuizNotFinished = json.getJSONArray("quiz_not_finished");
+                            JSONArray jQuizShared = json.getJSONArray("quiz_shared");
 
-                                String media;
-                                if (quiz.isNull("media")) {
-                                    media = null;
-                                } else {
-                                    media = Application.getUrlServeur() + quiz.getString("media");
-                                }
-
-                                listQuiz.add(new Quiz(
-                                                quiz.getInt("id"),
-                                                quiz.getString("name"),
-                                                media,
-                                                user,
-                                                null,
-                                                0
-                                        )
+                            for (int i = 0; i < jQuizNotFinished.length(); i++) {
+                                JSONObject quiz = jQuizNotFinished.getJSONObject(i);
+                                String media = quiz.isNull("media") ? null : Application.getUrlServeur() + quiz.getString("media");
+                                quizNotFinished.add(
+                                    new Quiz(
+                                        quiz.getInt("id"),
+                                        quiz.getString("name"),
+                                        media,
+                                        user,
+                                        null,
+                                        0
+                                    )
                                 );
                             }
-                            callBack.onSuccess(listQuiz);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                    callBack.onErrorNetwork();
-                } else if (error instanceof VolleyError) {
-                    Log.d("APP", "bug => " + error.getMessage());
-                    callBack.onErrorVollet();
-                }
-            }
-        });
-        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
-        queue.add(request);
-    }
 
-    public void getQuizShared(final User user, final DashboardCallBack callBack) {
-        JsonArrayRequest  request = new JsonArrayRequest(
-                Request.Method.GET,
-                Application.getUrlServeur() + user.getId() + "/quiz/shared",
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        Log.d("APP", "on recup les quiz partagés ==> " + response);
-                        ArrayList<Quiz> listQuiz = new ArrayList<Quiz>();
-                        try {
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject quiz = response.getJSONObject(i);
-
-                                String media;
-                                if (quiz.isNull("media")) {
-                                    media = null;
-                                } else {
-                                    media = Application.getUrlServeur() + quiz.getString("media");
-                                }
-
-                                listQuiz.add(new Quiz(
-                                                quiz.getInt("id"),
-                                                quiz.getString("name"),
-                                                media,
-                                                user,
-                                                null,
-                                                0
-                                        )
+                            for (int i = 0; i < jQuizShared.length(); i++) {
+                                JSONObject quiz = jQuizShared.getJSONObject(i);
+                                String media = quiz.isNull("media") ? null : Application.getUrlServeur() + quiz.getString("media");
+                                quizNotFinished.add(
+                                    new Quiz(
+                                        quiz.getInt("id"),
+                                        quiz.getString("name"),
+                                        media,
+                                        user,
+                                        null,
+                                        0
+                                    )
                                 );
                             }
-                            callBack.onSuccess(listQuiz);
+
+                            callBack.onSuccess(quizNotFinished, quizShared, json.getInt("friends_request_counter"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -132,7 +99,7 @@ public class DashboardModele {
     }
 
     public interface DashboardCallBack {
-        void onSuccess(ArrayList<Quiz> listQuizNotFinished); // utilisateur trouvé en bdd
+        void onSuccess(ArrayList<Quiz> quizNotFinished, ArrayList<Quiz> quizShared, int friendsRequestCounter); // utilisateur trouvé en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

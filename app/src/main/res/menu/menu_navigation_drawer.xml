@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
-
         <item
             android:id="@+id/menu_drawer_profil"
             android:icon="@drawable/ic_profil_24dp"
             android:title="@string/nav_drawer_profil" />
+
+        <item
+            android:id="@+id/menu_drawer_quiz"
+            android:icon="@drawable/ic_mes_quiz_24dp"
+            android:title="@string/nav_drawer_quiz" />
 
         <item
             android:id="@+id/menu_drawer_friend"
@@ -16,16 +19,14 @@
             android:title="@string/nav_drawer_friend" />
 
         <item
-            android:id="@+id/menu_drawer_quiz"
-            android:icon="@drawable/ic_mes_quiz_24dp"
-            android:title="@string/nav_drawer_quiz" />
-
+            android:id="@+id/menu_drawer_friends_request"
+            android:icon="@drawable/ic_person_add_black_24dp"
+            app:actionViewClass="android.widget.TextView"
+            android:title="@string/nav_demande_amis" />
     </group>
 
-    <item android:title="">
-
-        <group android:checkableBehavior="single">
-
+    <item android:title="Other">
+        <menu android:checkableBehavior="single">
             <item
                 android:id="@+id/menu_drawer_a_propos"
                 android:icon="@drawable/ic_a_propos_24dp"
@@ -35,9 +36,7 @@
                 android:id="@+id/menu_drawer_logout"
                 android:icon="@drawable/ic_logout_24dp"
                 android:title="@string/nav_drawer_logout" />
-
-        </group>
-
+        </menu>
     </item>
 
 </menu>

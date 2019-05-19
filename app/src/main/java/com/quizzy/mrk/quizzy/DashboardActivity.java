@@ -3,8 +3,11 @@ package com.quizzy.mrk.quizzy;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,6 +32,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 
@@ -47,6 +51,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private ListView lvQuizShared;
     private ArrayList<Quiz> quizShared;
 
+    private TextView tvBadgeFriendsRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,21 +70,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         this.mToolbar.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // set element in navigation drawer
-        NavigationView navigationView = findViewById(R.id.dashboard_nav);
-        View headerView = navigationView.getHeaderView(0);
-        navigationView.setNavigationItemSelectedListener(this);
-        ImageView ivUserImg = headerView.findViewById(R.id.header_nav_img);
-        Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(ivUserImg);
-        TextView tvNameUser = headerView.findViewById(R.id.header_nav_name);
-        tvNameUser.setText(Session.getSession().getUser().getFirstName() + " " + Session.getSession().getUser().getLastName());
-        TextView tvEmailUser = headerView.findViewById(R.id.header_nav_email);
-        tvEmailUser.setText(Session.getSession().getUser().getEmail());
-
         this.lvQuizNotFinish = findViewById(R.id.list_dashboard_quiz_not_finished);
         this.lvQuizShared = findViewById(R.id.list_dashboard_quiz_shared);
-        this.manageQuizNotFinished();
-        this.manageQuizShared();
+        this.manageLists();
 
         this.bNewQuiz = findViewById(R.id.btn_dashboard_new_quiz);
         this.bNewQuiz.setOnClickListener(new View.OnClickListener() {
@@ -91,27 +85,54 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
             }
         });
-
     }
 
-    private void manageQuizNotFinished(){
+    private void updateDataUserInNavigation(int friendsRequestCounter) {
+        NavigationView navigationView = findViewById(R.id.dashboard_nav);
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        ImageView ivUserImg = headerView.findViewById(R.id.header_nav_img);
+        Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(ivUserImg);
+        TextView tvNameUser = headerView.findViewById(R.id.header_nav_name);
+        tvNameUser.setText(Session.getSession().getUser().getFirstName() + " " + Session.getSession().getUser().getLastName());
+        TextView tvEmailUser = headerView.findViewById(R.id.header_nav_email);
+        tvEmailUser.setText(Session.getSession().getUser().getEmail());
 
+        tvBadgeFriendsRequest = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().findItem(R.id.menu_drawer_friends_request));
+        tvBadgeFriendsRequest.setGravity(Gravity.CENTER_VERTICAL);
+        tvBadgeFriendsRequest.setTypeface(null,Typeface.BOLD);
+        tvBadgeFriendsRequest.setTextColor(getResources().getColor(R.color.red));
+        if (friendsRequestCounter > 0) {
+            tvBadgeFriendsRequest.setText("" + friendsRequestCounter);
+        } else {
+            tvBadgeFriendsRequest.setText("");
+        }
+    }
+
+    private void manageLists(){
         this.dashboardModele.getQuizNotFinished(Session.getSession().getUser(), new DashboardModele.DashboardCallBack() {
             @Override
-            public void onSuccess(ArrayList<Quiz> listQuizNotFinished) {
-
+            public void onSuccess(ArrayList<Quiz> listQuizNotFinished, ArrayList<Quiz> listQuizShared, int friendsRequestCounter) {
                 // Liste contenant les noms des quiz
-                ArrayList<String> listItems = new ArrayList<String>();
-
+                ArrayList<String> itemQuizNotFinished = new ArrayList<String>();
+                ArrayList<String> itemQuizShared = new ArrayList<String>();
                 quizNotFinished = listQuizNotFinished;
+                quizShared = listQuizShared;
 
                 // Boucle pour afficher seulement le nom des quiz dans le dashboard
                 for(Quiz quiz : quizNotFinished) {
                     String quizName = quiz.getName();
-                    listItems.add(quizName);
+                    itemQuizNotFinished.add(quizName);
                 }
-                ArrayAdapter<String> adaptateur = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, listItems) ;
-                lvQuizNotFinish.setAdapter(adaptateur);
+                for(Quiz quiz : quizShared) {
+                    String quizName = quiz.getName();
+                    itemQuizShared.add(quizName);
+                }
+
+                ArrayAdapter<String> adaptateurQuizNotFinished = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizNotFinished) ;
+                ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizShared) ;
+                lvQuizNotFinish.setAdapter(adaptateurQuizNotFinished);
+                lvQuizShared.setAdapter(adaptateurQuizShared);
 
                 lvQuizNotFinish.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
@@ -126,43 +147,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                             }
                         }
                 );
-            }
-
-            @Override
-            public void onErrorNetwork() {
-                Snackbar snackbar = Snackbar
-                        .make(findViewById(R.id.activity_connexion), R.string.error_connexion_http, 2500);
-                snackbar.show();
-            }
-
-            @Override
-            public void onErrorVollet() {
-
-            }
-        });
-
-
-    }
-
-    private void manageQuizShared(){
-
-        this.dashboardModele.getQuizShared(Session.getSession().getUser(), new DashboardModele.DashboardCallBack() {
-            @Override
-            public void onSuccess(ArrayList<Quiz> listQuizNotFinished) {
-
-                // Liste contenant les noms des quiz
-                ArrayList<String> listItems = new ArrayList<String>();
-
-                quizShared = listQuizNotFinished;
-
-                // Boucle pour afficher seulement le nom des quiz dans le dashboard
-                for(Quiz quiz : quizShared) {
-                    String quizName = quiz.getName();
-                    listItems.add(quizName);
-                }
-                ArrayAdapter<String> adaptateur = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, listItems) ;
-                lvQuizShared.setAdapter(adaptateur);
-
                 lvQuizShared.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
                             @Override
@@ -177,6 +161,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                             }
                         }
                 );
+                updateDataUserInNavigation(friendsRequestCounter);
             }
 
             @Override
@@ -191,8 +176,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             }
         });
-
-
     }
 
     @Override
@@ -214,6 +197,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
         } else if (menuItem.getItemId() == R.id.menu_drawer_quiz) { // item mes quiz
             intent = new Intent(DashboardActivity.this, MesQuizActivity.class);
+            startActivity(intent);
+        } else if (menuItem.getItemId() == R.id.menu_drawer_friends_request) { // item mes quiz
+            intent = new Intent(DashboardActivity.this, FriendsRequestActivity.class);
             startActivity(intent);
         } else if (menuItem.getItemId() == R.id.menu_drawer_a_propos) { // item à propos
             mDrawerLayout.closeDrawers();

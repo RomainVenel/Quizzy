@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,8 +49,12 @@ public class ListeAmisActivity extends AppCompatActivity {
     private ItemDeleteFriendAdapteur adapter;
 
     private EditText etSearch;
-    private TextView tvMessage;
+    private TextView tvFriendsFound;
     private ListView lvFriend;
+
+    private Handler handler;
+    private Boolean canSearch;
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,20 +69,32 @@ public class ListeAmisActivity extends AppCompatActivity {
         this.mesAmisModele = new MesAmisModele(this, this.requestQueue);
 
         this.etSearch = findViewById(R.id.et_search);
-        this.tvMessage = findViewById(R.id.tv_friends_list);
+        this.tvFriendsFound = findViewById(R.id.tv_friends_list);
         this.lvFriend = findViewById(R.id.lv_friends_list);
-         
+
+        this.handler = new android.os.Handler();
+        this.canSearch = true;
+        this.runnable = new Runnable() {
+            public void run() {
+                showFriendList();
+                canSearch = true;
+            }
+        };
 
         this.showFriendList();
 
         TextWatcher searchWatcher = new TextWatcher() {
             @Override
             public void afterTextChanged(Editable arg0) {
+                if(canSearch == false) {
+                    handler.removeCallbacks(runnable);
+                }
+                canSearch = false;
+                handler.postDelayed(runnable, 600);
             }
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //ListeAmisActivity.this.adapter.getFilter().filter(s);
             }
 
             @Override
@@ -88,12 +105,13 @@ public class ListeAmisActivity extends AppCompatActivity {
     }
 
     private void showFriendList() {
-        this.mesAmisModele.getFriendsList(Session.getSession().getUser(), new MesAmisModele.FriendListCallBack() {
+        this.mesAmisModele.getFriendsList(Session.getSession().getUser(), etSearch.getText().toString().trim(), new MesAmisModele.FriendListCallBack() {
             @Override
             public void onSuccess(ArrayList<User> friends) {
                 friendList = friends;
                 adapter = new ItemDeleteFriendAdapteur(ListeAmisActivity.this);
                 lvFriend.setAdapter(adapter);
+                updateFriendsCounter();
             }
 
             @Override
@@ -112,6 +130,11 @@ public class ListeAmisActivity extends AppCompatActivity {
         });
     }
 
+    public void updateFriendsCounter() {
+        String str = this.friendList.size() + " " + getResources().getString(R.string.friends_found);
+        tvFriendsFound.setText(str);
+    }
+
 
     public void deleteFriendDialog(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -121,10 +144,10 @@ public class ListeAmisActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        deleteQuestion(listQuestions.get(position));
-//                        listQuestions.remove(position);
-//                        ((BaseAdapter) lvQuestions.getAdapter()).notifyDataSetChanged();
-//                        ((BaseAdapter) lvQuestions.getAdapter()).notifyDataSetInvalidated();
+                        deleteFriend(friendList.get(position));
+                        friendList.remove(position);
+                        ((BaseAdapter) lvFriend.getAdapter()).notifyDataSetChanged();
+                        ((BaseAdapter) lvFriend.getAdapter()).notifyDataSetInvalidated();
                         dialog.cancel();
                     }
                 });
@@ -142,7 +165,26 @@ public class ListeAmisActivity extends AppCompatActivity {
     }
 
     private void deleteFriend(User user) {
+        this.mesAmisModele.deleteFriend(Session.getSession().getUser(), user, new MesAmisModele.deleteFriendCallBack() {
+            @Override
+            public void onSuccess() {
+                updateFriendsCounter();
+            }
 
+            @Override
+            public void onErrorNetwork() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_liste_amis), R.string.error_connexion_http, 2500);
+                snackbar.show();
+            }
+
+            @Override
+            public void onErrorVollet() {
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_liste_amis), R.string.error_vollet, 2500);
+                snackbar.show();
+            }
+        });
     }
 
     @Override
@@ -158,15 +200,10 @@ public class ListeAmisActivity extends AppCompatActivity {
     }
 
     class ItemDeleteFriendAdapteur extends ArrayAdapter<User> {
-
-        private ArrayList<User> mOriginalValues; // Original Values
-        private ArrayList<User> mDisplayedValues;
         LayoutInflater inflater;
 
         public ItemDeleteFriendAdapteur(Activity context) {
             super(context, R.layout.adapter_delete_friend, friendList);
-            this.mOriginalValues = friendList;
-            this.mDisplayedValues = friendList;
             inflater = LayoutInflater.from(context);
         }
 

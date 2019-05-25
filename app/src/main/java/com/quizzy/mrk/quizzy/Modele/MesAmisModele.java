@@ -184,6 +184,83 @@ public class MesAmisModele {
         queue.add(request);
     }
 
+    public void getFriendsCanBeAdd(final User user, final String search, final FriendListCallBack callBack) {
+
+        StringRequest request = new StringRequest(Request.Method.POST, Application.getUrlServeur() + "friend/add/possible/" + user.getId(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("APP", "on recup les amis qui peuvent etre ajouté ==> " + response);
+                ArrayList<User> friendsList = new ArrayList<User>();
+                try {
+                    JSONArray json = new JSONArray(response);
+                    for (int i = 0; i < json.length(); i++) {
+                        JSONObject friend = json.getJSONObject(i);
+                        JSONObject birth = friend.getJSONObject("birthDate");
+
+                        friendsList.add(new User(
+                                friend.getInt("id"),
+                                friend.getString("firstName"),
+                                friend.getString("lastName"),
+                                friend.getString("username"),
+                                new GregorianCalendar(birth.getInt("year"), birth.getInt("month"), birth.getInt("day")),
+                                friend.getString("password"),
+                                friend.getString("email"),
+                                friend.isNull("media") ? null : Application.getUrlServeur() + friend.getString("media")
+                        ));
+                    }
+                    callBack.onSuccess(friendsList);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("search", search);
+
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
+    public void addFriend(final User userSender, final User user, final choiceFriendCallBack callBack) {
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Application.getUrlServeur() + "add/friend/" + userSender.getId() + "/" + user.getId(),
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("APP", "Response ==> " + response);
+                        callBack.onSuccess();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
 
     public interface FriendListCallBack {
         void onSuccess(ArrayList<User> friends);

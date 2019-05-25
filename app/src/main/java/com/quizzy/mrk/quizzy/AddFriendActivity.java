@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,27 +26,22 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.google.android.material.snackbar.Snackbar;
-import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.User;
-import com.quizzy.mrk.quizzy.Modele.ConnexionModele;
 import com.quizzy.mrk.quizzy.Modele.MesAmisModele;
+import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class ListeAmisActivity extends AppCompatActivity {
+public class AddFriendActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
     private MesAmisModele mesAmisModele;
     private ArrayList<User> friendList;
-    private ItemDeleteFriendAdapteur adapter;
+    private ItemAddFriendsAdapteur adapter;
 
-    private Button btnAddFriend;
     private EditText etSearch;
     private TextView tvFriendsFound;
     private ListView lvFriend;
@@ -58,30 +50,22 @@ public class ListeAmisActivity extends AppCompatActivity {
     private Boolean canSearch;
     private Runnable runnable;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_liste_amis);
+        setContentView(R.layout.activity_add_friend);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_activity_mes_amis));
+        actionBar.setTitle(getString(R.string.title_activity_add_friends));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.mesAmisModele = new MesAmisModele(this, this.requestQueue);
 
-        this.btnAddFriend = findViewById(R.id.btn_add_friend);
         this.etSearch = findViewById(R.id.et_search);
         this.tvFriendsFound = findViewById(R.id.tv_friends_list);
         this.lvFriend = findViewById(R.id.lv_friends_list);
-
-        this.btnAddFriend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ListeAmisActivity.this, AddFriendActivity.class);
-                startActivity(intent);
-            }
-        });
 
         this.handler = new android.os.Handler();
         this.canSearch = true;
@@ -115,12 +99,13 @@ public class ListeAmisActivity extends AppCompatActivity {
         this.etSearch.addTextChangedListener(searchWatcher);
     }
 
+
     private void showFriendList() {
-        this.mesAmisModele.getFriendsList(Session.getSession().getUser(), etSearch.getText().toString().trim(), new MesAmisModele.FriendListCallBack() {
+        this.mesAmisModele.getFriendsCanBeAdd(Session.getSession().getUser(), etSearch.getText().toString().trim(), new MesAmisModele.FriendListCallBack() {
             @Override
             public void onSuccess(ArrayList<User> friends) {
                 friendList = friends;
-                adapter = new ItemDeleteFriendAdapteur(ListeAmisActivity.this);
+                adapter = new ItemAddFriendsAdapteur(AddFriendActivity.this);
                 lvFriend.setAdapter(adapter);
                 updateFriendsCounter();
             }
@@ -128,34 +113,33 @@ public class ListeAmisActivity extends AppCompatActivity {
             @Override
             public void onErrorNetwork() {
                 Snackbar snackbar = Snackbar
-                        .make(findViewById(R.id.activity_liste_amis), R.string.error_connexion_http, 2500);
+                        .make(findViewById(R.id.activity_add_friend), R.string.error_connexion_http, 2500);
                 snackbar.show();
             }
 
             @Override
             public void onErrorVollet() {
                 Snackbar snackbar = Snackbar
-                        .make(findViewById(R.id.activity_liste_amis), R.string.error_vollet, 2500);
+                        .make(findViewById(R.id.activity_add_friend), R.string.error_vollet, 2500);
                 snackbar.show();
             }
         });
     }
 
     public void updateFriendsCounter() {
-        String str = this.friendList.size() + " " + getResources().getString(R.string.friends_found);
+        String str = this.friendList.size() + " " + getResources().getString(R.string.counter_add_friends);
         tvFriendsFound.setText(str);
     }
 
-
-    public void deleteFriendDialog(final int position) {
+    public void addFriendDialog(final int position) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage(R.string.message_dialog_delete_friend);
+        alertDialogBuilder.setMessage(R.string.message_dialog_accept_add_friend);
         alertDialogBuilder.setPositiveButton(
                 R.string.dialog_btn_yes,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteFriend(friendList.get(position));
+                        addFriend(friendList.get(position));
                         friendList.remove(position);
                         ((BaseAdapter) lvFriend.getAdapter()).notifyDataSetChanged();
                         ((BaseAdapter) lvFriend.getAdapter()).notifyDataSetInvalidated();
@@ -175,8 +159,8 @@ public class ListeAmisActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void deleteFriend(User user) {
-        this.mesAmisModele.deleteFriend(Session.getSession().getUser(), user, new MesAmisModele.deleteFriendCallBack() {
+    private void addFriend(User user) {
+        this.mesAmisModele.addFriend(Session.getSession().getUser(), user, new MesAmisModele.choiceFriendCallBack() {
             @Override
             public void onSuccess() {
                 updateFriendsCounter();
@@ -185,14 +169,14 @@ public class ListeAmisActivity extends AppCompatActivity {
             @Override
             public void onErrorNetwork() {
                 Snackbar snackbar = Snackbar
-                        .make(findViewById(R.id.activity_liste_amis), R.string.error_connexion_http, 2500);
+                        .make(findViewById(R.id.activity_add_friend), R.string.error_connexion_http, 2500);
                 snackbar.show();
             }
 
             @Override
             public void onErrorVollet() {
                 Snackbar snackbar = Snackbar
-                        .make(findViewById(R.id.activity_liste_amis), R.string.error_vollet, 2500);
+                        .make(findViewById(R.id.activity_add_friend), R.string.error_vollet, 2500);
                 snackbar.show();
             }
         });
@@ -202,7 +186,7 @@ public class ListeAmisActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(ListeAmisActivity.this, DashboardActivity.class);
+                Intent intent = new Intent(AddFriendActivity.this, ListeAmisActivity.class);
                 startActivity(intent);
                 return true;
             default:
@@ -210,11 +194,11 @@ public class ListeAmisActivity extends AppCompatActivity {
         }
     }
 
-    class ItemDeleteFriendAdapteur extends ArrayAdapter<User> {
+    class ItemAddFriendsAdapteur extends ArrayAdapter<User> {
         LayoutInflater inflater;
 
-        public ItemDeleteFriendAdapteur(Activity context) {
-            super(context, R.layout.adapter_delete_friend, friendList);
+        public ItemAddFriendsAdapteur(Activity context) {
+            super(context, R.layout.adapter_add_friend, friendList);
             inflater = LayoutInflater.from(context);
         }
 
@@ -222,7 +206,7 @@ public class ListeAmisActivity extends AppCompatActivity {
         public View getView(final int position, View convertView, ViewGroup parent) {
             View vItem = convertView;
             if (vItem == null) {
-                vItem = getLayoutInflater().inflate(R.layout.adapter_delete_friend, parent, false);
+                vItem = getLayoutInflater().inflate(R.layout.adapter_add_friend, parent, false);
             }
 
             ImageView ivList = vItem.findViewById(R.id.iv_list);
@@ -230,17 +214,17 @@ public class ListeAmisActivity extends AppCompatActivity {
                 Picasso.with(getContext()).load(friendList.get(position).getMedia()).into(ivList);
             }
 
-            TextView tvUsernameFriend = vItem.findViewById(R.id.tv_name_user);
-            tvUsernameFriend.setText(friendList.get(position).getUsername());
+            TextView tvNameFriend = vItem.findViewById(R.id.tv_name_user);
+            tvNameFriend.setText(friendList.get(position).getUsername());
 
             TextView tvEmail = vItem.findViewById(R.id.tv_email_user);
             tvEmail.setText(friendList.get(position).getEmail());
 
-            ImageButton btnDelete = vItem.findViewById(R.id.btn_delete_list);
-            btnDelete.setOnClickListener(new View.OnClickListener() {
+            ImageButton btnAdd = vItem.findViewById(R.id.btn_add_list);
+            btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    deleteFriendDialog(position);
+                    addFriendDialog(position);
                 }
             });
             return vItem;

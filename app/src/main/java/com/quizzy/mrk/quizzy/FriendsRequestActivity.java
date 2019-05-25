@@ -196,8 +196,8 @@ public class FriendsRequestActivity extends AppCompatActivity {
                 Picasso.with(getContext()).load(friendsRequest.get(position).getMedia()).into(ivFriend);
             }
 
-            TextView tvNameFriend = vItem.findViewById(R.id.tv_name_friend);
-            tvNameFriend.setText(friendsRequest.get(position).getLastName() + " " + friendsRequest.get(position).getFirstName());
+            TextView tvUsernameFriend = vItem.findViewById(R.id.tv_name_friend);
+            tvUsernameFriend.setText(friendsRequest.get(position).getUsername());
 
             TextView tvEmailFriend = vItem.findViewById(R.id.tv_email_friend);
             tvEmailFriend.setText(friendsRequest.get(position).getEmail());

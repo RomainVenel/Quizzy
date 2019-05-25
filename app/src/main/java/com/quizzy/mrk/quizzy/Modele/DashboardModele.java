@@ -66,7 +66,7 @@ public class DashboardModele {
                             for (int i = 0; i < jQuizShared.length(); i++) {
                                 JSONObject quiz = jQuizShared.getJSONObject(i);
                                 String media = quiz.isNull("media") ? null : Application.getUrlServeur() + quiz.getString("media");
-                                quizNotFinished.add(
+                                quizShared.add(
                                     new Quiz(
                                         quiz.getInt("id"),
                                         quiz.getString("name"),

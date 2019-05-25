@@ -75,6 +75,14 @@ public class ListeAmisActivity extends AppCompatActivity {
         this.tvFriendsFound = findViewById(R.id.tv_friends_list);
         this.lvFriend = findViewById(R.id.lv_friends_list);
 
+        this.btnAddFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListeAmisActivity.this, AddFriendActivity.class);
+                startActivity(intent);
+            }
+        });
+
         this.handler = new android.os.Handler();
         this.canSearch = true;
         this.runnable = new Runnable() {

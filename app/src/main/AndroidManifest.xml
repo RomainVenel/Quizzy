@@ -16,11 +16,6 @@
 
         <activity android:name=".PartPassageQuizActivity">
         </activity>
-        <activity android:name=".ResumQuizActivity">
-        </activity>
-        <activity android:name=".MonQuizOptionsActivity">
-        </activity>
-        <activity android:name=".ListeAmisActivity"></activity>
         <activity android:name=".ConnexionActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

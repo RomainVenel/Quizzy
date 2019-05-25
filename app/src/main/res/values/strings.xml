@@ -28,8 +28,8 @@
     <string name="dialog_sign_in_autorise">Autoriser</string>
     <string name="dialog_sign_in_refuse">Refuser</string>
     <string name="choose_img">Selectionner un image</string>
-    <string name="error_username_exist">Ce nom d\'utilisateur existe déjà</string>
-    <string name="error_email_exist">Cet email existe déjà</string>
+    <string name="error_username_exist">This username already exists</string>
+    <string name="error_email_exist">This email already exists</string>
     <string name="title_activity_sign_in">Inscription</string>
     <!-- end sign in -->
 
@@ -45,11 +45,12 @@
     <!-- end navigation drawer -->
 
     <!-- navigation profil -->
-    <string name="title_activity_profil">Profil</string>
-    <string name="tv_profil_firstName">Prénom</string>
-    <string name="tv_profil_lastName">Nom</string>
+    <string name="title_activity_profil">Profile</string>
+    <string name="tv_profil_firstName">First name</string>
+    <string name="tv_profil_lastName">Last name</string>
+    <string name="tv_profil_username">Username</string>
     <string name="tv_profil_email">Email</string>
-    <string name="b_profil_return">Retour</string>
+    <string name="b_profil_validate">Validate</string>
     <!-- end navigation profil -->
 
     <!-- dialog a propos -->

@@ -33,6 +33,11 @@ public class User implements Parcelable {
         this.media = media;
     }
 
+    public User(int id) {
+        super();
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

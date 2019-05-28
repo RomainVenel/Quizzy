@@ -18,11 +18,17 @@ import android.widget.RadioButton;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
 import com.google.android.material.tabs.TabLayout;
 import com.quizzy.mrk.quizzy.DashboardActivity;
 import com.quizzy.mrk.quizzy.Entities.Answer;
 import com.quizzy.mrk.quizzy.Entities.Part;
+import com.quizzy.mrk.quizzy.Entities.PartCompletion;
 import com.quizzy.mrk.quizzy.Entities.Question;
+import com.quizzy.mrk.quizzy.Entities.QuestionCompletion;
+import com.quizzy.mrk.quizzy.Entities.QuizCompletion;
+import com.quizzy.mrk.quizzy.Modele.PartCompletionModele;
+import com.quizzy.mrk.quizzy.Modele.QuizCompletionModele;
 import com.quizzy.mrk.quizzy.PartPassageQuizActivity;
 import com.quizzy.mrk.quizzy.R;
 import com.squareup.picasso.Picasso;
@@ -41,6 +47,9 @@ public class QuestionPassageQuizFragment extends Fragment {
     private static final String KEY_COLOR="color";
     private static final String KEY_PARTS="parts";
     private static final String KEY_QUESTIONS="questions";
+    private static final String KEY_QC="qc";
+    private PartCompletionModele partCompletionModele;
+    private RequestQueue requestQueue;
 
     public QuestionPassageQuizFragment() {
     }
@@ -48,7 +57,7 @@ public class QuestionPassageQuizFragment extends Fragment {
 
 
     // 2 - Method that will create a new instance of PageFragment, and add data to its bundle.
-    public static QuestionPassageQuizFragment newInstance(int position, int color, ArrayList<Part> parts, ArrayList<Question> questions) {
+    public static QuestionPassageQuizFragment newInstance(int position, int color, ArrayList<Part> parts, ArrayList<Question> questions, QuizCompletion qc) {
 
         // 2.1 Create new fragment
         QuestionPassageQuizFragment frag = new QuestionPassageQuizFragment();
@@ -61,6 +70,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         args.putParcelableArrayList(KEY_PARTS, parts);
         args.putParcelableArrayList(KEY_QUESTIONS, questions);
         args.putParcelableArrayList(KEY_PARTS, parts);
+        args.putParcelable(KEY_QC, qc);
         frag.setArguments(args);
 
         return(frag);
@@ -95,8 +105,11 @@ public class QuestionPassageQuizFragment extends Fragment {
         final int position = getArguments().getInt(KEY_POSITION, -1);
         final ArrayList<Question> questions = getArguments().getParcelableArrayList(KEY_QUESTIONS);
         final ArrayList<Part> parts = getArguments().getParcelableArrayList(KEY_PARTS);
+        final QuizCompletion qc = getArguments().getParcelable(KEY_QC);
 
         final ArrayList<Answer> listAnswersChecked = new ArrayList<>();
+
+        this.partCompletionModele = new PartCompletionModele(this.getActivity(), this.requestQueue);
 
 
 
@@ -174,6 +187,9 @@ public class QuestionPassageQuizFragment extends Fragment {
                         parts.remove(0);
                         Intent intent = new Intent(getActivity(), PartPassageQuizActivity.class);
                         intent.putExtra("listParts", parts);
+
+                        createPartCompletion(parts.get(0), qc);
+
                         startActivity(intent);
                     }
                 });
@@ -198,5 +214,26 @@ public class QuestionPassageQuizFragment extends Fragment {
 
     private void continueIfAnswers(Question question , ArrayList<Answer> answers) {
         Log.d("APP", "LISTANSWERS => " + answers);
+    }
+
+    private void createPartCompletion(Part part, QuizCompletion quizCompletion) {
+
+        partCompletionModele.newPartCompletion(part, quizCompletion,  new PartCompletionModele.PartCompletionCallBack() {
+            @Override
+            public void onSuccess(PartCompletion PartCompletionCreate) {
+
+            }
+
+            @Override
+            public void onErrorNetwork() {
+
+            }
+
+            @Override
+            public void onErrorVollet() {
+
+            }
+        });
+
     }
 }

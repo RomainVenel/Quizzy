@@ -68,7 +68,7 @@ public class ResumQuizActivity extends AppCompatActivity {
                 intent.putExtras(paquet);
                 startActivity(intent);
 
-                quizCompletionModele.newQuestionCompletion(quiz, new QuizCompletionModele.QuizCompletionCallBack() {
+                quizCompletionModele.newQuizCompletion(quiz, new QuizCompletionModele.QuizCompletionCallBack() {
                     @Override
                     public void onSuccess(QuizCompletion quizCompletionCreate) {
 

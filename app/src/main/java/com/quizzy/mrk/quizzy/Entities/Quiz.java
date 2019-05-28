@@ -33,6 +33,11 @@ public class Quiz implements Parcelable {
         this.isValidated = isValidated;
     }
 
+    public Quiz(int id) {
+        super();
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }

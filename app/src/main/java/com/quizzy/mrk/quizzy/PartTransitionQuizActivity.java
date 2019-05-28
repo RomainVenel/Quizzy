@@ -10,12 +10,16 @@ import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.quizzy.mrk.quizzy.Entities.Part;
+import com.quizzy.mrk.quizzy.Entities.PartCompletion;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
+import com.quizzy.mrk.quizzy.Entities.QuizCompletion;
 import com.quizzy.mrk.quizzy.Enum.SwipeDirection;
 import com.quizzy.mrk.quizzy.Fragments.CustomViewPager;
 import com.quizzy.mrk.quizzy.Fragments.PageAdapter;
+import com.quizzy.mrk.quizzy.Modele.PartCompletionModele;
 import com.quizzy.mrk.quizzy.Modele.PartsModele;
+import com.quizzy.mrk.quizzy.Modele.QuizCompletionModele;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 
 import java.util.ArrayList;
@@ -31,6 +35,7 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
     private Quiz quiz;
     private RequestQueue requestQueue;
     private PartsModele partsModele;
+    private QuizCompletionModele quizCompletionModele;
     private ArrayList<Part> listParts;
     private ArrayList<Question> listQuestions;
 
@@ -41,9 +46,11 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.partsModele = new PartsModele(this, this.requestQueue);
+        this.quizCompletionModele = new QuizCompletionModele(this, this.requestQueue);
 
         Bundle data = getIntent().getExtras();
         final ArrayList<Part> parts = data.getParcelableArrayList("listParts");
+        quiz = parts.get(0).getQuiz();
         listQuestions = new ArrayList<>();
 
         ActionBar actionBar = getSupportActionBar();
@@ -98,14 +105,34 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
                 }).create().show();
     }
 
-    private void configureViewPager(ArrayList<Part> parts, ArrayList<Question> questions){
+    private void configureViewPager(final ArrayList<Part> parts, final ArrayList<Question> questions){
         // 1 - Get ViewPager from layout
-        CustomViewPager pager = findViewById(R.id.customViewPager);
-        // 2 - Set Adapter PageAdapter and glue it together
-        pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions) {
-        });
+        final CustomViewPager pager = findViewById(R.id.customViewPager);
 
-        pager.setAllowedSwipeDirection(SwipeDirection.right);
+        Log.d("APP", "JE RENTRE?");
+
+        this.quizCompletionModele.getQuizCompletion(quiz, new QuizCompletionModele.QuizCompletionCallBack() {
+            @Override
+            public void onSuccess(QuizCompletion qc) {
+                // 2 - Set Adapter PageAdapter and glue it together
+                pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions, qc) {
+                });
+
+                pager.setAllowedSwipeDirection(SwipeDirection.right);
+
+                Log.d("APP", "ET LA??? " + qc.getId() + qc.getUser().getId() + qc.getQuiz().getId());
+            }
+
+            @Override
+            public void onErrorNetwork() {
+
+            }
+
+            @Override
+            public void onErrorVollet() {
+
+            }
+        });
 
     }
 

@@ -16,7 +16,9 @@ import com.google.android.material.snackbar.Snackbar;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
+import com.quizzy.mrk.quizzy.Entities.QuizCompletion;
 import com.quizzy.mrk.quizzy.Modele.PartsModele;
+import com.quizzy.mrk.quizzy.Modele.QuizCompletionModele;
 import com.quizzy.mrk.quizzy.Modele.QuizModele;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 
@@ -27,6 +29,7 @@ public class ResumQuizActivity extends AppCompatActivity {
     private Quiz quiz;
     private QuizModele quizModele;
     private PartsModele partsModele;
+    private QuizCompletionModele quizCompletionModele;
     private int cptParts;
     private int cptQuestions;
     private int timeQuiz;
@@ -46,6 +49,7 @@ public class ResumQuizActivity extends AppCompatActivity {
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.quizModele = new QuizModele(this, this.requestQueue);
         this.partsModele = new PartsModele(this, this.requestQueue);
+        this.quizCompletionModele = new QuizCompletionModele(this, this.requestQueue);
 
         this.tvResumNbParts = findViewById(R.id.tv_resum_nb_parts);
         this.tvResumNbQuestions = findViewById(R.id.tv_resum_nb_questions);
@@ -63,6 +67,24 @@ public class ResumQuizActivity extends AppCompatActivity {
                 Intent intent = new Intent(ResumQuizActivity.this, TransitionPassageQuizActivity.class);
                 intent.putExtras(paquet);
                 startActivity(intent);
+
+                quizCompletionModele.newQuestionCompletion(quiz, new QuizCompletionModele.QuizCompletionCallBack() {
+                    @Override
+                    public void onSuccess(QuizCompletion quizCompletionCreate) {
+
+                    }
+
+                    @Override
+                    public void onErrorNetwork() {
+
+                    }
+
+                    @Override
+                    public void onErrorVollet() {
+
+                    }
+                });
+
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });

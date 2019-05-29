@@ -13,6 +13,11 @@ public class Part implements Parcelable{
     private String media;
     private Quiz quiz;
 
+    public Part(int id) {
+        super();
+        this.id = id;
+    }
+
     public Part(int id, String name, String desc, String media, Quiz quiz) {
         super();
         this.id = id;

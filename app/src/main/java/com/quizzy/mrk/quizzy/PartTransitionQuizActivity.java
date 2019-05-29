@@ -36,6 +36,7 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private PartsModele partsModele;
     private QuizCompletionModele quizCompletionModele;
+    private PartCompletionModele partCompletionModele;
     private ArrayList<Part> listParts;
     private ArrayList<Question> listQuestions;
 
@@ -47,6 +48,7 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.partsModele = new PartsModele(this, this.requestQueue);
         this.quizCompletionModele = new QuizCompletionModele(this, this.requestQueue);
+        this.partCompletionModele = new PartCompletionModele(this, this.requestQueue);
 
         Bundle data = getIntent().getExtras();
         final ArrayList<Part> parts = data.getParcelableArrayList("listParts");
@@ -113,12 +115,29 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
         this.quizCompletionModele.getQuizCompletion(quiz, new QuizCompletionModele.QuizCompletionCallBack() {
             @Override
-            public void onSuccess(QuizCompletion qc) {
-                // 2 - Set Adapter PageAdapter and glue it together
-                pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions, qc) {
-                });
+            public void onSuccess(final QuizCompletion qc) {
 
-                pager.setAllowedSwipeDirection(SwipeDirection.right);
+                // 2 - Set Adapter PageAdapter and glue it together
+                partCompletionModele.newPartCompletion(parts.get(0), qc,  new PartCompletionModele.PartCompletionCallBack() {
+                    @Override
+                    public void onSuccess(PartCompletion PartCompletionCreate) {
+                        Log.d("APP", "SUCCESS HERE =>" + parts.get(0));
+                        pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions, qc) {
+                        });
+
+                        pager.setAllowedSwipeDirection(SwipeDirection.right);
+                    }
+
+                    @Override
+                    public void onErrorNetwork() {
+
+                    }
+
+                    @Override
+                    public void onErrorVollet() {
+
+                    }
+                });
 
                 Log.d("APP", "ET LA??? " + qc.getId() + qc.getUser().getId() + qc.getQuiz().getId());
             }

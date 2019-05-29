@@ -33,6 +33,11 @@ public class QuizCompletion implements Parcelable {
         parcel.writeValue(this.quiz);
     }
 
+    public QuizCompletion(int id) {
+        super();
+        this.id = id;
+    }
+
     public QuizCompletion(int id, User user, Quiz quiz) {
         super();
         this.id = id;

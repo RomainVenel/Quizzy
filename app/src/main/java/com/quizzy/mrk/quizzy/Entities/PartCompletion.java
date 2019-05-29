@@ -33,6 +33,18 @@ public class PartCompletion implements Parcelable {
         parcel.writeValue(this.part);
     }
 
+    public PartCompletion(int id) {
+        super();
+        this.id = id;
+    }
+
+    public PartCompletion(int id, Part part, QuizCompletion qc) {
+        super();
+        this.id = id;
+        this.part = part;
+        this.qc = qc;
+    }
+
     public PartCompletion(Parcel in){
         this.id = in.readInt();
         this.qc = (QuizCompletion) in.readValue(QuizCompletion.class.getClassLoader());

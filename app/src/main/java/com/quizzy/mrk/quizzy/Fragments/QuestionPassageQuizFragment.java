@@ -31,6 +31,7 @@ import com.quizzy.mrk.quizzy.Modele.PartCompletionModele;
 import com.quizzy.mrk.quizzy.Modele.QuizCompletionModele;
 import com.quizzy.mrk.quizzy.PartPassageQuizActivity;
 import com.quizzy.mrk.quizzy.R;
+import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -109,6 +110,7 @@ public class QuestionPassageQuizFragment extends Fragment {
 
         final ArrayList<Answer> listAnswersChecked = new ArrayList<>();
 
+        this.requestQueue = VolleySingleton.getInstance(this.getActivity()).getRequestQueue();
         this.partCompletionModele = new PartCompletionModele(this.getActivity(), this.requestQueue);
 
 

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/backgroundDark"
     android:layout_height="match_parent">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,65 +14,75 @@
         android:orientation="vertical"
         tools:context=".PartsActivity">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/tv_part_name" />
-
         <EditText
             android:id="@+id/et_part_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="10dp"
-            android:maxLength="255" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/tv_part_desc" />
+            android:background="@drawable/custome_edit_text_dark"
+            android:drawableLeft="@drawable/ic_et_name"
+            android:drawablePadding="10dp"
+            android:hint="@string/tv_part_name"
+            android:maxLength="255"
+            android:textColor="@color/graywhite"
+            android:textColorHint="@color/graywhite" />
 
         <EditText
             android:id="@+id/et_part_desc"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="10dp"
-            android:maxLength="255" />
+            android:background="@drawable/custome_edit_text_dark"
+            android:drawableLeft="@drawable/ic_et_name"
+            android:drawablePadding="10dp"
+            android:hint="@string/tv_part_desc"
+            android:maxLength="255"
+            android:textColor="@color/graywhite"
+            android:textColorHint="@color/graywhite" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:minHeight="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_quiz_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
+                android:drawableLeft="@drawable/ic_add_24dp"
+                android:drawablePadding="5dp"
+                android:drawableTint="@color/graywhite"
+                android:text="@string/add_img"
+                android:textColor="@color/graywhite" />
+
+            <com.dmallcott.dismissibleimageview.DismissibleImageView
+                android:id="@+id/iv_part_img"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+        </RelativeLayout>
 
         <TextView
-            android:id="@+id/tv_quiz_img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:drawableLeft="@drawable/ic_add_24dp"
-            android:drawablePadding="5dp"
-            android:drawableTint="@color/darkGray"
-            android:text="@string/btn_part_add_img" />
-
-        <com.dmallcott.dismissibleimageview.DismissibleImageView
-            android:id="@+id/iv_part_img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:drawablePadding="5dp"
+            android:textColor="@color/graywhite"
             android:text="@string/tv_part_list_question" />
 
         <ListView
@@ -92,8 +103,8 @@
             android:layout_marginRight="10dp"
             android:drawableLeft="@drawable/ic_add_24dp"
             android:drawablePadding="5dp"
-            android:drawableTint="@color/colorPrimaryDark"
-            android:textColor="@color/colorPrimaryDark"
+            android:drawableTint="@color/graywhite"
+            android:textColor="@color/graywhite"
             android:text="@string/btn_part_add_question" />
 
     </LinearLayout>

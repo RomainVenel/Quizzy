@@ -91,7 +91,7 @@ public class QuizActivity extends AppCompatActivity {
                     openGallery();
                 } else {
                     ivImg.setImageDrawable(null);
-                    tvImg.setText(R.string.tv_quiz_add_img);
+                    tvImg.setText(R.string.add_img);
                     tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_24dp, 0, 0, 0);
                 }
             }
@@ -272,7 +272,7 @@ public class QuizActivity extends AppCompatActivity {
         this.etName.setText(this.quiz.getName());
         if (this.quiz.getMedia() != null) {
             Picasso.with(this).load(this.quiz.getMedia()).into(ivImg);
-            this.tvImg.setText(R.string.btn_quiz_delete_img);
+            this.tvImg.setText(R.string.delete_img);
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
 
@@ -373,7 +373,7 @@ public class QuizActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pathUri);
                 this.ivImg.setImageBitmap(bitmap);
-                this.tvImg.setText(R.string.btn_quiz_delete_img);
+                this.tvImg.setText(R.string.delete_img);
                 this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
             } catch (IOException e) {
                 e.printStackTrace();

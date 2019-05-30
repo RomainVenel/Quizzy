@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
@@ -88,7 +89,7 @@ public class PartsActivity extends AppCompatActivity {
                     openGallery();
                 } else {
                     ivImg.setImageDrawable(null);
-                    tvImg.setText(R.string.btn_part_add_img);
+                    tvImg.setText(R.string.add_img);
                     tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_24dp, 0, 0, 0);
                 }
             }
@@ -107,6 +108,7 @@ public class PartsActivity extends AppCompatActivity {
                 }
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void createPart() {
@@ -226,7 +228,7 @@ public class PartsActivity extends AppCompatActivity {
         this.etDesc.setText(this.part.getDesc());
         if (this.part.getMedia() != null) {
             Picasso.with(this).load(this.part.getMedia()).into(ivImg);
-            this.tvImg.setText(R.string.btn_part_delete_img);
+            this.tvImg.setText(R.string.delete_img);
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
 
@@ -298,7 +300,7 @@ public class PartsActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pathUri);
                 this.ivImg.setImageBitmap(bitmap);
-                this.tvImg.setText(R.string.btn_part_delete_img);
+                this.tvImg.setText(R.string.delete_img);
                 this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
             } catch (IOException e) {
                 e.printStackTrace();

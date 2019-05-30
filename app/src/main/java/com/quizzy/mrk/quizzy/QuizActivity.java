@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -79,6 +80,8 @@ public class QuizActivity extends AppCompatActivity {
         if (this.isNewQuiz == false) {
             this.quiz = getIntent().getExtras().getParcelable("quiz");
             this.updateDataActivity();
+        } else {
+            this.btnCreer.setVisibility(View.INVISIBLE);
         }
 
         this.tvImg.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +144,7 @@ public class QuizActivity extends AppCompatActivity {
                 }
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
 

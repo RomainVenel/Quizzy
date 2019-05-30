@@ -52,21 +52,19 @@
     <!-- end dashboard -->
 
     <!-- quiz -->
-    <string name="title_activity_new_quiz">Quiz</string>
-    <string name="tv_quiz_name">Nom de votre quiz</string>
-    <string name="tv_quiz_add_img">Ajouter une image à mon quiz</string>
-    <string name="btn_quiz_delete_img">Supprimer l\'image de mon quiz</string>
-    <string name="btn_quiz_add_part">Ajouter une partie</string>
-    <string name="tv_quiz_list_part">Vos parties :</string>
-    <string name="message_dialog_check_quiz_validator">Pour valider votre quiz, vous devez obligatoirement avoir :</string>
-    <string name="message_dialog_check_quiz_quiz">Un nom d\'utilisateur et au moins une partie à votre quiz</string>
-    <string name="message_dialog_check_quiz_part">Un nom et au moins une question pour chaque partie</string>
-    <string name="message_dialog_check_quiz_question">Une nom et au moins une réponse pour chaque questions</string>
-    <string name="message_dialog_check_quiz_answer">Une nom et au moins une bonne réponse sur l\'ensemble des réponses</string>
+    <string name="tv_quiz_name">Quiz name</string>
+    <string name="tv_quiz_add_img">Add image</string>
+    <string name="btn_quiz_delete_img">Delete image</string>
+    <string name="btn_quiz_add_part">Add part</string>
+    <string name="tv_quiz_list_part">Your parts :</string>
+    <string name="message_dialog_check_quiz_validator">To validate your quiz, you must have:</string>
+    <string name="message_dialog_check_quiz_quiz">A quiz name and at least one part</string>
+    <string name="message_dialog_check_quiz_part">A part name and at least one question for each part</string>
+    <string name="message_dialog_check_quiz_question">A question name and at least one answer for each question</string>
+    <string name="message_dialog_check_quiz_answer">A answer name and at least a good answer on all the answers</string>
     <string name="tv_debut_quiz">Début du quiz dans</string>
-    <string name="message_dialog_delete_part">Êtes-vous sûr de vouloir supprimer cette partie ?</string>
-    <string name="btn_quiz_finish">Terminer</string>
-    <!-- end quiz -->
+    <string name="message_dialog_delete_part">Are you sure you want to delete this part ?</string>
+    <string name="btn_quiz_finish">Finish</string>
 
     <!-- parts -->
     <string name="title_activity_parts">Partie</string>
@@ -135,5 +133,6 @@
     <string name="title_activity_my_friends">My friends</string>
     <string name="title_activity_add_friends">Add friends</string>
     <string name="title_activity_friends_request">My friend requests</string>
+    <string name="title_activity_new_quiz">Quiz</string>
 
 </resources>

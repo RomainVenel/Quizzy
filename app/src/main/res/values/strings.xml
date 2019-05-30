@@ -121,10 +121,8 @@
     <!-- end friends request -->
 
     <!-- add friend -->
-    <string name="title_activity_add_friends">Ajouter des amis</string>
     <string name="counter_add_friends">friend(s) found</string>
     <string name="message_dialog_accept_add_friend">Are you sure you want to add this friend ?</string>
-    <!-- end add friend -->
 
     <string name="et_error_empty">The field cannot be empty</string>
     <string name="error_connexion_http">HTTP connection error</string>
@@ -144,5 +142,6 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_my_friends">My friends</string>
+    <string name="title_activity_add_friends">Add friends</string>
 
 </resources>

@@ -243,7 +243,6 @@ public class QuestionPassageQuizFragment extends Fragment {
             @Override
             public void onSuccess(final PartCompletion pc) {
 
-                removeQuestionCompletion(pc, question);
                 createQuestionCompletion(score, pc, question);
 
             }
@@ -265,27 +264,6 @@ public class QuestionPassageQuizFragment extends Fragment {
         partCompletionModele.newPartCompletion(part, quizCompletion,  new PartCompletionModele.PartCompletionCallBack() {
             @Override
             public void onSuccess(PartCompletion PartCompletionCreate) {
-
-            }
-
-            @Override
-            public void onErrorNetwork() {
-
-            }
-
-            @Override
-            public void onErrorVollet() {
-
-            }
-        });
-
-    }
-
-    private void removeQuestionCompletion(PartCompletion pc, Question question) {
-
-        questionCompletionModele.removeQuestionCompletion(pc, question,  new QuestionCompletionModele.QuestionCompletionCallBack() {
-            @Override
-            public void onSuccess(QuestionCompletion PartCompletionCreate) {
 
             }
 

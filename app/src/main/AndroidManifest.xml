@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.quizzy.mrk.quizzy">
+          package="com.quizzy.mrk.quizzy">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -36,6 +36,10 @@
         <activity android:name=".TransitionPassageQuizActivity" />
         <activity android:name=".FriendsRequestActivity" />
         <activity android:name=".AddFriendActivity"></activity>
+        <activity android:name=".ResumQuizActivity"></activity>
+        <activity android:name=".PartTransitionQuizActivity"></activity>
+        <activity android:name=".ListeAmisActivity"></activity>
+        <activity android:name=".MonQuizOptionsActivity"></activity>
     </application>
 
 </manifest>

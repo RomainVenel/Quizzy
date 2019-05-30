@@ -83,37 +83,6 @@ public class QuestionCompletionModele {
         queue.add(request);
     }
 
-    public void removeQuestionCompletion(final PartCompletion pc, final Question question, final QuestionCompletionModele.QuestionCompletionCallBack callBack) {
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                Application.getUrlServeur() + "partCompletion/" + pc.getId() + "/question/" + question.getId() + "/questionCompletion/remove",
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NetworkError) {
-                    callBack.onErrorNetwork();
-                } else if (error instanceof VolleyError) {
-                    Log.d("APP", "bug => " + error.getMessage());
-                    callBack.onErrorVollet();
-                }
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                return params;
-            }
-        };
-        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
-        queue.add(request);
-    }
-
     public interface QuestionCompletionCallBack {
         void onSuccess(QuestionCompletion questionCompletionCreate); // quiz insere en bdd
 

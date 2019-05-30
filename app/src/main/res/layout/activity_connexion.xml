@@ -81,26 +81,26 @@
                 android:textColor="@color/graywhite" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_login_valider"
+                android:id="@+id/btn_login_register"
                 android:layout_width="120dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:backgroundTint="@color/yellowBtn"
-                android:text="@string/login"
+                android:text="@string/register"
                 android:textColor="@color/white" />
 
         </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_login_register"
+            android:id="@+id/btn_login_valider"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:backgroundTint="@color/yellowBtn"
-            android:text="@string/register"
+            android:text="@string/login"
             android:textColor="@color/white" />
 
     </LinearLayout>

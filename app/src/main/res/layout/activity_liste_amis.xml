@@ -5,16 +5,16 @@
     android:id="@+id/activity_liste_amis"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/backgroundDark"
+    android:orientation="vertical"
     tools:context=".ListeAmisActivity">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add_friend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:backgroundTint="@color/yellowBtn"
         android:text="@string/btn_add_friend"
@@ -24,33 +24,32 @@
         android:id="@+id/et_search"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/custome_edit_text_dark"
         android:drawableLeft="@drawable/ic_et_search"
-        android:textColor="@color/graywhite"
+        android:drawablePadding="10dp"
         android:hint="@string/tv_search"
-        android:textColorHint="@color/graywhite"
-        android:drawablePadding="10dp" />
+        android:textColor="@color/graywhite"
+        android:textColorHint="@color/graywhite" />
 
     <TextView
         android:id="@+id/tv_friends_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="8dp"
         android:textColor="@color/graywhite" />
 
     <ListView
         android:id="@+id/lv_friends_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-    </ListView>
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="10dp"></ListView>
 
 </LinearLayout>

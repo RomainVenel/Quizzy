@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -85,7 +86,7 @@ public class InscriptionActivity extends AppCompatActivity {
                 Application.hideKeyboard(getApplicationContext(), v);
                 DatePickerDialog dialog = new DatePickerDialog(
                         InscriptionActivity.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
+                        R.style.MyDatePickerDialogTheme,
                         birthdayListener,
                         birthdaySelected.get(Calendar.YEAR),
                         birthdaySelected.get(Calendar.MONTH),
@@ -176,6 +177,7 @@ public class InscriptionActivity extends AppCompatActivity {
                 changeImgProfil();
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private boolean checkSignin() {

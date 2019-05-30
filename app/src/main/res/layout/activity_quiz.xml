@@ -48,7 +48,7 @@
                 android:drawableLeft="@drawable/ic_add_24dp"
                 android:drawablePadding="5dp"
                 android:drawableTint="@color/graywhite"
-                android:text="@string/tv_quiz_add_img"
+                android:text="@string/add_img"
                 android:textColor="@color/graywhite" />
 
             <com.dmallcott.dismissibleimageview.DismissibleImageView

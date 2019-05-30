@@ -53,8 +53,6 @@
 
     <!-- quiz -->
     <string name="tv_quiz_name">Quiz name</string>
-    <string name="tv_quiz_add_img">Add image</string>
-    <string name="btn_quiz_delete_img">Delete image</string>
     <string name="btn_quiz_add_part">Add part</string>
     <string name="tv_quiz_list_part">Your parts :</string>
     <string name="message_dialog_check_quiz_validator">To validate your quiz, you must have:</string>
@@ -67,15 +65,11 @@
     <string name="btn_quiz_finish">Finish</string>
 
     <!-- parts -->
-    <string name="title_activity_parts">Partie</string>
-    <string name="tv_part_name">Nom de votre partie</string>
-    <string name="tv_part_desc">Description de votre partie</string>
-    <string name="btn_part_add_img">Ajouter une image à ma partie</string>
-    <string name="btn_part_delete_img">Supprimer l\'image de ma partie</string>
-    <string name="tv_part_list_question">Vos questions :</string>
-    <string name="message_dialog_delete_question">Êtes-vous sûr de vouloir supprimer cette question ?</string>
-    <string name="btn_part_add_question">Ajouter une question</string>
-    <!-- end parts -->
+    <string name="tv_part_name">Part name</string>
+    <string name="tv_part_desc">Description</string>
+    <string name="tv_part_list_question">Your questions :</string>
+    <string name="message_dialog_delete_question">Are you sure you want to delete this question ?</string>
+    <string name="btn_part_add_question">Add question</string>
 
     <!-- question -->
     <string name="title_activity_question">Question</string>
@@ -126,6 +120,8 @@
     <string name="tv_search">Search</string>
     <string name="friends_found">Friend(s) found</string>
     <string name="validate">Validate</string>
+    <string name="add_img">Add image</string>
+    <string name="delete_img">Delete image</string>
 
     <!-- title activities -->
     <string name="title_activity_register">Register</string>
@@ -134,5 +130,7 @@
     <string name="title_activity_add_friends">Add friends</string>
     <string name="title_activity_friends_request">My friend requests</string>
     <string name="title_activity_new_quiz">Quiz</string>
+    <string name="title_activity_parts">Part</string>
+
 
 </resources>

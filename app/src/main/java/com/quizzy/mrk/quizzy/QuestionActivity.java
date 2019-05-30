@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -88,7 +89,7 @@ public class QuestionActivity extends AppCompatActivity {
         this.hydrateListType();
         this.hydrateListGrade();
 
-        ArrayAdapter<String> aaType = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, this.listType);
+        ArrayAdapter<String> aaType = new ArrayAdapter<String>(this, R.layout.adater_spinner_item, this.listType);
         aaType.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spType.setAdapter(aaType);
         this.spType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -105,7 +106,7 @@ public class QuestionActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter<String> aaGrade = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, this.listGrade);
+        ArrayAdapter<String> aaGrade = new ArrayAdapter<String>(this, R.layout.adater_spinner_item, this.listGrade);
         aaGrade.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.spGrade.setAdapter(aaGrade);
 
@@ -125,7 +126,7 @@ public class QuestionActivity extends AppCompatActivity {
                     openGallery();
                 } else {
                     ivImg.setImageDrawable(null);
-                    tvImg.setText(R.string.btn_question_add_img);
+                    tvImg.setText(R.string.add_img);
                     tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_add_24dp, 0, 0, 0);
                 }
             }
@@ -158,6 +159,7 @@ public class QuestionActivity extends AppCompatActivity {
                 }
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void updateQuestion() {
@@ -315,7 +317,7 @@ public class QuestionActivity extends AppCompatActivity {
         this.etName.setText(this.question.getName());
         if (this.question.getMedia() != null) {
             Picasso.with(this).load(this.question.getMedia()).into(ivImg);
-            this.tvImg.setText(R.string.btn_question_delete_img);
+            this.tvImg.setText(R.string.delete_img);
             this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
 
@@ -323,8 +325,6 @@ public class QuestionActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
                 for (Answer answer : question.getAnswers()) {
-                    Log.d("APP", "on rajoute une reponse ============");
-
                     View rowView;
                     if (question.getType().equals("QCM")) {
                         rowView = layoutInflater.inflate(R.layout.question_qcm_row, llAllAnswer, false);
@@ -393,7 +393,7 @@ public class QuestionActivity extends AppCompatActivity {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pathUri);
                 this.ivImg.setImageBitmap(bitmap);
-                this.tvImg.setText(R.string.btn_question_delete_img);
+                this.tvImg.setText(R.string.delete_img);
                 this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -422,5 +422,4 @@ public class QuestionActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

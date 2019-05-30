@@ -72,18 +72,15 @@
     <string name="btn_part_add_question">Add question</string>
 
     <!-- question -->
-    <string name="title_activity_question">Question</string>
-    <string name="tv_question_type">Type de question</string>
-    <string name="tv_question_grade">Note à votre question</string>
-    <string name="tv_question_name">Nom de votre question</string>
-    <string name="btn_question_add_img">Ajouter une image à ma question</string>
-    <string name="btn_question_delete_img">Supprimer l\'image de ma question</string>
-    <string name="btn_question_add_answer">Ajouter une réponse</string>
-    <string name="btn_question_save_question">Sauvegarder</string>
-    <string name="et_question_empty_answer">Il doit y avoir au moins 1 réponse</string>
-    <string name="et_question_empty_good_answer">Il doit y avoir au moins 1 bonne réponse</string>
-    <string name="et_question_empty_name_answer">Tous les champs des réponses ne sont pas renseignés</string>
-    <!-- end question -->
+    <string name="tv_question_type">Question type</string>
+    <string name="tv_question_grade">Grade</string>
+    <string name="tv_question_name">Question name</string>
+    <string name="tv_answer_name">Answer name</string>
+    <string name="btn_question_add_answer">Add answer</string>
+    <string name="btn_question_save_question">Save</string>
+    <string name="et_question_empty_answer">There must have at least 1 answer</string>
+    <string name="et_question_empty_good_answer">There must have at least 1 good answer</string>
+    <string name="et_question_empty_name_answer">All answer name fields of the answers are not filled</string>
 
     <!-- mes quiz -->
     <string name="title_activity_mes_quiz">Mes quiz</string>
@@ -110,6 +107,7 @@
     <string name="counter_add_friends">friend(s) found</string>
     <string name="message_dialog_accept_add_friend">Are you sure you want to add this friend ?</string>
 
+    <!-- warding -->
     <string name="et_error_empty">The field cannot be empty</string>
     <string name="error_connexion_http">HTTP connection error</string>
     <string name="error_vollet">Volley error</string>
@@ -131,6 +129,7 @@
     <string name="title_activity_friends_request">My friend requests</string>
     <string name="title_activity_new_quiz">Quiz</string>
     <string name="title_activity_parts">Part</string>
+    <string name="title_activity_question">Question</string>
 
 
 </resources>

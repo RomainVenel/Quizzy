@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/activity_add_friend"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".AddFriendActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_add_friend"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundDark"
+    android:orientation="vertical"
+    tools:context=".AddFriendActivity">
 
     <EditText
         android:id="@+id/et_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:maxLength="255"
-        android:hint="@string/tv_search" />
+        android:background="@drawable/custome_edit_text_dark"
+        android:drawableLeft="@drawable/ic_et_search"
+        android:textColor="@color/graywhite"
+        android:hint="@string/tv_search"
+        android:textColorHint="@color/graywhite"
+        android:drawablePadding="10dp" />
 
     <TextView
         android:id="@+id/tv_friends_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp" />
+        android:textColor="@color/graywhite" />
 
     <ListView
         android:id="@+id/lv_friends_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
-    </ListView>
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="10dp" />
 
 </LinearLayout>

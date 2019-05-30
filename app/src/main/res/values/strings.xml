@@ -39,15 +39,6 @@
     <string name="nav_drawer_logout">Déconnection</string>
     <!-- end navigation drawer -->
 
-    <!-- navigation profil -->
-    <string name="title_activity_profil">Profile</string>
-    <string name="tv_profil_firstName">First name</string>
-    <string name="tv_profil_lastName">Last name</string>
-    <string name="tv_profil_username">Username</string>
-    <string name="tv_profil_email">Email</string>
-    <string name="b_profil_validate">Validate</string>
-    <!-- end navigation profil -->
-
     <!-- dialog a propos -->
     <string name="txt_a_propos_title">À propos ...</string>
     <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL 2018-2019</string>
@@ -150,4 +141,7 @@
     
     <!-- fragment question -->
     <string name="btn_next_part">Partie suivante</string>
+    <string name="validate">Validate</string>
+    <string name="title_activity_profile">Profile</string>
+
 </resources>

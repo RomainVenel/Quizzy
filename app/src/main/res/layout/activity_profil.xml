@@ -1,95 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_profil"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ProfilActivity">
+    android:background="@color/backgroundDark"
+    android:layout_height="match_parent">
 
-    <com.dmallcott.dismissibleimageview.DismissibleImageView
-        android:id="@+id/profil_img"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:src="@mipmap/ic_launcher_round" />
-
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_profil"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/tv_profil_firstName"
-        android:textColor="@color/colorPrimaryDark" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:gravity="center"
+        tools:context=".ProfilActivity">
 
-    <EditText
-        android:id="@+id/et_profil_firstName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:maxLength="255" />
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:id="@+id/profil_img"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/default_img_user"
+            app:civ_border_color="@color/yellowBtn"
+            app:civ_border_width="3dp"
+            app:civ_shadow="true"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/tv_profil_lastName"
-        android:textColor="@color/colorPrimaryDark" />
+        <EditText
+            android:id="@+id/et_profil_lastName"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/custome_edit_text_dark"
+            android:drawableLeft="@drawable/ic_ed_name"
+            android:textColor="@color/graywhite"
+            android:hint="@string/tv_sign_in_last_name"
+            android:textColorHint="@color/graywhite"
+            android:drawablePadding="10dp"
+            android:inputType="text" />
 
-    <EditText
-        android:id="@+id/et_profil_lastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:maxLength="255" />
+        <EditText
+            android:id="@+id/et_profil_firstName"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custome_edit_text_dark"
+            android:drawableLeft="@drawable/ic_ed_name"
+            android:textColor="@color/graywhite"
+            android:hint="@string/tv_sign_in_first_name"
+            android:textColorHint="@color/graywhite"
+            android:drawablePadding="10dp"
+            android:inputType="text" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/tv_profil_username"
-        android:textColor="@color/colorPrimaryDark" />
+        <EditText
+            android:id="@+id/et_profil_username"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custome_edit_text_dark"
+            android:drawableLeft="@drawable/ic_ed_name"
+            android:textColor="@color/graywhite"
+            android:hint="@string/ed_username"
+            android:textColorHint="@color/graywhite"
+            android:drawablePadding="10dp"
+            android:inputType="text" />
 
-    <EditText
-        android:id="@+id/et_profil_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:maxLength="255" />
+        <EditText
+            android:id="@+id/et_profil_email"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/custome_edit_text_dark"
+            android:drawableLeft="@drawable/ic_ed_email"
+            android:textColor="@color/graywhite"
+            android:hint="@string/tv_sign_in_email"
+            android:textColorHint="@color/graywhite"
+            android:drawablePadding="10dp"
+            android:inputType="textEmailAddress" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/tv_profil_email"
-        android:textColor="@color/colorPrimaryDark" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_profil_validate"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/yellowBtn"
+            android:text="@string/validate"
+            android:textColor="@color/white" />
 
-    <EditText
-        android:id="@+id/et_profil_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:maxLength="255" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/b_profil_return"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/yellowBtn"
-        android:text="@string/b_profil_validate" />
-
-</LinearLayout>
+</ScrollView>

@@ -8,6 +8,7 @@ public class AnswerCompletion implements Parcelable {
     private int id;
     private QuestionCompletion qc;
     private Answer answer;
+    private int score;
 
     public static final Creator<AnswerCompletion> CREATOR = new Creator<AnswerCompletion>() {
         @Override
@@ -31,13 +32,13 @@ public class AnswerCompletion implements Parcelable {
         parcel.writeInt(this.id);
         parcel.writeValue(this.qc);
         parcel.writeValue(this.answer);
+        parcel.writeInt(this.score);
     }
 
     public AnswerCompletion(int id) {
         super();
         this.id = id;
     }
-
     public AnswerCompletion(int id, QuestionCompletion qc, Answer answer) {
         super();
         this.id = id;
@@ -45,10 +46,20 @@ public class AnswerCompletion implements Parcelable {
         this.answer = answer;
     }
 
+
+    public AnswerCompletion(int id, QuestionCompletion qc, Answer answer, int score) {
+        super();
+        this.id = id;
+        this.qc = qc;
+        this.answer = answer;
+        this.score = score;
+    }
+
     public AnswerCompletion(Parcel in){
         this.id = in.readInt();
         this.qc = (QuestionCompletion) in.readValue(QuestionCompletion.class.getClassLoader());
         this.answer = (Answer) in.readValue(Answer.class.getClassLoader());
+        this.score = in.readInt();
     }
 
     public int getId() {
@@ -73,5 +84,13 @@ public class AnswerCompletion implements Parcelable {
 
     public void setAnswer(Answer answer) {
         this.answer = answer;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

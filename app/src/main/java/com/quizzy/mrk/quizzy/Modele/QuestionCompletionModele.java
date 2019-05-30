@@ -35,10 +35,10 @@ public class QuestionCompletionModele {
         this.queue = queue;
     }
 
-    public void newQuestionCompletion(final PartCompletion pc, final Question question, final int score, final QuestionCompletionModele.QuestionCompletionCallBack callBack) {
+    public void newQuestionCompletion(final PartCompletion pc, final Question question, final QuestionCompletionModele.QuestionCompletionCallBack callBack) {
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                Application.getUrlServeur() + "partCompletion/" + pc.getId() + "/question/" + question.getId() + "/score/" + score + "/questionCompletion/new",
+                Application.getUrlServeur() + "partCompletion/" + pc.getId() + "/question/" + question.getId() + "/questionCompletion/new",
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -47,13 +47,12 @@ public class QuestionCompletionModele {
                             JSONObject qcGiven = response.getJSONObject("qc");
 
                             int id = qcGiven.getInt("id");
-                            int score = qcGiven.getInt("score");
                             int pcId = qcGiven.getInt("pc");
                             int questionId = qcGiven.getInt("question");
 
                             PartCompletion partForQC = new PartCompletion(pcId);
                             Question questionForQC = new Question(questionId);
-                            QuestionCompletion qc = new QuestionCompletion(id, score, partForQC, questionForQC);
+                            QuestionCompletion qc = new QuestionCompletion(id, partForQC, questionForQC);
                             callBack.onSuccess(qc);
 
 
@@ -84,7 +83,7 @@ public class QuestionCompletionModele {
     }
 
     public interface QuestionCompletionCallBack {
-        void onSuccess(QuestionCompletion questionCompletionCreate); // quiz insere en bdd
+        void onSuccess(QuestionCompletion qc); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

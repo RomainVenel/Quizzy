@@ -6,7 +6,6 @@ import android.os.Parcelable;
 public class QuestionCompletion implements Parcelable {
 
     private int id;
-    private int score;
     private PartCompletion pc;
     private Question question;
 
@@ -15,7 +14,7 @@ public class QuestionCompletion implements Parcelable {
         this.id = id;
     }
 
-    public QuestionCompletion(int id, int score, PartCompletion pc, Question question) {
+    public QuestionCompletion(int id, PartCompletion pc, Question question) {
         super();
         this.id = id;
         this.pc = pc;
@@ -42,12 +41,10 @@ public class QuestionCompletion implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(id);
-        parcel.writeInt(score);
     }
 
     public QuestionCompletion(Parcel in){
         this.id = in.readInt();
-        this.score = in.readInt();
         this.pc = (PartCompletion) in.readValue(PartCompletion.class.getClassLoader());
         this.question = (Question) in.readValue(Question.class.getClassLoader());
     }
@@ -58,14 +55,6 @@ public class QuestionCompletion implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public PartCompletion getPc() {

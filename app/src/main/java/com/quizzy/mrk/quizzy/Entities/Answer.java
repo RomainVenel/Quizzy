@@ -60,6 +60,10 @@ public class Answer implements Parcelable {
         this.correct = in.readInt() == 1;
     }
 
+    public Answer(int id) {
+        this.id = id;
+    }
+
     public static final Creator<Answer> CREATOR = new Creator<Answer>() {
 
         public Answer createFromParcel(Parcel source){

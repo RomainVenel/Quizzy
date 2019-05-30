@@ -8,6 +8,7 @@ public class QuizCompletion implements Parcelable {
     private int id;
     private User user;
     private Quiz quiz;
+    private int score;
 
     public static final Creator<QuizCompletion> CREATOR = new Creator<QuizCompletion>() {
         @Override
@@ -45,10 +46,19 @@ public class QuizCompletion implements Parcelable {
         this.quiz = quiz;
     }
 
+    public QuizCompletion(int id, User user, Quiz quiz, int score) {
+        super();
+        this.id = id;
+        this.user = user;
+        this.quiz = quiz;
+        this.score = score;
+    }
+
     public QuizCompletion(Parcel in){
         this.id = in.readInt();
         this.user = (User) in.readValue(User.class.getClassLoader());
         this.quiz = (Quiz) in.readValue(Quiz.class.getClassLoader());
+        this.score = in.readInt();
     }
 
     public int getId() {
@@ -73,5 +83,13 @@ public class QuizCompletion implements Parcelable {
 
     public void setQuiz(Quiz quiz) {
         this.quiz = quiz;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

@@ -22,10 +22,12 @@ import com.android.volley.RequestQueue;
 import com.google.android.material.tabs.TabLayout;
 import com.quizzy.mrk.quizzy.DashboardActivity;
 import com.quizzy.mrk.quizzy.Entities.Answer;
+import com.quizzy.mrk.quizzy.Entities.AnswerCompletion;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.PartCompletion;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.QuestionCompletion;
+import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Entities.QuizCompletion;
 import com.quizzy.mrk.quizzy.Enum.SwipeDirection;
 import com.quizzy.mrk.quizzy.Modele.AnswerCompletionModele;
@@ -52,10 +54,12 @@ public class QuestionPassageQuizFragment extends Fragment {
     private static final String KEY_PARTS="parts";
     private static final String KEY_QUESTIONS="questions";
     private static final String KEY_QC="qc";
+    private QuizCompletionModele quizCompletionModele;
     private PartCompletionModele partCompletionModele;
     private QuestionCompletionModele questionCompletionModele;
     private AnswerCompletionModele answerCompletionModele;
     private int score;
+    private int cumul;
     private RequestQueue requestQueue;
 
     public QuestionPassageQuizFragment() {
@@ -118,6 +122,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         final ArrayList<Answer> listAnswersIncorrect = new ArrayList<>();
 
         this.requestQueue = VolleySingleton.getInstance(this.getActivity()).getRequestQueue();
+        this.quizCompletionModele = new QuizCompletionModele(this.getActivity(), this.requestQueue);
         this.partCompletionModele = new PartCompletionModele(this.getActivity(), this.requestQueue);
         this.questionCompletionModele = new QuestionCompletionModele(this.getActivity(), this.requestQueue);
         this.answerCompletionModele = new AnswerCompletionModele(this.getActivity(), this.requestQueue);
@@ -142,11 +147,11 @@ public class QuestionPassageQuizFragment extends Fragment {
                             if (!answer.isCorrect()) {
                                 listAnswersIncorrect.add(answer);
                             }
-                            continueIfAnswers(parts.get(0), qc, questions.get(position), listAnswersChecked, listAnswersIncorrect);
+                            continueIfAnswers(parts.get(0), qc, questions.get(position), listAnswersChecked, listAnswersIncorrect, answer);
                         }else{
                             listAnswersIncorrect.remove(answer);
                             listAnswersChecked.remove(answer);
-                            continueIfAnswers(parts.get(0), qc, questions.get(position), listAnswersChecked, listAnswersIncorrect);
+                            continueIfAnswers(parts.get(0), qc, questions.get(position), listAnswersChecked, listAnswersIncorrect, answer);
                         }
                     }
                 });
@@ -177,7 +182,7 @@ public class QuestionPassageQuizFragment extends Fragment {
                             if (!answer.isCorrect()) {
                                 listAnswersIncorrect.add(answer);
                             }
-                            continueIfAnswers(parts.get(0), qc, questions.get(position), listAnswersChecked, listAnswersIncorrect);
+                            continueIfAnswers(parts.get(0), qc, questions.get(position), listAnswersChecked, listAnswersIncorrect, answer);
                         }
 
                     }
@@ -231,7 +236,7 @@ public class QuestionPassageQuizFragment extends Fragment {
         return result;
     }
 
-    private void continueIfAnswers(Part part, final QuizCompletion qc, final Question question , ArrayList<Answer> answers, ArrayList<Answer> answersIncorrect) {
+    private void continueIfAnswers(Part part, final QuizCompletion qc, final Question question , ArrayList<Answer> answers, ArrayList<Answer> answersIncorrect, final Answer answer) {
         Log.d("APP", "Question => " + question.getGrade() + " --- Answers" + answers + " -------- Answers incorrect " + answersIncorrect);
         if (answersIncorrect.isEmpty()) {
             score = question.getGrade();
@@ -242,8 +247,26 @@ public class QuestionPassageQuizFragment extends Fragment {
         this.partCompletionModele.getPartCompletion(part, qc, new PartCompletionModele.PartCompletionCallBack() {
             @Override
             public void onSuccess(final PartCompletion pc) {
+                createQuestionCompletion(qc, score, pc, question, answer);
+            }
 
-                createQuestionCompletion(score, pc, question);
+            @Override
+            public void onErrorNetwork() {
+
+            }
+
+            @Override
+            public void onErrorVollet() {
+
+            }
+        });
+    }
+
+    private void setScoreForAnswerCompletion(final QuestionCompletion qc, final int score, final Answer answer) {
+
+        answerCompletionModele.setScoreForAnswerCompletion(qc, score, answer,  new AnswerCompletionModele.AnswerCompletionCallBack() {
+            @Override
+            public void onSuccess(AnswerCompletion answerCompletionCreate) {
 
             }
 
@@ -257,6 +280,7 @@ public class QuestionPassageQuizFragment extends Fragment {
 
             }
         });
+
     }
 
     private void createPartCompletion(Part part, QuizCompletion quizCompletion) {
@@ -280,12 +304,15 @@ public class QuestionPassageQuizFragment extends Fragment {
 
     }
 
-    private void createQuestionCompletion(int score, PartCompletion pc, Question question) {
+    private void createQuestionCompletion(final QuizCompletion qc, final int score, PartCompletion pc, final Question question, final Answer answer) {
 
-        questionCompletionModele.newQuestionCompletion(pc, question, score,  new QuestionCompletionModele.QuestionCompletionCallBack() {
+        Log.d("APP", "NEGATIF " + score);
+
+        questionCompletionModele.newQuestionCompletion(pc, question,  new QuestionCompletionModele.QuestionCompletionCallBack() {
             @Override
-            public void onSuccess(QuestionCompletion PartCompletionCreate) {
-
+            public void onSuccess(QuestionCompletion questionCompletion) {
+                Log.d("APP", "QuestionCompletion " + questionCompletion.getId() + "Answer " + answer.getId());
+                createAnswerCompletion(questionCompletion, answer, score);
             }
 
             @Override
@@ -301,12 +328,13 @@ public class QuestionPassageQuizFragment extends Fragment {
 
     }
 
-    /*private void createAnswerCompletion(QuestionCompletion qc, Answer answer) {
+    private void createAnswerCompletion(final QuestionCompletion qc, final Answer answer, final int score) {
 
-        partCompletionModele.newPartCompletion(part, qc,  new PartCompletionModele.PartCompletionCallBack() {
+        answerCompletionModele.newAnswerCompletion(qc, answer, new AnswerCompletionModele.AnswerCompletionCallBack() {
             @Override
-            public void onSuccess(PartCompletion PartCompletionCreate) {
-
+            public void onSuccess(AnswerCompletion answerCompletionCreate) {
+                Log.d("APP", "LE SCORE EST NULL???? " + score);
+                setScoreForAnswerCompletion(qc, score, answer);
             }
 
             @Override
@@ -320,5 +348,5 @@ public class QuestionPassageQuizFragment extends Fragment {
             }
         });
 
-    }*/
+    }
 }

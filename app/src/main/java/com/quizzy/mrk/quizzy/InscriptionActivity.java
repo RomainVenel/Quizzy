@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -55,7 +56,6 @@ public class InscriptionActivity extends AppCompatActivity {
     private EditText etSigninEmail;
     private EditText etSigninPassword;
     private EditText etSigninConfirmPassword;
-    private Button bBack;
     private Button bSignin;
 
     @Override
@@ -64,7 +64,8 @@ public class InscriptionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inscription);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        actionBar.setTitle(getString(R.string.title_activity_register));
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.inscriptionModele = new InscriptionModele(this, this.requestQueue);
@@ -77,7 +78,6 @@ public class InscriptionActivity extends AppCompatActivity {
         this.etSigninEmail = findViewById(R.id.et_sign_in_email);
         this.etSigninPassword = findViewById(R.id.et_sign_in_password);
         this.etSigninConfirmPassword = findViewById(R.id.et_sign_in_confirm_password);
-        this.bBack = findViewById(R.id.btn_login_back);
         this.bSignin = findViewById(R.id.btn_login_inscription);
 
         this.etSigninBirthday.setOnClickListener(new View.OnClickListener() {
@@ -108,14 +108,6 @@ public class InscriptionActivity extends AppCompatActivity {
                 etSigninBirthday.setError(null);
             }
         };
-
-        this.bBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(InscriptionActivity.this, ConnexionActivity.class);
-                startActivity(intent);
-            }
-        });
 
         this.bSignin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -165,8 +157,6 @@ public class InscriptionActivity extends AppCompatActivity {
                                 }
                             }
                     );
-                } else {
-                    Log.d("APP", "Inscription not full");
                 }
             }
         });
@@ -294,6 +284,18 @@ public class InscriptionActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(InscriptionActivity.this, ConnexionActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

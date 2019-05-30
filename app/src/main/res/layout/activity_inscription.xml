@@ -14,6 +14,7 @@
         android:orientation="vertical"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
+        android:gravity="center"
         tools:context=".InscriptionActivity">
 
         <com.mikhaellopez.circularimageview.CircularImageView
@@ -21,7 +22,6 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center"
             android:src="@drawable/default_img_user"
             app:civ_border_color="@color/yellowBtn"
             app:civ_border_width="3dp"
@@ -119,33 +119,15 @@
             android:drawablePadding="10dp"
             android:inputType="textPassword" />
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_login_back"
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_marginTop="15dp"
-                android:layout_alignParentLeft="true"
-                android:backgroundTint="@color/yellowBtn"
-                android:text="@string/btn_label_back_maj"
-                android:textColor="@color/white" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_login_inscription"
-                android:layout_width="wrap_content"
-                android:layout_height="55dp"
-                android:layout_marginTop="15dp"
-                android:layout_alignParentRight="true"
-                android:backgroundTint="@color/yellowBtn"
-                android:text="@string/register"
-                android:textColor="@color/white" />
-
-        </RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_login_inscription"
+            android:layout_width="wrap_content"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="@color/yellowBtn"
+            android:text="@string/register"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

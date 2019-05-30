@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -64,7 +65,7 @@ public class ListeAmisActivity extends AppCompatActivity {
         setContentView(R.layout.activity_liste_amis);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_activity_mes_amis));
+        actionBar.setTitle(getString(R.string.title_activity_my_friends));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
@@ -132,6 +133,7 @@ public class ListeAmisActivity extends AppCompatActivity {
             }
         };
         this.etSearch.addTextChangedListener(searchWatcher);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void showFriendList() {

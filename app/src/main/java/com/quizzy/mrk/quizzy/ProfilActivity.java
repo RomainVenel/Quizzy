@@ -1,21 +1,18 @@
 package com.quizzy.mrk.quizzy;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.google.android.material.snackbar.Snackbar;
-import com.quizzy.mrk.quizzy.Modele.MesAmisModele;
 import com.quizzy.mrk.quizzy.Modele.UserModele;
-import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
@@ -33,7 +30,7 @@ public class ProfilActivity extends AppCompatActivity {
     private EditText etFirstName;
     private EditText etUsername;
     private EditText etEmail;
-    private Button bReturn;
+    private Button bValidate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,7 @@ public class ProfilActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profil);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_activity_profil));
+        actionBar.setTitle(getString(R.string.title_activity_profile));
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
@@ -52,7 +49,7 @@ public class ProfilActivity extends AppCompatActivity {
         this.etFirstName = findViewById(R.id.et_profil_firstName);
         this.etUsername = findViewById(R.id.et_profil_username);
         this.etEmail = findViewById(R.id.et_profil_email);
-        this.bReturn = findViewById(R.id.b_profil_return);
+        this.bValidate = findViewById(R.id.btn_profil_validate);
 
         Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(this.ivUserImg);
         etLastName.setText(Session.getSession().getUser().getLastName());
@@ -60,12 +57,13 @@ public class ProfilActivity extends AppCompatActivity {
         etUsername.setText(Session.getSession().getUser().getUsername());
         etEmail.setText(Session.getSession().getUser().getEmail());
 
-        this.bReturn.setOnClickListener(new View.OnClickListener() {
+        this.bValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateProfile();
             }
         });
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     private void updateProfile()
@@ -161,5 +159,4 @@ public class ProfilActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 }

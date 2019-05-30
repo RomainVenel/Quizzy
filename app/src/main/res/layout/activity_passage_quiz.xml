@@ -11,7 +11,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="@string/tv_profil_email"
+        android:text="@string/tv_question_name"
         android:textColor="@color/colorPrimaryDark"/>
 
 </LinearLayout>

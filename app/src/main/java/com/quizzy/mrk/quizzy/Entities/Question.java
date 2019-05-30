@@ -16,6 +16,10 @@ public class Question implements Parcelable{
     private Part part;
     private ArrayList<Answer> answers;
 
+    public Question(int id) {
+        this.id = id;
+    }
+
     public Question(int id, String type, int grade, String name, String media, Part part, ArrayList<Answer> answers) {
         this.id = id;
         this.type = type;

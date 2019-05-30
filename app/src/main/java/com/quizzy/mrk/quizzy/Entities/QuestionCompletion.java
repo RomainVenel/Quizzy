@@ -10,6 +10,18 @@ public class QuestionCompletion implements Parcelable {
     private PartCompletion pc;
     private Question question;
 
+    public QuestionCompletion(int id) {
+        super();
+        this.id = id;
+    }
+
+    public QuestionCompletion(int id, int score, PartCompletion pc, Question question) {
+        super();
+        this.id = id;
+        this.pc = pc;
+        this.question = question;
+    }
+
     public static final Creator<QuestionCompletion> CREATOR = new Creator<QuestionCompletion>() {
         @Override
         public QuestionCompletion createFromParcel(Parcel in) {

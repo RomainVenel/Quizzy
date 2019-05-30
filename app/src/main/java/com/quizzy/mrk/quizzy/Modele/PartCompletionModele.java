@@ -86,6 +86,53 @@ public class PartCompletionModele {
         queue.add(request);
     }
 
+    public void getPartCompletion(final Part part, final QuizCompletion qc, final PartCompletionModele.PartCompletionCallBack callBack) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                Application.getUrlServeur() + part.getId() + "/" + qc.getId() + "/partCompletion/get",
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONObject pcGiven = response.getJSONObject("pc");
+
+                            int id = pcGiven.getInt("id");
+                            int partId = pcGiven.getInt("part");
+                            int qcId = pcGiven.getInt("qc");
+
+                            Part partForQC = new Part(partId);
+                            QuizCompletion qcForQC = new QuizCompletion(qcId);
+                            PartCompletion pc = new PartCompletion(id, partForQC, qcForQC);
+                            callBack.onSuccess(pc);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
     public interface PartCompletionCallBack {
         void onSuccess(PartCompletion partCompletionCreate); // quiz insere en bdd
 

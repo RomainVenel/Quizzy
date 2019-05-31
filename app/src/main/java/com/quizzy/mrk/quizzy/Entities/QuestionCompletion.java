@@ -3,11 +3,14 @@ package com.quizzy.mrk.quizzy.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class QuestionCompletion implements Parcelable {
 
     private int id;
     private PartCompletion pc;
     private Question question;
+    private ArrayList<AnswerCompletion> answersCompletion;
 
     public QuestionCompletion(int id) {
         super();
@@ -47,6 +50,8 @@ public class QuestionCompletion implements Parcelable {
         this.id = in.readInt();
         this.pc = (PartCompletion) in.readValue(PartCompletion.class.getClassLoader());
         this.question = (Question) in.readValue(Question.class.getClassLoader());
+        this.answersCompletion = new ArrayList<>();
+        in.readList(this.answersCompletion, getClass().getClassLoader());
     }
 
     public int getId() {
@@ -71,5 +76,13 @@ public class QuestionCompletion implements Parcelable {
 
     public void setQuestion(Question question) {
         this.question = question;
+    }
+
+    public ArrayList<AnswerCompletion> getAnswersCompletion() {
+        return answersCompletion;
+    }
+
+    public void setAnswersCompletion(ArrayList<AnswerCompletion> answersCompletion) {
+        this.answersCompletion = answersCompletion;
     }
 }

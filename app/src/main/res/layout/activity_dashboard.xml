@@ -44,16 +44,35 @@
         </ListView>
 
         <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:text="@string/tv_quiz_shared"
+        android:textColor="@color/colorPrimaryDark"/>
+
+        <ListView
+            android:id="@+id/list_dashboard_quiz_shared"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+        </ListView>
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="@string/tv_quiz_shared"
+            android:text="@string/tv_quiz_completed"
             android:textColor="@color/colorPrimaryDark"/>
 
         <ListView
-            android:id="@+id/list_dashboard_quiz_shared"
+            android:id="@+id/list_dashboard_quiz_completed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"

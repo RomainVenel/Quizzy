@@ -59,7 +59,6 @@ public class QuestionPassageQuizFragment extends Fragment {
     private QuestionCompletionModele questionCompletionModele;
     private AnswerCompletionModele answerCompletionModele;
     private int score;
-    private int cumul;
     private RequestQueue requestQueue;
 
     public QuestionPassageQuizFragment() {
@@ -220,9 +219,11 @@ public class QuestionPassageQuizFragment extends Fragment {
             }else {
                 btnNextPart.setVisibility(View.VISIBLE);
                 btnNextPart.setText("Finir le Quiz !");
+
                 btnNextPart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        setScoreTotalForQuizCompletion(qc);
                         Intent intent = new Intent(getActivity(), DashboardActivity.class);
                         intent.putExtra("listParts", parts);
                         startActivity(intent);
@@ -267,7 +268,27 @@ public class QuestionPassageQuizFragment extends Fragment {
         answerCompletionModele.setScoreForAnswerCompletion(qc, score, answer,  new AnswerCompletionModele.AnswerCompletionCallBack() {
             @Override
             public void onSuccess(AnswerCompletion answerCompletionCreate) {
+            }
 
+            @Override
+            public void onErrorNetwork() {
+
+            }
+
+            @Override
+            public void onErrorVollet() {
+
+            }
+        });
+
+    }
+
+    private void setScoreTotalForQuizCompletion(final QuizCompletion qc) {
+
+        quizCompletionModele.setQuizCompletionScore(qc, new QuizCompletionModele.QuizCompletionCallBack() {
+            @Override
+            public void onSuccess(QuizCompletion quizCompletionCreate) {
+                Log.d("APP", "Nouvelle Quiz Completion " + quizCompletionCreate.getId() + " " + quizCompletionCreate.getScore() + " " + quizCompletionCreate.getQuiz().getId() + " " + quizCompletionCreate.getUser());
             }
 
             @Override
@@ -333,7 +354,6 @@ public class QuestionPassageQuizFragment extends Fragment {
         answerCompletionModele.newAnswerCompletion(qc, answer, new AnswerCompletionModele.AnswerCompletionCallBack() {
             @Override
             public void onSuccess(AnswerCompletion answerCompletionCreate) {
-                Log.d("APP", "LE SCORE EST NULL???? " + score);
                 setScoreForAnswerCompletion(qc, score, answer);
             }
 

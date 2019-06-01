@@ -49,6 +49,7 @@
     <string name="btn_dashboard_new_quiz">Créer un quiz</string>
     <string name="tv_quiz_not_finished">Vos quiz en cours de création :</string>
     <string name="tv_quiz_shared">Les quiz partagés avec vous :</string>
+    <string name="tv_quiz_completed">Vos quiz finis :</string>
     <!-- end dashboard -->
 
     <!-- quiz -->

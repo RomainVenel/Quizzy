@@ -3,12 +3,15 @@ package com.quizzy.mrk.quizzy.Entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class QuizCompletion implements Parcelable {
 
     private int id;
     private User user;
     private Quiz quiz;
     private int score;
+    private ArrayList<PartCompletion> partsCompletion;
 
     public static final Creator<QuizCompletion> CREATOR = new Creator<QuizCompletion>() {
         @Override
@@ -59,6 +62,8 @@ public class QuizCompletion implements Parcelable {
         this.user = (User) in.readValue(User.class.getClassLoader());
         this.quiz = (Quiz) in.readValue(Quiz.class.getClassLoader());
         this.score = in.readInt();
+        this.partsCompletion = new ArrayList<>();
+        in.readList(this.partsCompletion, getClass().getClassLoader());
     }
 
     public int getId() {
@@ -91,5 +96,13 @@ public class QuizCompletion implements Parcelable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public ArrayList<PartCompletion> getPartsCompletion() {
+        return partsCompletion;
+    }
+
+    public void setPartsCompletion(ArrayList<PartCompletion> partsCompletion) {
+        this.partsCompletion = partsCompletion;
     }
 }

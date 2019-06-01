@@ -19,6 +19,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -42,11 +43,13 @@ public class DashboardModele {
                         Log.d("APP", "on recup les quiz ==> " + response);
                         ArrayList<Quiz> quizNotFinished = new ArrayList<>();
                         ArrayList<Quiz> quizShared = new ArrayList<>();
+                        ArrayList<Quiz> quizCompleted = new ArrayList<>();
 
                         try {
                             JSONObject json = new JSONObject(response);
                             JSONArray jQuizNotFinished = json.getJSONArray("quiz_not_finished");
                             JSONArray jQuizShared = json.getJSONArray("quiz_shared");
+                            JSONArray jQuizCompleted = json.getJSONArray("quiz_completed");
 
                             for (int i = 0; i < jQuizNotFinished.length(); i++) {
                                 JSONObject quiz = jQuizNotFinished.getJSONObject(i);
@@ -78,7 +81,22 @@ public class DashboardModele {
                                 );
                             }
 
-                            callBack.onSuccess(quizNotFinished, quizShared, json.getInt("friends_request_counter"));
+                            for (int i = 0; i < jQuizCompleted.length(); i++) {
+                                JSONObject quiz = jQuizCompleted.getJSONObject(i);
+                                String media = quiz.isNull("media") ? null : Application.getUrlServeur() + quiz.getString("media");
+                                quizCompleted.add(
+                                        new Quiz(
+                                                quiz.getInt("id"),
+                                                quiz.getString("name"),
+                                                media,
+                                                user,
+                                                null,
+                                                0
+                                        )
+                                );
+                            }
+
+                            callBack.onSuccess(quizNotFinished, quizShared, quizCompleted,  json.getInt("friends_request_counter"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -99,7 +117,7 @@ public class DashboardModele {
     }
 
     public interface DashboardCallBack {
-        void onSuccess(ArrayList<Quiz> quizNotFinished, ArrayList<Quiz> quizShared, int friendsRequestCounter); // utilisateur trouvé en bdd
+        void onSuccess(ArrayList<Quiz> quizNotFinished, ArrayList<Quiz> quizShared, ArrayList<Quiz> quizCompleted, int friendsRequestCounter); // utilisateur trouvé en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

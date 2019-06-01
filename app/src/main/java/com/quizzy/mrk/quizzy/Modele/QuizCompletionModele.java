@@ -13,6 +13,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.quizzy.mrk.quizzy.Entities.Answer;
+import com.quizzy.mrk.quizzy.Entities.AnswerCompletion;
+import com.quizzy.mrk.quizzy.Entities.PartCompletion;
 import com.quizzy.mrk.quizzy.Entities.Question;
 import com.quizzy.mrk.quizzy.Entities.QuestionCompletion;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
@@ -96,6 +99,37 @@ public class QuizCompletionModele {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
+    public void setQuizCompletionScore(final QuizCompletion qc, final QuizCompletionModele.QuizCompletionCallBack callBack) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Application.getUrlServeur() + qc.getId() + "/quizCompletion/setScore",
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
                     }
                 }, new Response.ErrorListener() {
             @Override

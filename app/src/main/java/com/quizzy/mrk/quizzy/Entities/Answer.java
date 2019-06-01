@@ -8,11 +8,19 @@ public class Answer implements Parcelable {
     private int id;
     private String name;
     private boolean correct;
+    private Question question;
 
     public Answer(int id, String name, boolean correct) {
         this.id = id;
         this.name = name;
         this.correct = correct;
+    }
+
+    public Answer(int id, String name, boolean correct, Question question) {
+        this.id = id;
+        this.name = name;
+        this.correct = correct;
+        this.question = question;
     }
 
     public Answer() {
@@ -42,6 +50,14 @@ public class Answer implements Parcelable {
         this.correct = correct;
     }
 
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -58,6 +74,7 @@ public class Answer implements Parcelable {
         this.id = in.readInt();
         this.name = in.readString();
         this.correct = in.readInt() == 1;
+        this.question = (Question) in.readValue(Question.class.getClassLoader());
     }
 
     public Answer(int id) {

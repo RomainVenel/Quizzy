@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:layout_weight="0.05"
         android:gravity="center"
+        android:buttonTint="@color/graywhite"
         android:inputType="text">
     </RadioButton>
 
@@ -21,6 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight=".15"
+        android:textColor="@color/graywhite"
         android:gravity="center">
     </TextView>
 

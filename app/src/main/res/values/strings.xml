@@ -29,14 +29,14 @@
     <!-- end sign in -->
 
     <!-- navigation drawer -->
-    <string name="open_nav_drawer">Ouvrir</string>
-    <string name="close_nav_drawer">Fermer</string>
-    <string name="nav_drawer_profil">Profil</string>
-    <string name="nav_drawer_friend">Mes amis</string>
-    <string name="nav_drawer_quiz">Mes quiz</string>
-    <string name="nav_demande_amis">Demande d\'amis</string>
-    <string name="nav_drawer_a_propos">À propos</string>
-    <string name="nav_drawer_logout">Déconnection</string>
+    <string name="open_nav_drawer">Open</string>
+    <string name="close_nav_drawer">Close</string>
+    <string name="nav_drawer_profil">Profilz</string>
+    <string name="nav_drawer_friend">My friends</string>
+    <string name="nav_drawer_quiz">My quizzes</string>
+    <string name="nav_demande_amis">Friend requests</string>
+    <string name="nav_drawer_a_propos">About</string>
+    <string name="nav_drawer_logout">Logout</string>
     <!-- end navigation drawer -->
 
     <!-- dialog a propos -->

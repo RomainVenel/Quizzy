@@ -220,11 +220,10 @@ public class QuestionPassageQuizFragment extends Fragment {
                 btnNextPart.setVisibility(View.VISIBLE);
                 btnNextPart.setText("Finir le Quiz !");
 
-                setScoreTotalForQuizCompletion(qc);
-
                 btnNextPart.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        setScoreTotalForQuizCompletion(qc);
                         Intent intent = new Intent(getActivity(), DashboardActivity.class);
                         intent.putExtra("listParts", parts);
                         startActivity(intent);

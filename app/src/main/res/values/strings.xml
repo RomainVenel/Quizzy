@@ -40,9 +40,8 @@
     <!-- end navigation drawer -->
 
     <!-- dialog a propos -->
-    <string name="txt_a_propos_title">À propos ...</string>
-    <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL 2018-2019</string>
-    <!-- end dialog a propos -->
+    <string name="txt_a_propos_title">About ...</string>
+    <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL \n2018-2019</string>
 
     <!-- dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
@@ -142,6 +141,6 @@
     <string name="title_activity_new_quiz">Quiz</string>
     <string name="title_activity_parts">Part</string>
     <string name="title_activity_question">Question</string>
-
+    <string name="title_resum_quiz">Summary</string>
 
 </resources>

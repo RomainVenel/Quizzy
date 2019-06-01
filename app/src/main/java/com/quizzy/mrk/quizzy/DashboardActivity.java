@@ -51,6 +51,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private ListView lvQuizShared;
     private ArrayList<Quiz> quizShared;
 
+    private ListView lvQuizCompleted;
+    private ArrayList<Quiz> quizCompleted;
+
     private TextView tvBadgeFriendsRequest;
 
     @Override
@@ -72,6 +75,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         this.lvQuizNotFinish = findViewById(R.id.list_dashboard_quiz_not_finished);
         this.lvQuizShared = findViewById(R.id.list_dashboard_quiz_shared);
+        this.lvQuizCompleted = findViewById(R.id.list_dashboard_quiz_completed);
         this.manageLists();
 
         this.bNewQuiz = findViewById(R.id.btn_dashboard_new_quiz);
@@ -112,12 +116,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private void manageLists(){
         this.dashboardModele.getQuizNotFinished(Session.getSession().getUser(), new DashboardModele.DashboardCallBack() {
             @Override
-            public void onSuccess(ArrayList<Quiz> listQuizNotFinished, ArrayList<Quiz> listQuizShared, int friendsRequestCounter) {
+            public void onSuccess(ArrayList<Quiz> listQuizNotFinished, ArrayList<Quiz> listQuizShared, ArrayList<Quiz> listQuizCompleted, int friendsRequestCounter) {
                 // Liste contenant les noms des quiz
                 ArrayList<String> itemQuizNotFinished = new ArrayList<String>();
                 ArrayList<String> itemQuizShared = new ArrayList<String>();
+                ArrayList<String> itemQuizCompleted = new ArrayList<String>();
                 quizNotFinished = listQuizNotFinished;
                 quizShared = listQuizShared;
+                quizCompleted = listQuizCompleted;
 
                 // Boucle pour afficher seulement le nom des quiz dans le dashboard
                 for(Quiz quiz : quizNotFinished) {
@@ -128,11 +134,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     String quizName = quiz.getName();
                     itemQuizShared.add(quizName);
                 }
+                for(Quiz quiz : quizCompleted) {
+                    String quizName = quiz.getName();
+                    itemQuizCompleted.add(quizName);
+                }
 
                 ArrayAdapter<String> adaptateurQuizNotFinished = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizNotFinished) ;
                 ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizShared) ;
+                ArrayAdapter<String> adaptateurQuizCompleted = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizCompleted) ;
                 lvQuizNotFinish.setAdapter(adaptateurQuizNotFinished);
                 lvQuizShared.setAdapter(adaptateurQuizShared);
+                lvQuizCompleted.setAdapter(adaptateurQuizCompleted);
 
                 lvQuizNotFinish.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
@@ -162,6 +174,22 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                             }
                         }
                 );
+
+                lvQuizCompleted.setOnItemClickListener(
+                        new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Bundle paquet = new Bundle();
+                                paquet.putBoolean("new_quiz", false);
+                                paquet.putParcelable("quiz", quizCompleted.get(position) );
+                                /*Intent intent = new Intent(DashboardActivity.this, ResumQuizActivity.class);
+                                intent.putExtras(paquet);
+                                startActivity(intent);*/
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            }
+                        }
+                );
+
                 updateDataUserInNavigation(friendsRequestCounter);
             }
 

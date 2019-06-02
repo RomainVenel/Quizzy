@@ -45,7 +45,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <com.dmallcott.dismissibleimageview.DismissibleImageView
                 android:id="@+id/iv_question_quiz"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
@@ -58,13 +58,20 @@
 
     </androidx.cardview.widget.CardView>
 
-    <TableLayout
-        android:id="@+id/answers_view"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="818dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_next_part"
+        android:layout_marginBottom="60dp"
         android:layout_marginTop="300dp">
 
-    </TableLayout>
+        <TableLayout
+            android:id="@+id/answers_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TableLayout>
+    </ScrollView>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -76,6 +83,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/yellowBtn"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:text="@string/btn_next_part" />
 
     </RelativeLayout>

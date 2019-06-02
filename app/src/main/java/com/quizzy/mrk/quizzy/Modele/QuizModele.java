@@ -310,9 +310,9 @@ public class QuizModele {
                         Log.d("APP", "Response ==> " + response);
                         try {
 
-                            String sharedId = response.getString("id");
+                            String shareExist = response.getString("share exist");
 
-                            callBack.onSuccess();
+                            callBack.onSuccess(shareExist);
 
 
                         } catch (JSONException e) {
@@ -343,7 +343,7 @@ public class QuizModele {
     }
 
     public interface ShareQuizCallBack {
-        void onSuccess(); // quiz insere en bdd
+        void onSuccess(String shareExist); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

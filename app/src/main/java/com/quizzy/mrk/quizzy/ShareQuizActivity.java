@@ -134,9 +134,25 @@ public class ShareQuizActivity extends AppCompatActivity {
                                             public void onClick(DialogInterface dialog, int which) {
                                                 sharesModele.shareQuiz(friendList.get(position), quiz, new QuizModele.ShareQuizCallBack() {
                                                     @Override
-                                                    public void onSuccess() {
-                                                        Intent intent = new Intent(ShareQuizActivity.this, MesQuizActivity.class);
-                                                        startActivity(intent);
+                                                    public void onSuccess(String shareExist) {
+                                                        if (shareExist.equals("no")) {
+                                                            Snackbar snackbar = Snackbar
+                                                                    .make(findViewById(R.id.activity_share_quiz), "Quiz partagé avec " + friendList.get(position).getUsername(), 2500);
+                                                            snackbar.show();
+                                                            final Handler handler = new Handler();
+                                                            handler.postDelayed(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    Intent intent = new Intent(ShareQuizActivity.this, MesQuizActivity.class);
+                                                                    startActivity(intent);
+                                                                }
+                                                            }, 2000);
+                                                        } else {
+                                                            Snackbar snackbar = Snackbar
+                                                                    .make(findViewById(R.id.activity_share_quiz),  "Quiz déjà partagé avec " + friendList.get(position).getUsername(), 2500);
+                                                            snackbar.show();
+                                                        }
+
                                                     }
 
                                                     @Override

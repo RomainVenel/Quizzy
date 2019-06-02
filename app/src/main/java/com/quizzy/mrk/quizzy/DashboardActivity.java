@@ -5,9 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,9 +17,11 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
+import com.quizzy.mrk.quizzy.Adapter.CustomAdapter;
+import com.quizzy.mrk.quizzy.Adapter.DataItem;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Modele.DashboardModele;
+import com.quizzy.mrk.quizzy.Modele.QuizModele;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
@@ -40,6 +40,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private RequestQueue requestQueue;
     private DashboardModele dashboardModele;
+    private QuizModele quizModele;
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToolbar;
@@ -56,6 +57,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private TextView tvBadgeFriendsRequest;
 
+    private ArrayList<DataItem> data = new ArrayList<DataItem>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.dashboardModele = new DashboardModele(this, this.requestQueue);
+        this.quizModele = new QuizModele(this, this.requestQueue);
 
         this.mDrawerLayout = findViewById(R.id.dashboard_drawer);
         this.mToolbar = new ActionBarDrawerToggle(this, this.mDrawerLayout, R.string.open_nav_drawer, R.string.close_nav_drawer);
@@ -120,7 +124,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 // Liste contenant les noms des quiz
                 ArrayList<String> itemQuizNotFinished = new ArrayList<String>();
                 ArrayList<String> itemQuizShared = new ArrayList<String>();
-                ArrayList<String> itemQuizCompleted = new ArrayList<String>();
                 quizNotFinished = listQuizNotFinished;
                 quizShared = listQuizShared;
                 quizCompleted = listQuizCompleted;
@@ -135,16 +138,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     itemQuizShared.add(quizName);
                 }
                 for(Quiz quiz : quizCompleted) {
-                    String quizName = quiz.getName();
-                    itemQuizCompleted.add(quizName);
+                    getScoreQuiz(quiz);
                 }
 
                 ArrayAdapter<String> adaptateurQuizNotFinished = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizNotFinished) ;
                 ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizShared) ;
-                ArrayAdapter<String> adaptateurQuizCompleted = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizCompleted) ;
                 lvQuizNotFinish.setAdapter(adaptateurQuizNotFinished);
                 lvQuizShared.setAdapter(adaptateurQuizShared);
-                lvQuizCompleted.setAdapter(adaptateurQuizCompleted);
 
                 lvQuizNotFinish.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
@@ -245,5 +245,37 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
         }
         return false;
+    }
+
+    private void getScoreQuiz(final Quiz quiz) {
+
+        quizModele.getScoreQuiz(quiz.getUser(), quiz, new QuizModele.getScoreQuizCallBack() {
+            @Override
+            public void onSuccess(String score, String maxScore) {
+                final String quizName = quiz.getName();
+                final String quizScore = score;
+                final String quizMaxScore = maxScore;
+
+                final String resultScores = quizScore + "/" + quizMaxScore;
+
+                DataItem dataItem = new DataItem(quizName, resultScores);
+                data.add(dataItem);
+
+                CustomAdapter adapter = new CustomAdapter(DashboardActivity.this, R.layout.row_list_completed, data);
+
+                lvQuizCompleted.setAdapter(adapter);
+            }
+
+            @Override
+            public void onErrorNetwork() {
+
+            }
+
+            @Override
+            public void onErrorVollet() {
+
+            }
+        });
+
     }
 }

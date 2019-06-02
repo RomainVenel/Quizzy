@@ -13,9 +13,12 @@ import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.quizzy.mrk.quizzy.Entities.Part;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
+import com.quizzy.mrk.quizzy.Entities.QuizCompletion;
+import com.quizzy.mrk.quizzy.Entities.User;
 import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.Session;
 
@@ -261,6 +264,41 @@ public class QuizModele {
         queue.add(request);
     }
 
+    public void getScoreQuiz(final User user, final Quiz quiz, final getScoreQuizCallBack callBack) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.GET,
+                Application.getUrlServeur() + Session.getSession().getUser().getId() + "/" + quiz.getId() + "/score",
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+
+                            JSONObject scores = response.getJSONObject("score");
+
+                            String score = scores.getString("score");
+                            String maxScore = scores.getString("maxScore");
+
+                            callBack.onSuccess(score, maxScore);
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
 
     public interface NewQuizCallBack {
         void onSuccess(int quiz_id, String media); // quiz insere en bdd
@@ -288,6 +326,14 @@ public class QuizModele {
 
     public interface deletePartQuizCallBack {
         void onSuccess();
+
+        void onErrorNetwork(); // Pas de connexion
+
+        void onErrorVollet(); // Erreur de volley
+    }
+
+    public interface getScoreQuizCallBack {
+        void onSuccess(String score, String maxScore);
 
         void onErrorNetwork(); // Pas de connexion
 

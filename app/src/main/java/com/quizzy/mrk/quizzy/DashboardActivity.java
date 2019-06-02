@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -59,10 +61,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private ArrayList<DataItem> data = new ArrayList<DataItem>();
 
+    private MediaPlayer dofusMp3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        Log.d("APP", "INITIALISATED MEDIA " + dofusMp3);
+
+        this.dofusMp3 = MediaPlayer.create(getApplicationContext(), R.raw.dofus);
+
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_activity_dashboard));
@@ -115,6 +124,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else {
             tvBadgeFriendsRequest.setText("");
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        playMusic(this.dofusMp3);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d("APP", "NOT HERE MEDIA " + dofusMp3);
     }
 
     private void manageLists(){
@@ -276,6 +299,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             }
         });
+    }
+
+    private void playMusic(MediaPlayer music) {
+
+        if (music.isPlaying()) {
+            music.stop();
+        }else{
+            music.start();
+        }
 
     }
 }

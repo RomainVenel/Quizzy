@@ -1,6 +1,7 @@
 package com.quizzy.mrk.quizzy.Fragments;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -225,7 +226,6 @@ public class QuestionPassageQuizFragment extends Fragment {
                     public void onClick(View view) {
                         setScoreTotalForQuizCompletion(qc);
                         Intent intent = new Intent(getActivity(), DashboardActivity.class);
-                        intent.putExtra("listParts", parts);
                         startActivity(intent);
                     }
                 });

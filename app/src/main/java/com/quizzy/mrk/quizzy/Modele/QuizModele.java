@@ -300,8 +300,50 @@ public class QuizModele {
         queue.add(request);
     }
 
+    public void shareQuiz(final User user, final Quiz quiz, final ShareQuizCallBack callBack) {
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                Application.getUrlServeur() + user.getId() + "/" + quiz.getId() + "/share",
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("APP", "Response ==> " + response);
+                        try {
+
+                            String sharedId = response.getString("id");
+
+                            callBack.onSuccess();
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        });
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
     public interface NewQuizCallBack {
         void onSuccess(int quiz_id, String media); // quiz insere en bdd
+
+        void onErrorNetwork(); // Pas de connexion
+
+        void onErrorVollet(); // Erreur de volley
+    }
+
+    public interface ShareQuizCallBack {
+        void onSuccess(); // quiz insere en bdd
 
         void onErrorNetwork(); // Pas de connexion
 

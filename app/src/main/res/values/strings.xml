@@ -87,6 +87,8 @@
     <string name="title_activity_mes_quiz">Mes quiz</string>
     <string name="tv_mes_quiz_empty">Vous n\'avez aucun quiz</string>
     <string name="tv_mes_quiz_adapteur_date">Validé le</string>
+    <string name="message_dialog_mes_quiz">Que voulez-vous faire?</string>
+    <string name="message_dialog_share_quiz">Voulez-vous partager votre quiz avec cet utilisateur?</string>
     <!-- end mes quiz -->
 
     <!-- mon quiz -->
@@ -120,9 +122,11 @@
     <string name="btn_label_back_maj">BACK</string>
     <string name="dialog_btn_yes">Yes</string>
     <string name="dialog_btn_no">No</string>
+    <string name="dialog_btn_partage">Partager</string>
+    <string name="dialog_btn_delete">Supprimer</string>
     <string name="tv_search">Search</string>
     <string name="friends_found">Friend(s) found</string>
-    
+
     <!-- fragment question -->
     <string name="btn_next_part">Partie suivante</string>
     <string name="validate">Validate</string>

@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -19,6 +20,7 @@ import com.android.volley.RequestQueue;
 import com.google.android.material.snackbar.Snackbar;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
 import com.quizzy.mrk.quizzy.Modele.MesQuizModele;
+import com.quizzy.mrk.quizzy.Modele.QuizModele;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
@@ -30,6 +32,7 @@ public class MesQuizActivity extends AppCompatActivity {
 
     private RequestQueue requestQueue;
     private MesQuizModele mesQuizModele;
+    private QuizModele mQuizModele;
     private ArrayList<Quiz> listQuiz;
 
     private TextView tvNoQuiz;
@@ -46,6 +49,7 @@ public class MesQuizActivity extends AppCompatActivity {
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.mesQuizModele = new MesQuizModele(this, this.requestQueue);
+        this.mQuizModele = new QuizModele(this, this.requestQueue);
 
         this.tvNoQuiz = findViewById(R.id.tv_mes_quiz);
         this.lvQuiz = findViewById(R.id.lv_mes_quiz);
@@ -66,13 +70,53 @@ public class MesQuizActivity extends AppCompatActivity {
                     lvQuiz.setOnItemClickListener(
                             new AdapterView.OnItemClickListener() {
                                 @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    Bundle paquet = new Bundle();
-                                    paquet.putParcelable("quiz", listQuiz.get(position) );
-                                    Intent intent = new Intent(MesQuizActivity.this, MonQuizOptionsActivity.class);
-                                    intent.putExtras(paquet);
-                                    startActivity(intent);
-                                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                                    androidx.appcompat.app.AlertDialog.Builder alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(MesQuizActivity.this);
+                                    alertDialogBuilder.setMessage(R.string.message_dialog_mes_quiz);
+                                    alertDialogBuilder.setPositiveButton(
+                                            R.string.dialog_btn_partage,
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.cancel();
+                                                    Bundle paquet = new Bundle();
+                                                    paquet.putParcelable("quiz", listQuiz.get(position) );
+                                                    Intent intent = new Intent(MesQuizActivity.this, ShareQuizActivity.class);
+                                                    intent.putExtras(paquet);
+                                                    startActivity(intent);
+                                                }
+                                            });
+
+                                    alertDialogBuilder.setNegativeButton(
+                                            R.string.dialog_btn_delete,
+                                            new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    mQuizModele.deleteQuiz(listQuiz.get(position), new QuizModele.deleteQuizCallBack() {
+                                                        @Override
+                                                        public void onSuccess() {
+                                                            Intent intent = new Intent(MesQuizActivity.this, MesQuizActivity.class);
+                                                            startActivity(intent);
+                                                        }
+
+                                                        @Override
+                                                        public void onErrorNetwork() {
+                                                            Snackbar snackbar = Snackbar
+                                                                    .make(findViewById(R.id.activity_mes_quiz), R.string.error_connexion_http, 2500);
+                                                            snackbar.show();
+                                                        }
+
+                                                        @Override
+                                                        public void onErrorVollet() {
+                                                            Snackbar snackbar = Snackbar
+                                                                    .make(findViewById(R.id.activity_mes_quiz), R.string.error_vollet, 2500);
+                                                            snackbar.show();
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                    androidx.appcompat.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                                    alertDialog.show();
                                 }
                             }
                     );

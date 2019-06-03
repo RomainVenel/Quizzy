@@ -9,7 +9,6 @@
     <string name="error_user_not_found">Username or password incorrect</string>
     <string name="register">REGISTER</string>
     <string name="forgotPassword">Forgot password?</string>
-    <!-- end login -->
 
     <!-- sign in -->
     <string name="tv_sign_in_last_name">Last name</string>
@@ -26,23 +25,20 @@
     <string name="error_username_exist">This username already exists</string>
     <string name="error_email_exist">This email already exists</string>
     <string name="title_activity_sign_in">Inscription</string>
-    <!-- end sign in -->
 
     <!-- navigation drawer -->
-    <string name="open_nav_drawer">Ouvrir</string>
-    <string name="close_nav_drawer">Fermer</string>
-    <string name="nav_drawer_profil">Profil</string>
-    <string name="nav_drawer_friend">Mes amis</string>
-    <string name="nav_drawer_quiz">Mes quiz</string>
-    <string name="nav_demande_amis">Demande d\'amis</string>
-    <string name="nav_drawer_a_propos">À propos</string>
-    <string name="nav_drawer_logout">Déconnection</string>
-    <!-- end navigation drawer -->
+    <string name="open_nav_drawer">Open</string>
+    <string name="close_nav_drawer">Close</string>
+    <string name="nav_drawer_profil">Profilz</string>
+    <string name="nav_drawer_friend">My friends</string>
+    <string name="nav_drawer_quiz">My quizzes</string>
+    <string name="nav_demande_amis">Friend requests</string>
+    <string name="nav_drawer_a_propos">About</string>
+    <string name="nav_drawer_logout">Logout</string>
 
     <!-- dialog a propos -->
-    <string name="txt_a_propos_title">À propos ...</string>
-    <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL 2018-2019</string>
-    <!-- end dialog a propos -->
+    <string name="txt_a_propos_title">About ...</string>
+    <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL \n2018-2019</string>
 
     <!-- dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
@@ -84,12 +80,11 @@
     <string name="et_question_empty_name_answer">All answer name fields of the answers are not filled</string>
 
     <!-- mes quiz -->
-    <string name="title_activity_mes_quiz">Mes quiz</string>
-    <string name="tv_mes_quiz_empty">Vous n\'avez aucun quiz</string>
-    <string name="tv_mes_quiz_adapteur_date">Validé le</string>
-    <string name="message_dialog_mes_quiz">Que voulez-vous faire?</string>
-    <string name="message_dialog_share_quiz">Voulez-vous partager votre quiz avec cet utilisateur?</string>
-    <!-- end mes quiz -->
+    <string name="title_activity_mes_quiz">My quizzes</string>
+    <string name="tv_mes_quiz_empty">You have no quiz</string>
+    <string name="tv_mes_quiz_adapteur_date">Validated on</string>
+    <string name="message_dialog_mes_quiz">What do you want to do ?</string>
+    <string name="message_dialog_share_quiz">Do you want to share your quiz with this friend ?</string>
 
     <!-- mon quiz -->
     <string name="btn_mon_quiz_delete">Supprimer ce quiz</string>
@@ -122,8 +117,8 @@
     <string name="btn_label_back_maj">BACK</string>
     <string name="dialog_btn_yes">Yes</string>
     <string name="dialog_btn_no">No</string>
-    <string name="dialog_btn_partage">Partager</string>
-    <string name="dialog_btn_delete">Supprimer</string>
+    <string name="dialog_btn_partage">Share</string>
+    <string name="dialog_btn_delete">Delete</string>
     <string name="tv_search">Search</string>
     <string name="friends_found">Friend(s) found</string>
 
@@ -142,6 +137,6 @@
     <string name="title_activity_new_quiz">Quiz</string>
     <string name="title_activity_parts">Part</string>
     <string name="title_activity_question">Question</string>
-
+    <string name="title_resum_quiz">Summary</string>
 
 </resources>

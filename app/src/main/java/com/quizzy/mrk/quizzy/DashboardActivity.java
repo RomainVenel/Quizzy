@@ -1,6 +1,7 @@
 package com.quizzy.mrk.quizzy;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -206,6 +207,20 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         });
     }
 
+    public void openDialogApropos() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_a_propos);
+        Button closeDialog = dialog.findViewById(R.id.btn_close_dialog_a_propos);
+        dialog.show();
+
+        closeDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.cancel();
+            }
+        });
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mToolbar.onOptionsItemSelected(item)) {
@@ -231,16 +246,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             startActivity(intent);
         } else if (menuItem.getItemId() == R.id.menu_drawer_a_propos) { // item à propos
             mDrawerLayout.closeDrawers();
-            AlertDialog alertDialog = new AlertDialog.Builder(this).create();
-            alertDialog.setTitle(getString(R.string.txt_a_propos_title));
-            alertDialog.setMessage(getString(R.string.txt_a_propos_message));
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-            alertDialog.show();
+            this.openDialogApropos();
         } else if (menuItem.getItemId() == R.id.menu_drawer_logout) {  // item deconnexion
             Session.getSession().fermer();
             intent = new Intent(DashboardActivity.this, ConnexionActivity.class);

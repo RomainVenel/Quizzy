@@ -1,10 +1,12 @@
 package com.quizzy.mrk.quizzy;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -44,6 +46,10 @@ public class ResumQuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resum_quiz);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(getString(R.string.title_resum_quiz));
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         this.quiz = getIntent().getExtras().getParcelable("quiz");
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
@@ -143,6 +149,18 @@ public class ResumQuizActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(ResumQuizActivity.this, DashboardActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 }

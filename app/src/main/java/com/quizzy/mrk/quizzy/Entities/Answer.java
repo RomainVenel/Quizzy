@@ -68,6 +68,7 @@ public class Answer implements Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.name);
         dest.writeInt(this.correct ? 1 : 0);
+        dest.writeValue(this.question);
     }
 
     public Answer(Parcel in){

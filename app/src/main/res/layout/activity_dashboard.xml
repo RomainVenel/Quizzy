@@ -5,6 +5,7 @@
     android:id="@+id/dashboard_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgroundDark"
     tools:context=".DashboardActivity"
     tools:openDrawer="start">
 
@@ -13,73 +14,94 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dashboard_new_quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:background="@color/colorPrimaryDark"
+            android:backgroundTint="@color/yellowBtn"
             android:text="@string/btn_dashboard_new_quiz"
             android:textColor="@color/white" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:text="@string/tv_quiz_not_finished"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/graywhite" />
 
-        <ListView
-            android:id="@+id/list_dashboard_quiz_not_finished"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_weight="0.1">
 
-        </ListView>
+            <ListView
+                android:id="@+id/list_dashboard_quiz_not_finished"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:dividerHeight="2px"
+                android:layout_marginRight="10dp" />
 
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:text="@string/tv_quiz_shared"
-        android:textColor="@color/colorPrimaryDark"/>
-
-        <ListView
-            android:id="@+id/list_dashboard_quiz_shared"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-
-        </ListView>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_quiz_shared"
+            android:textColor="@color/graywhite" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_weight="0.1">
+
+            <ListView
+                android:id="@+id/list_dashboard_quiz_shared"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:dividerHeight="2px"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:text="@string/tv_quiz_completed"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/graywhite" />
 
-        <ListView
-            android:id="@+id/list_dashboard_quiz_completed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:layout_weight="0.1">
 
-        </ListView>
+            <ListView
+                android:id="@+id/list_dashboard_quiz_completed"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:dividerHeight="2px"
+                android:layout_marginRight="10dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -92,6 +114,6 @@
         app:headerLayout="@layout/header_nav_drawer"
         app:itemIconTint="@color/darkGray"
         app:itemTextColor="@color/darkGray"
-        app:menu="@menu/menu_navigation_drawer"/>
+        app:menu="@menu/menu_navigation_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

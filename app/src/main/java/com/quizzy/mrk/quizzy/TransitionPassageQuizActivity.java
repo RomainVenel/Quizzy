@@ -82,12 +82,4 @@ public class TransitionPassageQuizActivity extends AppCompatActivity {
             }
         }, TIME_OUT);
     }
-
-    public class QuestionIdComparator implements Comparator<Question>
-    {
-        @Override
-        public int compare(Question question1, Question question2) {
-            return question1.getId() - question2.getId();
-        }
-    }
 }

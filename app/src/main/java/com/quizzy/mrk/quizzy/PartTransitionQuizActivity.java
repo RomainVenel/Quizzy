@@ -2,6 +2,7 @@ package com.quizzy.mrk.quizzy;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -39,11 +40,14 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
     private PartCompletionModele partCompletionModele;
     private ArrayList<Part> listParts;
     private ArrayList<Question> listQuestions;
+    private MediaPlayer standByMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_part_transition_quiz);
+
+        this.standByMe = MediaPlayer.create(getApplicationContext(), R.raw.standbyme);
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.partsModele = new PartsModele(this, this.requestQueue);
@@ -64,7 +68,6 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
                 for (Question question : questions) {
 
                     listQuestions.add(question);
-                    Log.d("APP", "SUCCESS");
                 }
 
                 Collections.sort(listQuestions, new QuestionIdComparator());
@@ -73,7 +76,7 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
             @Override
             public void onErrorNetwork() {
-                Log.d("APP", "ERROR NETWORK");
+
             }
 
             @Override
@@ -111,8 +114,6 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
         // 1 - Get ViewPager from layout
         final CustomViewPager pager = findViewById(R.id.customViewPager);
 
-        Log.d("APP", "JE RENTRE?");
-
         this.quizCompletionModele.getQuizCompletion(quiz, new QuizCompletionModele.QuizCompletionCallBack() {
             @Override
             public void onSuccess(final QuizCompletion qc) {
@@ -121,7 +122,6 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
                 partCompletionModele.newPartCompletion(parts.get(0), qc,  new PartCompletionModele.PartCompletionCallBack() {
                     @Override
                     public void onSuccess(PartCompletion PartCompletionCreate) {
-                        Log.d("APP", "SUCCESS HERE =>" + parts.get(0));
                         pager.setAdapter(new PageAdapter(getSupportFragmentManager(), getResources().getIntArray(R.array.colorPagesViewPager), parts, questions, qc) {
                         });
 
@@ -138,8 +138,6 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
                     }
                 });
-
-                Log.d("APP", "ET LA??? " + qc.getId() + qc.getUser().getId() + qc.getQuiz().getId());
             }
 
             @Override
@@ -152,6 +150,14 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        standByMe.stop();
+        standByMe.release();
 
     }
 

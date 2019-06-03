@@ -173,7 +173,10 @@ public class ShareQuizActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 dialog.cancel();
+                                                Bundle paquet = new Bundle();
+                                                paquet.putParcelable("quiz", quiz );
                                                 Intent intent = new Intent(ShareQuizActivity.this, ShareQuizActivity.class);
+                                                intent.putExtras(paquet);
                                                 startActivity(intent);
                                             }
                                         });

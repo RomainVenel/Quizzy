@@ -43,6 +43,9 @@
     <!-- dashboard -->
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="btn_dashboard_new_quiz">Créer un quiz</string>
+    <string name="btn_dashboard_created_quiz">Quiz en cours de création</string>
+    <string name="btn_dashboard_shared_quiz">Quiz partagés avec vous</string>
+    <string name="btn_dashboard_finished_quiz">Quiz finis</string>
     <string name="tv_quiz_not_finished">Vos quiz en cours de création :</string>
     <string name="tv_quiz_shared">Les quiz partagés avec vous :</string>
     <string name="tv_quiz_completed">Vos quiz finis :</string>

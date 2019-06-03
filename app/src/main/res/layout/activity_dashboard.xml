@@ -16,23 +16,26 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dashboard_new_quiz"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/yellowBtn"
+            app:icon="@drawable/ic_add_black_24dp"
+            android:text="@string/btn_dashboard_new_quiz"
+            android:textColor="@color/white"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dashboard_created_quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/yellowBtn"
-            android:text="@string/btn_dashboard_new_quiz"
+            android:text="@string/btn_dashboard_created_quiz"
             android:textColor="@color/white" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/tv_quiz_not_finished"
-            android:textColor="@color/graywhite" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -51,14 +54,16 @@
 
         </LinearLayout>
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dashboard_quiz_shared"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:text="@string/tv_quiz_shared"
-            android:textColor="@color/graywhite" />
+            android:backgroundTint="@color/yellowBtn"
+            android:text="@string/btn_dashboard_shared_quiz"
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -77,15 +82,16 @@
 
         </LinearLayout>
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_dashboard_finished_quiz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:text="@string/tv_quiz_completed"
-            android:textColor="@color/graywhite" />
-
+            android:backgroundTint="@color/yellowBtn"
+            android:text="@string/btn_dashboard_finished_quiz"
+            android:textColor="@color/white" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -102,6 +108,36 @@
                 android:layout_marginRight="10dp" />
 
         </LinearLayout>
+
+
+        <!--<TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_quiz_not_finished"
+            android:textColor="@color/graywhite" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_quiz_shared"
+            android:textColor="@color/graywhite" />
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_quiz_completed"
+            android:textColor="@color/graywhite" />-->
 
     </LinearLayout>
 

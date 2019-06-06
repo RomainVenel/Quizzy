@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.quizzy.mrk.quizzy.Adapter.CustomAdapter;
 import com.quizzy.mrk.quizzy.Adapter.DataItem;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
@@ -60,7 +63,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private boolean isBig = false;
 
-    private LinearLayout lNotFinishedquiz;
+    private LinearLayout lNotFinishedQuiz;
+    private LinearLayout lSharedQuiz;
+    private LinearLayout lFinishedQuiz;
 
     private ListView lvQuizShared;
     private ArrayList<Quiz> quizShared;
@@ -110,39 +115,35 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         // Edit quiz
         this.bCreatedQuiz = findViewById(R.id.btn_dashboard_created_quiz);
-        this.lNotFinishedquiz = findViewById(R.id.layout_created_quiz);
+        this.lNotFinishedQuiz = findViewById(R.id.layout_created_quiz);
         this.bCreatedQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                openCloseList(lNotFinishedquiz, lvQuizNotFinish);
+                openCloseList(lNotFinishedQuiz, lvQuizNotFinish, v);
 
             }
         });
 
         // Shared quiz
         this.bSharedQuiz = findViewById(R.id.btn_dashboard_quiz_shared);
+        this.lSharedQuiz = findViewById(R.id.layout_shared_quiz);
         this.bSharedQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle paquet = new Bundle();
-                paquet.putBoolean("new_quiz", true);
-                Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
-                intent.putExtras(paquet);
-                startActivity(intent);
+
+                openCloseList(lSharedQuiz, lvQuizShared, v);
             }
         });
 
         // Finished quiz
         this.bNotFinishedQuiz = findViewById(R.id.btn_dashboard_finished_quiz);
+        this.lFinishedQuiz = findViewById(R.id.layout_finished_quiz);
         this.bNotFinishedQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle paquet = new Bundle();
-                paquet.putBoolean("new_quiz", true);
-                Intent intent = new Intent(DashboardActivity.this, QuizActivity.class);
-                intent.putExtras(paquet);
-                startActivity(intent);
+
+                openCloseList(lFinishedQuiz, lvQuizCompleted, v);
             }
         });
     }
@@ -193,8 +194,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     getScoreQuiz(quiz);
                 }
 
-                ArrayAdapter<String> adaptateurQuizNotFinished = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizNotFinished) ;
-                ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizShared) ;
+                ArrayAdapter<String> adaptateurQuizNotFinished = new ArrayAdapter<String>(DashboardActivity.this, R.layout.dahsboard_custom_white_text, itemQuizNotFinished) ;
+                ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this ,R.layout.dahsboard_custom_white_text, itemQuizShared);
                 lvQuizNotFinish.setAdapter(adaptateurQuizNotFinished);
                 lvQuizShared.setAdapter(adaptateurQuizShared);
 
@@ -335,35 +336,41 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         });
     }
 
-    private void openCloseList(final LinearLayout layout, ListView list) {
+    private void openCloseList(final LinearLayout layout, ListView list, View view) {
 
-        if(!isBig){
-            ValueAnimator va = ValueAnimator.ofInt(0, 200);
-            va.setDuration(900);
-            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    Integer value = (Integer) animation.getAnimatedValue();
-                    layout.getLayoutParams().height = value.intValue();
-                    layout.requestLayout();
-                }
-            });
-            va.start();
-            isBig = true;
+        if (list.getAdapter().getCount() != 0) {
+            if (!isBig) {
+                ValueAnimator va = ValueAnimator.ofInt(0, 200);
+                va.setDuration(900);
+                va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        Integer value = (Integer) animation.getAnimatedValue();
+                        layout.getLayoutParams().height = value.intValue();
+                        layout.requestLayout();
+                    }
+                });
+                va.start();
+                isBig = true;
+            } else {
+                ValueAnimator va = ValueAnimator.ofInt(200, 0);
+                va.setDuration(900);
+                va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        Integer value = (Integer) animation.getAnimatedValue();
+                        layout.getLayoutParams().height = value.intValue();
+                        layout.requestLayout();
+                    }
+                });
+                va.start();
+                isBig = false;
+            }
+            list.setVisibility(View.VISIBLE);
+        } else {
+            Animation shake = AnimationUtils.loadAnimation(DashboardActivity.this, R.anim.shake);
+            view.startAnimation(shake);
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.activity_dashboard),  "Aucun quiz disponible", 2500);
+            snackbar.show();
         }
-        else{
-            ValueAnimator va = ValueAnimator.ofInt(200, 0);
-            va.setDuration(900);
-            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    Integer value = (Integer) animation.getAnimatedValue();
-                    layout.getLayoutParams().height = value.intValue();
-                    layout.requestLayout();
-                }
-            });
-            va.start();
-            isBig = false;
-        }
-        list.setVisibility(View.VISIBLE);
-
     }
 }

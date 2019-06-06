@@ -10,8 +10,10 @@
     tools:openDrawer="start">
 
     <LinearLayout
+        android:id="@+id/activity_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
@@ -19,12 +21,11 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/yellowBtn"
-            app:icon="@drawable/ic_add_black_24dp"
             android:text="@string/btn_dashboard_new_quiz"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_add_black_24dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dashboard_created_quiz"
@@ -34,9 +35,9 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/yellowBtn"
-            app:icon="@drawable/ic_edit_black_24dp"
             android:text="@string/btn_dashboard_created_quiz"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_edit_black_24dp"/>
 
         <LinearLayout
             android:id="@+id/layout_created_quiz"
@@ -63,14 +64,15 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/yellowBtn"
-            app:icon="@drawable/ic_compare_arrows_black_24dp"
             android:text="@string/btn_dashboard_shared_quiz"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_compare_arrows_black_24dp"/>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/layout_shared_quiz"
             android:layout_width="fill_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/list_dashboard_quiz_shared"
@@ -91,13 +93,15 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/yellowBtn"
-            app:icon="@drawable/ic_check_black_24dp"
             android:text="@string/btn_dashboard_finished_quiz"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:icon="@drawable/ic_check_black_24dp"/>
+
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/layout_finished_quiz"
             android:layout_width="fill_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:orientation="horizontal">
 
             <ListView
                 android:id="@+id/list_dashboard_quiz_completed"

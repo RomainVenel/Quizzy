@@ -1,7 +1,11 @@
 package com.quizzy.mrk.quizzy;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.widget.ImageView;
 import com.android.volley.RequestQueue;
 import com.google.android.material.snackbar.Snackbar;
 import com.quizzy.mrk.quizzy.Modele.UserModele;
+import com.quizzy.mrk.quizzy.Technique.Application;
 import com.quizzy.mrk.quizzy.Technique.Session;
 import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
@@ -20,15 +25,17 @@ import com.squareup.picasso.Picasso;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 public class ProfilActivity extends AppCompatActivity {
 
+    private final int SELECT_IMG = 1;
     private RequestQueue requestQueue;
     private UserModele userModele;
 
     private ImageView ivUserImg;
     private EditText etLastName;
     private EditText etFirstName;
-    private EditText etUsername;
     private EditText etEmail;
     private Button bValidate;
 
@@ -47,15 +54,20 @@ public class ProfilActivity extends AppCompatActivity {
         this.ivUserImg = this.findViewById(R.id.profil_img);
         this.etLastName = findViewById(R.id.et_profil_lastName);
         this.etFirstName = findViewById(R.id.et_profil_firstName);
-        this.etUsername = findViewById(R.id.et_profil_username);
         this.etEmail = findViewById(R.id.et_profil_email);
         this.bValidate = findViewById(R.id.btn_profil_validate);
 
         Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(this.ivUserImg);
         etLastName.setText(Session.getSession().getUser().getLastName());
         etFirstName.setText(Session.getSession().getUser().getFirstName());
-        etUsername.setText(Session.getSession().getUser().getUsername());
         etEmail.setText(Session.getSession().getUser().getEmail());
+
+        this.ivUserImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGallery();
+            }
+        });
 
         this.bValidate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,15 +84,14 @@ public class ProfilActivity extends AppCompatActivity {
             this.userModele.updateProfile(
                     this.etLastName.getText().toString().trim(),
                     this.etFirstName.getText().toString().trim(),
-                    this.etUsername.getText().toString().trim(),
                     this.etEmail.getText().toString().trim(),
+                    this.getBase64Img(),
                     Session.getSession().getUser(),
                     new UserModele.UserCallBack() {
                         @Override
                         public void onSuccess() {
                             Session.getSession().getUser().setLastName(etLastName.getText().toString().trim());
                             Session.getSession().getUser().setFirstName(etFirstName.getText().toString().trim());
-                            Session.getSession().getUser().setUsername(etUsername.getText().toString().trim());
                             Session.getSession().getUser().setEmail(etEmail.getText().toString().trim());
 
                             Intent intent = new Intent(ProfilActivity.this, DashboardActivity.class);
@@ -89,13 +100,8 @@ public class ProfilActivity extends AppCompatActivity {
 
                         @Override
                         public void onErrorData(String error) {
-                            if (error.equals("username")) {
-                                etUsername.setError(getString(R.string.error_username_exist));
-                                Log.d("APP", "username empty");
-                            } else if(error.equals("email")) {
-                                etEmail.setError(getString(R.string.error_email_exist));
-                                Log.d("APP", "email empty");
-                            }
+                            etEmail.setError(getString(R.string.error_email_exist));
+                            Log.d("APP", "email empty");
                         }
 
                         @Override
@@ -132,13 +138,6 @@ public class ProfilActivity extends AppCompatActivity {
             this.etFirstName.setError(null);
         }
 
-        if (this.etUsername.getText().toString().matches("")) {
-            this.etUsername.setError(getString(R.string.et_error_empty));
-            check = false;
-        } else {
-            this.etUsername.setError(null);
-        }
-
         if (this.etEmail.getText().toString().matches("")) {
             this.etEmail.setError(getString(R.string.et_error_empty));
             check = false;
@@ -146,6 +145,36 @@ public class ProfilActivity extends AppCompatActivity {
             this.etEmail.setError(null);
         }
         return check;
+    }
+
+    private String getBase64Img() {
+        if (this.ivUserImg.getDrawable() == null) { // si il n'y a pas d'image
+            return null;
+        } else {
+            return Application.bitmapToBase64(((BitmapDrawable) this.ivUserImg.getDrawable()).getBitmap());
+        }
+    }
+
+    private void openGallery() {
+        Intent picker = new Intent(Intent.ACTION_GET_CONTENT);
+        picker.setType("image/*");
+        picker.putExtra(Intent.EXTRA_LOCAL_ONLY, true); // seulement image en memoire interne
+        startActivityForResult(Intent.createChooser(picker, getString(R.string.choose_img)), this.SELECT_IMG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SELECT_IMG && resultCode == RESULT_OK) {
+            Uri pathUri = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pathUri);
+                this.ivUserImg.setImageBitmap(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override

@@ -35,7 +35,7 @@ public class UserModele {
         this.queue = queue;
     }
 
-    public void updateProfile(final String lastName, final String firstName, final String username, final String email, final User user, final UserCallBack callBack) {
+    public void updateProfile(final String lastName, final String firstName, final String email, final String media, final User user, final UserCallBack callBack) {
         StringRequest request = new StringRequest(
                 Request.Method.POST,
                 Application.getUrlServeur() + "update/profil/" + user.getId(),
@@ -46,9 +46,10 @@ public class UserModele {
                         try {
                             JSONObject json = new JSONObject(response);
                             if (json.getBoolean("status")) {
+                                Session.getSession().getUser().setMedia(Application.getUrlServeur() + json.getString("media"));
                                 callBack.onSuccess();
                             } else {
-                                callBack.onErrorData(json.getString("error"));
+                                callBack.onErrorData("Email already exist");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -70,8 +71,10 @@ public class UserModele {
                 Map<String, String> params = new HashMap<>();
                 params.put("last_name", lastName);
                 params.put("first_name", firstName);
-                params.put("username", username);
                 params.put("email", email);
+                if (media != null) {
+                    params.put("media", media);
+                }
 
                 return params;
             }

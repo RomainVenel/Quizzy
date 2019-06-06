@@ -54,19 +54,6 @@
             android:inputType="text" />
 
         <EditText
-            android:id="@+id/et_profil_username"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/custome_edit_text_dark"
-            android:drawableLeft="@drawable/ic_ed_name"
-            android:textColor="@color/graywhite"
-            android:hint="@string/ed_username"
-            android:textColorHint="@color/graywhite"
-            android:drawablePadding="10dp"
-            android:inputType="text" />
-
-        <EditText
             android:id="@+id/et_profil_email"
             android:layout_width="match_parent"
             android:layout_height="45dp"

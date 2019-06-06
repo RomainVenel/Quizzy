@@ -126,6 +126,49 @@ public class UserModele {
         queue.add(request);
     }
 
+    public void changePassword(final User user, final String password, final UserCallBack callBack) {
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Application.getUrlServeur() + "user/" + user.getId() + "/change/password",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("APP", "Response ==> " + response);
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            if (json.getBoolean("status")) {
+                                Session.getSession().getUser().setPassword(password);
+                                callBack.onSuccess();
+                            } else {
+                                callBack.onErrorData("user not found");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("password", password);
+
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
     public interface UserCallBack {
         void onSuccess(); // updated in bdd
 
@@ -135,6 +178,4 @@ public class UserModele {
 
         void onErrorVollet(); // Erreur de volley
     }
-
-
 }

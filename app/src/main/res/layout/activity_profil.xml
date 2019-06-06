@@ -67,8 +67,18 @@
             android:inputType="textEmailAddress" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_change_password"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/yellowBtn"
+            android:text="@string/change_password"
+            android:textColor="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_profil_validate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginTop="15dp"
             android:layout_centerInParent="true"

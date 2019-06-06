@@ -13,10 +13,11 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgetPasswordActivity"></activity>
-        <activity android:name=".ShareQuizActivity"></activity>
-        <activity android:name=".ShareQuiz"></activity>
-        <activity android:name=".PartPassageQuizActivity"></activity>
+        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".ForgetPasswordActivity" />
+        <activity android:name=".ShareQuizActivity" />
+        <activity android:name=".ShareQuiz" />
+        <activity android:name=".PartPassageQuizActivity" />
         <activity android:name=".ConnexionActivity" />
         <activity android:name=".MonQuizOptionsActivity" />
         <activity android:name=".ListeAmisActivity" />

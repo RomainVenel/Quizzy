@@ -37,6 +37,7 @@ public class ProfilActivity extends AppCompatActivity {
     private EditText etLastName;
     private EditText etFirstName;
     private EditText etEmail;
+    private Button bChangePassword;
     private Button bValidate;
 
     @Override
@@ -55,6 +56,7 @@ public class ProfilActivity extends AppCompatActivity {
         this.etLastName = findViewById(R.id.et_profil_lastName);
         this.etFirstName = findViewById(R.id.et_profil_firstName);
         this.etEmail = findViewById(R.id.et_profil_email);
+        this.bChangePassword = findViewById(R.id.btn_change_password);
         this.bValidate = findViewById(R.id.btn_profil_validate);
 
         Picasso.with(this).load(Session.getSession().getUser().getMedia()).into(this.ivUserImg);
@@ -66,6 +68,14 @@ public class ProfilActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openGallery();
+            }
+        });
+
+        this.bChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfilActivity.this, ChangePasswordActivity.class);
+                startActivity(intent);
             }
         });
 

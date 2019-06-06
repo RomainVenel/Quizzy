@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -22,8 +23,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
+import com.github.mikephil.charting.charts.BubbleChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.BubbleData;
+import com.github.mikephil.charting.data.BubbleDataSet;
+import com.github.mikephil.charting.data.BubbleEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.interfaces.datasets.IBubbleDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.MPPointF;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.quizzy.mrk.quizzy.Adapter.CustomAdapter;
@@ -36,6 +58,7 @@ import com.quizzy.mrk.quizzy.Technique.VolleySingleton;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -75,12 +98,22 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private TextView tvBadgeFriendsRequest;
 
+    private PieChart pieChart;
+
+    private String[] xData = {"Quiz en cours", "Quiz partagés", "Quiz finis"};
+
     private ArrayList<DataItem> data = new ArrayList<DataItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        this.pieChart = findViewById(R.id.chart);
+
+        pieChart.setRotationEnabled(true);
+        pieChart.setHoleRadius(0f);
+        pieChart.setTransparentCircleAlpha(0);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_activity_dashboard));
@@ -146,6 +179,60 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 openCloseList(lFinishedQuiz, lvQuizCompleted, v);
             }
         });
+    }
+
+    private void addDataSet(PieChart pieChart, ListView lvNotFinish, ListView lvShared, ListView lvFinished) {
+
+        ArrayList<PieEntry> yEntrys = new ArrayList<>();
+        ArrayList<String> xEntrys = new ArrayList<>();
+
+        if (lvFinished.getAdapter() == null) {
+            final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), 0};
+
+            for (int i = 0; i < yData.length; i++) {
+                yEntrys.add(new PieEntry(yData[i] , i));
+            }
+        } else {
+            final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), lvFinished.getAdapter().getCount()};
+
+            for (int i = 0; i < yData.length; i++) {
+                yEntrys.add(new PieEntry(yData[i] , i));
+            }
+        }
+
+        for (int i = 1; i < xData.length; i++) {
+            xEntrys.add(xData[i]);
+        }
+
+        // create the data set
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "pourcentage quiz");
+        pieDataSet.setSliceSpace(2);
+        pieDataSet.setValueTextSize(14);
+
+        // add colors to dataset
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.rgb(218, 95, 106));
+        colors.add(Color.rgb(146, 180, 34));
+        colors.add(Color.rgb(173, 206, 183));
+
+        pieDataSet.setColors(colors);
+
+        // add legend to chart
+        Legend legend = pieChart.getLegend();
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setTextColor(Color.WHITE);
+        legend.setEnabled(true);
+
+        // remove description
+        Description desc = pieChart.getDescription();
+        desc.setEnabled(false);
+
+        // create pie data object
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+
     }
 
     private void updateDataUserInNavigation(int friendsRequestCounter) {
@@ -322,6 +409,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 CustomAdapter adapter = new CustomAdapter(DashboardActivity.this, R.layout.row_list_completed, data);
 
                 lvQuizCompleted.setAdapter(adapter);
+
+                addDataSet(pieChart, lvQuizNotFinish, lvQuizShared, lvQuizCompleted);
             }
 
             @Override
@@ -338,33 +427,41 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private void openCloseList(final LinearLayout layout, ListView list, View view) {
 
-        if (list.getAdapter().getCount() != 0) {
-            if (!isBig) {
-                ValueAnimator va = ValueAnimator.ofInt(0, 200);
-                va.setDuration(900);
-                va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        Integer value = (Integer) animation.getAnimatedValue();
-                        layout.getLayoutParams().height = value.intValue();
-                        layout.requestLayout();
-                    }
-                });
-                va.start();
-                isBig = true;
+        if (list.getAdapter() != null) {
+            if (list.getAdapter().getCount() != 0) {
+                if (!isBig) {
+                    ValueAnimator va = ValueAnimator.ofInt(0, 200);
+                    va.setDuration(900);
+                    va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            Integer value = (Integer) animation.getAnimatedValue();
+                            layout.getLayoutParams().height = value.intValue();
+                            layout.requestLayout();
+                        }
+                    });
+                    va.start();
+                    isBig = true;
+                } else {
+                    ValueAnimator va = ValueAnimator.ofInt(200, 0);
+                    va.setDuration(900);
+                    va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            Integer value = (Integer) animation.getAnimatedValue();
+                            layout.getLayoutParams().height = value.intValue();
+                            layout.requestLayout();
+                        }
+                    });
+                    va.start();
+                    isBig = false;
+                }
+                list.setVisibility(View.VISIBLE);
             } else {
-                ValueAnimator va = ValueAnimator.ofInt(200, 0);
-                va.setDuration(900);
-                va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                    public void onAnimationUpdate(ValueAnimator animation) {
-                        Integer value = (Integer) animation.getAnimatedValue();
-                        layout.getLayoutParams().height = value.intValue();
-                        layout.requestLayout();
-                    }
-                });
-                va.start();
-                isBig = false;
+                Animation shake = AnimationUtils.loadAnimation(DashboardActivity.this, R.anim.shake);
+                view.startAnimation(shake);
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_dashboard),  "Aucun quiz disponible", 2500);
+                snackbar.show();
             }
-            list.setVisibility(View.VISIBLE);
         } else {
             Animation shake = AnimationUtils.loadAnimation(DashboardActivity.this, R.anim.shake);
             view.startAnimation(shake);

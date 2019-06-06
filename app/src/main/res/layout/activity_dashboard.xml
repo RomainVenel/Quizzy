@@ -15,6 +15,26 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="290dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/tv_quiz_not_finished"
+                android:textColor="@color/graywhite" />
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_dashboard_new_quiz"
@@ -34,7 +54,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:backgroundTint="@color/yellowBtn"
+            android:backgroundTint="@color/saumon"
             android:text="@string/btn_dashboard_created_quiz"
             android:textColor="@color/white"
             app:icon="@drawable/ic_edit_black_24dp"/>
@@ -63,7 +83,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:backgroundTint="@color/yellowBtn"
+            android:backgroundTint="@color/greenSlack"
             android:text="@string/btn_dashboard_shared_quiz"
             android:textColor="@color/white"
             app:icon="@drawable/ic_compare_arrows_black_24dp"/>
@@ -92,7 +112,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="10dp"
-            android:backgroundTint="@color/yellowBtn"
+            android:backgroundTint="@color/blueSad"
             android:text="@string/btn_dashboard_finished_quiz"
             android:textColor="@color/white"
             app:icon="@drawable/ic_check_black_24dp"/>

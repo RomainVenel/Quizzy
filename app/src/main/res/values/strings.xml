@@ -121,6 +121,8 @@
     <string name="dialog_btn_delete">Delete</string>
     <string name="tv_search">Search</string>
     <string name="friends_found">Friend(s) found</string>
+    <string name="user_not_found">User not found</string>
+    <string name="check_mail_new_password">Check your email for your new password</string>
 
     <!-- fragment question -->
     <string name="btn_next_part">Partie suivante</string>

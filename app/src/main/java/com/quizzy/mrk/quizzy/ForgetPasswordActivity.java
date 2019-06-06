@@ -95,13 +95,16 @@ public class ForgetPasswordActivity extends AppCompatActivity {
             this.userModele.forgetPassword(this.etUsername.getText().toString().trim(), this.birthdaySelected, new UserModele.UserCallBack() {
                 @Override
                 public void onSuccess() {
-                    Log.d("APP", "password changed");
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(R.id.activity_forget_password), R.string.check_mail_new_password, 3000);
+                    snackbar.show();
                 }
 
                 @Override
                 public void onErrorData(String error) {
-                    Log.d("APP", "user not found");
-                    Log.d("APP", birthdaySelected.get(Calendar.YEAR) + "/" + birthdaySelected.get(Calendar.MONTH) + "/" + birthdaySelected.get(Calendar.DAY_OF_MONTH));
+                    Snackbar snackbar = Snackbar
+                            .make(findViewById(R.id.activity_forget_password), R.string.user_not_found, 3000);
+                    snackbar.show();
                 }
 
                 @Override

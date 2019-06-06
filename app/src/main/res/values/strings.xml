@@ -138,5 +138,6 @@
     <string name="title_activity_parts">Part</string>
     <string name="title_activity_question">Question</string>
     <string name="title_resum_quiz">Summary</string>
+    <string name="title_forget_password">Forget password</string>
 
 </resources>

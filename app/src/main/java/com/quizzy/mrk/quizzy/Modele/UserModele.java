@@ -40,6 +40,51 @@ public class UserModele {
                 Request.Method.POST,
                 Application.getUrlServeur() + "update/profil/" + user.getId(),
                 new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("APP", "Response ==> " + response);
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            if (json.getBoolean("status")) {
+                                callBack.onSuccess();
+                            } else {
+                                callBack.onErrorData(json.getString("error"));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError) {
+                    callBack.onErrorNetwork();
+                } else if (error instanceof VolleyError) {
+                    Log.d("APP", "bug => " + error.getMessage());
+                    callBack.onErrorVollet();
+                }
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("last_name", lastName);
+                params.put("first_name", firstName);
+                params.put("username", username);
+                params.put("email", email);
+
+                return params;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(10000, 1, 1.0f));
+        queue.add(request);
+    }
+
+    public void forgetPassword(final String username, final GregorianCalendar birthday, final UserCallBack callBack) {
+        StringRequest request = new StringRequest(
+                Request.Method.POST,
+                Application.getUrlServeur() + "forget/password",
+                new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("APP", "Response ==> " + response);
@@ -48,7 +93,7 @@ public class UserModele {
                     if (json.getBoolean("status")) {
                         callBack.onSuccess();
                     } else {
-                        callBack.onErrorData(json.getString("error"));
+                        callBack.onErrorData("User not found");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -68,10 +113,8 @@ public class UserModele {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("last_name", lastName);
-                params.put("first_name", firstName);
                 params.put("username", username);
-                params.put("email", email);
+                params.put("birthday", birthday.get(Calendar.YEAR) + "-" + birthday.get(Calendar.MONTH) + "-" + birthday.get(Calendar.DAY_OF_MONTH));
 
                 return params;
             }

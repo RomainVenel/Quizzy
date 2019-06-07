@@ -28,4 +28,6 @@
     <color name="grayColorEditText">#2E3339</color>
     <color name="graywhite">#CDCFCA</color>
     <color name="yellowBtn">#FFB842</color>
+    <color name="greenSlack">#92B422</color>
+    <color name="blueSad">#ADCEB7</color>
 </resources>

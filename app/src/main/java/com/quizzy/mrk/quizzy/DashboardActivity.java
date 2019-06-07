@@ -1,25 +1,33 @@
 package com.quizzy.mrk.quizzy;
 
-import android.app.AlertDialog;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.quizzy.mrk.quizzy.Adapter.CustomAdapter;
 import com.quizzy.mrk.quizzy.Adapter.DataItem;
 import com.quizzy.mrk.quizzy.Entities.Quiz;
@@ -51,6 +59,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private ListView lvQuizNotFinish;
     private ArrayList<Quiz> quizNotFinished;
     private Button bNewQuiz;
+    private Button bCreatedQuiz;
+    private Button bSharedQuiz;
+    private Button bNotFinishedQuiz;
+
+    private boolean isBig = false;
+
+    private LinearLayout lNotFinishedQuiz;
+    private LinearLayout lSharedQuiz;
+    private LinearLayout lFinishedQuiz;
 
     private ListView lvQuizShared;
     private ArrayList<Quiz> quizShared;
@@ -60,12 +77,22 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private TextView tvBadgeFriendsRequest;
 
+    private PieChart pieChart;
+
+    private String[] xData = {"Quiz en cours", "Quiz partagés", "Quiz finis"};
+
     private ArrayList<DataItem> data = new ArrayList<DataItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        this.pieChart = findViewById(R.id.chart);
+
+        pieChart.setRotationEnabled(true);
+        pieChart.setHoleRadius(0f);
+        pieChart.setTransparentCircleAlpha(0);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_activity_dashboard));
@@ -80,11 +107,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         this.mToolbar.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        this.lvQuizNotFinish = findViewById(R.id.list_dashboard_quiz_not_finished);
+        this.lvQuizNotFinish = findViewById(R.id.list_dashboard_quiz_created);
         this.lvQuizShared = findViewById(R.id.list_dashboard_quiz_shared);
         this.lvQuizCompleted = findViewById(R.id.list_dashboard_quiz_completed);
         this.manageLists();
 
+        // Create quiz
         this.bNewQuiz = findViewById(R.id.btn_dashboard_new_quiz);
         this.bNewQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +124,94 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
             }
         });
+
+        // Edit quiz
+        this.bCreatedQuiz = findViewById(R.id.btn_dashboard_created_quiz);
+        this.lNotFinishedQuiz = findViewById(R.id.layout_created_quiz);
+        this.bCreatedQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openCloseList(lNotFinishedQuiz, lvQuizNotFinish, v);
+
+            }
+        });
+
+        // Shared quiz
+        this.bSharedQuiz = findViewById(R.id.btn_dashboard_quiz_shared);
+        this.lSharedQuiz = findViewById(R.id.layout_shared_quiz);
+        this.bSharedQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openCloseList(lSharedQuiz, lvQuizShared, v);
+            }
+        });
+
+        // Finished quiz
+        this.bNotFinishedQuiz = findViewById(R.id.btn_dashboard_finished_quiz);
+        this.lFinishedQuiz = findViewById(R.id.layout_finished_quiz);
+        this.bNotFinishedQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                openCloseList(lFinishedQuiz, lvQuizCompleted, v);
+            }
+        });
+    }
+
+    private void addDataSet(PieChart pieChart, ListView lvNotFinish, ListView lvShared, ListView lvFinished) {
+
+        ArrayList<PieEntry> yEntrys = new ArrayList<>();
+        ArrayList<String> xEntrys = new ArrayList<>();
+
+        if (lvFinished.getAdapter() == null) {
+            final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), 0};
+
+            for (int i = 0; i < yData.length; i++) {
+                yEntrys.add(new PieEntry(yData[i] , i));
+            }
+        } else {
+            final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), lvFinished.getAdapter().getCount()};
+
+            for (int i = 0; i < yData.length; i++) {
+                yEntrys.add(new PieEntry(yData[i] , i));
+            }
+        }
+
+        for (int i = 1; i < xData.length; i++) {
+            xEntrys.add(xData[i]);
+        }
+
+        // create the data set
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "pourcentage quiz");
+        pieDataSet.setSliceSpace(2);
+        pieDataSet.setValueTextSize(14);
+
+        // add colors to dataset
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.rgb(218, 95, 106));
+        colors.add(Color.rgb(146, 180, 34));
+        colors.add(Color.rgb(173, 206, 183));
+
+        pieDataSet.setColors(colors);
+
+        // add legend to chart
+        Legend legend = pieChart.getLegend();
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setTextColor(Color.WHITE);
+        legend.setEnabled(true);
+
+        // remove description
+        Description desc = pieChart.getDescription();
+        desc.setEnabled(false);
+
+        // create pie data object
+        PieData pieData = new PieData(pieDataSet);
+        pieChart.setData(pieData);
+        pieChart.invalidate();
+
     }
 
     private void updateDataUserInNavigation(int friendsRequestCounter) {
@@ -144,8 +260,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     getScoreQuiz(quiz);
                 }
 
-                ArrayAdapter<String> adaptateurQuizNotFinished = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizNotFinished) ;
-                ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this, android.R.layout.simple_list_item_1, itemQuizShared) ;
+                ArrayAdapter<String> adaptateurQuizNotFinished = new ArrayAdapter<String>(DashboardActivity.this, R.layout.dahsboard_custom_white_text, itemQuizNotFinished) ;
+                ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this ,R.layout.dahsboard_custom_white_text, itemQuizShared);
                 lvQuizNotFinish.setAdapter(adaptateurQuizNotFinished);
                 lvQuizShared.setAdapter(adaptateurQuizShared);
 
@@ -269,9 +385,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 DataItem dataItem = new DataItem(quizName, resultScores);
                 data.add(dataItem);
 
-                CustomAdapter adapter = new CustomAdapter(DashboardActivity.this, R.layout.row_list_completed, data);
+                CustomAdapter adapter;
+
+                adapter = new CustomAdapter(DashboardActivity.this, R.layout.row_list_completed, data);
 
                 lvQuizCompleted.setAdapter(adapter);
+
+                addDataSet(pieChart, lvQuizNotFinish, lvQuizShared, lvQuizCompleted);
             }
 
             @Override
@@ -284,5 +404,51 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             }
         });
+    }
+
+    private void openCloseList(final LinearLayout layout, ListView list, View view) {
+
+        if (list.getAdapter() != null) {
+            if (list.getAdapter().getCount() != 0) {
+                if (!isBig) {
+                    ValueAnimator va = ValueAnimator.ofInt(0, 400);
+                    va.setDuration(900);
+                    va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            Integer value = (Integer) animation.getAnimatedValue();
+                            layout.getLayoutParams().height = value.intValue();
+                            layout.requestLayout();
+                        }
+                    });
+                    va.start();
+                    isBig = true;
+                } else {
+                    ValueAnimator va = ValueAnimator.ofInt(400, 0);
+                    va.setDuration(900);
+                    va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            Integer value = (Integer) animation.getAnimatedValue();
+                            layout.getLayoutParams().height = value.intValue();
+                            layout.requestLayout();
+                        }
+                    });
+                    va.start();
+                    isBig = false;
+                }
+                list.setVisibility(View.VISIBLE);
+            } else {
+                Animation shake = AnimationUtils.loadAnimation(DashboardActivity.this, R.anim.shake);
+                view.startAnimation(shake);
+                Snackbar snackbar = Snackbar
+                        .make(findViewById(R.id.activity_dashboard),  "Aucun quiz disponible", 2500);
+                snackbar.show();
+            }
+        } else {
+            Animation shake = AnimationUtils.loadAnimation(DashboardActivity.this, R.anim.shake);
+            view.startAnimation(shake);
+            Snackbar snackbar = Snackbar
+                    .make(findViewById(R.id.activity_dashboard),  "Aucun quiz disponible", 2500);
+            snackbar.show();
+        }
     }
 }

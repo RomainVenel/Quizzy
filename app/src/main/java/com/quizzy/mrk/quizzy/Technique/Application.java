@@ -3,6 +3,7 @@ package com.quizzy.mrk.quizzy.Technique;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,7 +15,8 @@ import java.security.NoSuchAlgorithmException;
 
 public class Application {
 
-    private static String urlServeur = "http://192.168.1.23/QuizzyServer/web/" ;
+    private static String urlServeur = "http://192.168.79.1/QuizzyServer/web/" ;
+    private static Bitmap newBitMap;
 
     public static String getUrlServeur() {
         return urlServeur;
@@ -61,9 +63,26 @@ public class Application {
 
     public static String bitmapToBase64(Bitmap bitmap)
     {
+        newBitMap = getResizedBitmap(bitmap, 100, 100);
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+        newBitMap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
         return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+    }
+
+    public static Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(
+                bm, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
     }
 
 }

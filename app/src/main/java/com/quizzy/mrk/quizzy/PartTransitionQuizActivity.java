@@ -40,14 +40,11 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
     private PartCompletionModele partCompletionModele;
     private ArrayList<Part> listParts;
     private ArrayList<Question> listQuestions;
-    private MediaPlayer standByMe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_part_transition_quiz);
-
-        this.standByMe = MediaPlayer.create(getApplicationContext(), R.raw.standbyme);
 
         this.requestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         this.partsModele = new PartsModele(this, this.requestQueue);
@@ -150,14 +147,6 @@ public class PartTransitionQuizActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        standByMe.stop();
-        standByMe.release();
 
     }
 

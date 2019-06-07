@@ -9,101 +9,138 @@
     tools:context=".DashboardActivity"
     tools:openDrawer="start">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_dashboard_new_quiz"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:backgroundTint="@color/yellowBtn"
-            android:text="@string/btn_dashboard_new_quiz"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/tv_quiz_not_finished"
-            android:textColor="@color/graywhite" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_weight="0.1">
+            android:id="@+id/activity_dashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/list_dashboard_quiz_not_finished"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="290dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/tv_quiz_title_pie"
+                    android:textColor="@color/graywhite" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dashboard_new_quiz"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:dividerHeight="2px"
-                android:layout_marginRight="10dp" />
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/yellowBtn"
+                android:text="@string/btn_dashboard_new_quiz"
+                android:textColor="@color/white"
+                app:icon="@drawable/ic_add_black_24dp"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dashboard_created_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/saumon"
+                android:text="@string/btn_dashboard_created_quiz"
+                android:textColor="@color/white"
+                app:icon="@drawable/ic_edit_black_24dp"/>
+
+            <LinearLayout
+                android:id="@+id/layout_created_quiz"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal">
+
+                <ListView
+                    android:id="@+id/list_dashboard_quiz_created"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dashboard_quiz_shared"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/greenSlack"
+                android:text="@string/btn_dashboard_shared_quiz"
+                android:textColor="@color/white"
+                app:icon="@drawable/ic_compare_arrows_black_24dp"/>
+
+            <LinearLayout
+                android:id="@+id/layout_shared_quiz"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal">
+
+                <ListView
+                    android:id="@+id/list_dashboard_quiz_shared"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_dashboard_finished_quiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:backgroundTint="@color/blueSad"
+                android:text="@string/btn_dashboard_finished_quiz"
+                android:textColor="@color/white"
+                app:icon="@drawable/ic_check_black_24dp"/>
+
+            <LinearLayout
+                android:id="@+id/layout_finished_quiz"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:orientation="horizontal">
+
+                <ListView
+                    android:id="@+id/list_dashboard_quiz_completed"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/tv_quiz_shared"
-            android:textColor="@color/graywhite" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_weight="0.1">
-
-            <ListView
-                android:id="@+id/list_dashboard_quiz_shared"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:dividerHeight="2px"
-                android:layout_marginRight="10dp" />
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/tv_quiz_completed"
-            android:textColor="@color/graywhite" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:layout_weight="0.1">
-
-            <ListView
-                android:id="@+id/list_dashboard_quiz_completed"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:dividerHeight="2px"
-                android:layout_marginRight="10dp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/dashboard_nav"

@@ -36,7 +36,7 @@ public class PartPassageQuizActivity extends AppCompatActivity {
         this.ivPart = findViewById(R.id.iv_part_quiz);
         this.tvPartTitle.setText(parts.get(0).getName());
         if (parts.get(0).getMedia() != null) {
-            Picasso.with(this).load(parts.get(0).getMedia()).into(ivPart);
+            Picasso.with(this).load(parts.get(0).getMedia()).fit().into(ivPart);
         }else {
             this.ivPart.setVisibility(View.INVISIBLE);
         }

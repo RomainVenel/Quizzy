@@ -49,6 +49,7 @@
     <string name="tv_quiz_not_finished">Vos quiz en cours de création :</string>
     <string name="tv_quiz_shared">Les quiz partagés avec vous :</string>
     <string name="tv_quiz_completed">Vos quiz finis :</string>
+    <string name="tv_quiz_title_pie">Statistiques de tout vos quiz :</string>
     <!-- end dashboard -->
 
     <!-- quiz -->

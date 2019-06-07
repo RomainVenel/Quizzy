@@ -390,14 +390,10 @@ public class QuestionActivity extends AppCompatActivity {
 
         if (requestCode == SELECT_IMG && resultCode == RESULT_OK) {
             Uri pathUri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), pathUri);
-                this.ivImg.setImageBitmap(bitmap);
-                this.tvImg.setText(R.string.delete_img);
-                this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            Picasso.with(QuestionActivity.this).load(pathUri).fit().into(ivImg);
+            this.tvImg.setText(R.string.delete_img);
+            this.tvImg.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_cross_24dp, 0, 0, 0);
         }
     }
 

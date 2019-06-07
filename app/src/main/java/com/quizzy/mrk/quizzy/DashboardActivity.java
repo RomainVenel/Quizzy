@@ -430,7 +430,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (list.getAdapter() != null) {
             if (list.getAdapter().getCount() != 0) {
                 if (!isBig) {
-                    ValueAnimator va = ValueAnimator.ofInt(0, 200);
+                    ValueAnimator va = ValueAnimator.ofInt(0, 400);
                     va.setDuration(900);
                     va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         public void onAnimationUpdate(ValueAnimator animation) {
@@ -442,7 +442,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                     va.start();
                     isBig = true;
                 } else {
-                    ValueAnimator va = ValueAnimator.ofInt(200, 0);
+                    ValueAnimator va = ValueAnimator.ofInt(400, 0);
                     va.setDuration(900);
                     va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                         public void onAnimationUpdate(ValueAnimator animation) {

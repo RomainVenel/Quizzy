@@ -50,6 +50,14 @@ public class ConnexionActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
+        this.tvForgotMdp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentionEnvoyer = new Intent(ConnexionActivity.this, ForgetPasswordActivity.class);
+                startActivity(intentionEnvoyer);
+            }
+        });
+
         this.bSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

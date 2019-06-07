@@ -82,7 +82,7 @@ public class InscriptionModele {
                 params.put("nom", nom);
                 params.put("prenom", prenom);
                 params.put("username", username);
-                params.put("birthday", birthday.get(Calendar.YEAR) + "-" + birthday.get(Calendar.MONTH) + "-" + birthday.get(Calendar.DAY_OF_MONTH));
+                params.put("birthday", birthday.get(Calendar.YEAR) + "-" + (birthday.get(Calendar.MONTH) + 1) + "-" + birthday.get(Calendar.DAY_OF_MONTH));
                 params.put("email", email);
                 params.put("password", password);
                 params.put("media", media);

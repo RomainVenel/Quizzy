@@ -121,6 +121,12 @@
     <string name="dialog_btn_delete">Delete</string>
     <string name="tv_search">Search</string>
     <string name="friends_found">Friend(s) found</string>
+    <string name="user_not_found">User not found</string>
+    <string name="check_mail_new_password">Check your email for your new password</string>
+    <string name="change_password">Change password</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="wrong_password">Wrong password</string>
 
     <!-- fragment question -->
     <string name="btn_next_part">Partie suivante</string>
@@ -138,5 +144,7 @@
     <string name="title_activity_parts">Part</string>
     <string name="title_activity_question">Question</string>
     <string name="title_resum_quiz">Summary</string>
+    <string name="title_forget_password">Forget password</string>
+    <string name="title_change_password">Change password</string>
 
 </resources>

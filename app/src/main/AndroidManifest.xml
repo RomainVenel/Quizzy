@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.quizzy.mrk.quizzy">
+    package="com.quizzy.mrk.quizzy">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,39 +13,38 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ShareQuizActivity">
-        </activity>
-        <activity android:name=".ShareQuiz">
-        </activity>
-        <activity android:name=".PartPassageQuizActivity">
-        </activity>
-        <activity android:name=".ConnexionActivity"/>
-        <activity android:name=".MonQuizOptionsActivity"/>
-        <activity android:name=".ListeAmisActivity"/>
+        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".ForgetPasswordActivity" />
+        <activity android:name=".ShareQuizActivity" />
+        <activity android:name=".ShareQuiz" />
+        <activity android:name=".PartPassageQuizActivity" />
+        <activity android:name=".ConnexionActivity" />
+        <activity android:name=".MonQuizOptionsActivity" />
+        <activity android:name=".ListeAmisActivity" />
         <activity
             android:name=".LoadActivity"
             android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".InscriptionActivity"
-            android:parentActivityName=".ConnexionActivity"/>
-        <activity android:name=".DashboardActivity"/>
-        <activity android:name=".QuizActivity"/>
-        <activity android:name=".PartsActivity"/>
-        <activity android:name=".QuestionActivity"/>
-        <activity android:name=".ProfilActivity"/>
-        <activity android:name=".MesQuizActivity"/>
-        <activity android:name=".PassageQuizActivity"/>
-        <activity android:name=".TransitionPassageQuizActivity"/>
-        <activity android:name=".FriendsRequestActivity"/>
-        <activity android:name=".AddFriendActivity"/>
-        <activity android:name=".ResumQuizActivity"/>
-        <activity android:name=".PartTransitionQuizActivity"/>
+            android:parentActivityName=".ConnexionActivity" />
+        <activity android:name=".DashboardActivity" />
+        <activity android:name=".QuizActivity" />
+        <activity android:name=".PartsActivity" />
+        <activity android:name=".QuestionActivity" />
+        <activity android:name=".ProfilActivity" />
+        <activity android:name=".MesQuizActivity" />
+        <activity android:name=".PassageQuizActivity" />
+        <activity android:name=".TransitionPassageQuizActivity" />
+        <activity android:name=".FriendsRequestActivity" />
+        <activity android:name=".AddFriendActivity" />
+        <activity android:name=".ResumQuizActivity" />
+        <activity android:name=".PartTransitionQuizActivity" />
     </application>
 
 </manifest>

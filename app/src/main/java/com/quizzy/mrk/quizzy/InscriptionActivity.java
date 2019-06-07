@@ -131,11 +131,11 @@ public class InscriptionActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onErrorData(String error) {
-                                    if (error == "username") {
+                                    if (error.equals("username")) {
                                         Snackbar snackbar = Snackbar
                                                 .make(findViewById(R.id.activity_inscription), R.string.error_username_exist, 2500);
                                         snackbar.show();
-                                    } else if (error == "email") {
+                                    } else if (error.equals("email")) {
                                         Snackbar snackbar = Snackbar
                                                 .make(findViewById(R.id.activity_inscription), R.string.error_email_exist, 2500);
                                         snackbar.show();

@@ -28,7 +28,6 @@ public class CustomAdapter extends ArrayAdapter<DataItem> {
             v = inflater.inflate(R.layout.row_list_completed, null);
         }
 
-
         DataItem i = objects.get(position);
 
         if (i != null) {
@@ -41,7 +40,6 @@ public class CustomAdapter extends ArrayAdapter<DataItem> {
             if (recordView != null){
                 recordView.setText(i.getrecord());
             }
-
         }
 
         return v;

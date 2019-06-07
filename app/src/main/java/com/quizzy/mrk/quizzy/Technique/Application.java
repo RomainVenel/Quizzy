@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class Application {
 
-    private static String urlServeur = "http://172.20.10.4/QuizzyServer/web/" ;
+    private static String urlServeur = "http://192.168.79.1/QuizzyServer/web/" ;
     private static Bitmap newBitMap;
 
     public static String getUrlServeur() {

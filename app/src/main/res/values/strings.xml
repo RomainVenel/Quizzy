@@ -3,41 +3,41 @@
 
     <!-- login -->
     <string name="ed_username">Username</string>
-    <string name="ed_password">Password</string>
+    <string name="ed_password">Mot de passe</string>
     <string name="login">LOGIN</string>
     <string name="dialog_login">Connection ...</string>
-    <string name="error_user_not_found">Username or password incorrect</string>
+    <string name="error_user_not_found">Username ou mot de passe incorrect</string>
     <string name="register">REGISTER</string>
-    <string name="forgotPassword">Forgot password?</string>
+    <string name="forgotPassword">Mot de passe oublié?</string>
 
     <!-- sign in -->
-    <string name="tv_sign_in_last_name">Last name</string>
-    <string name="tv_sign_in_first_name">First name</string>
-    <string name="ed_sign_birthday">Birthday</string>
+    <string name="tv_sign_in_last_name">Nom</string>
+    <string name="tv_sign_in_first_name">Prénom</string>
+    <string name="ed_sign_birthday">Date de naissance</string>
     <string name="tv_sign_in_email">Email</string>
-    <string name="tv_sign_in_confirm_password">Confirm password</string>
-    <string name="et_error_email">The email must be valid</string>
-    <string name="et_error_mdp_diff">Passwords are not the same</string>
+    <string name="tv_sign_in_confirm_password">Confirmez le mot de passe</string>
+    <string name="et_error_email">L\'email doit être valide</string>
+    <string name="et_error_mdp_diff">Les mots de passe doivent être identiques</string>
     <string name="dialog_sign_in_title">Autorisez vous Quizzy à accéder à vos photos ?</string>
     <string name="dialog_sign_in_autorise">Autoriser</string>
     <string name="dialog_sign_in_refuse">Refuser</string>
-    <string name="choose_img">Selectionner un image</string>
-    <string name="error_username_exist">This username already exists</string>
-    <string name="error_email_exist">This email already exists</string>
+    <string name="choose_img">Selectionner une image</string>
+    <string name="error_username_exist">Cet username existe déjà</string>
+    <string name="error_email_exist">Cet email existe déjà</string>
     <string name="title_activity_sign_in">Inscription</string>
 
     <!-- navigation drawer -->
-    <string name="open_nav_drawer">Open</string>
-    <string name="close_nav_drawer">Close</string>
-    <string name="nav_drawer_profil">Profilz</string>
-    <string name="nav_drawer_friend">My friends</string>
-    <string name="nav_drawer_quiz">My quizzes</string>
-    <string name="nav_demande_amis">Friend requests</string>
-    <string name="nav_drawer_a_propos">About</string>
-    <string name="nav_drawer_logout">Logout</string>
+    <string name="open_nav_drawer">Ouvrir</string>
+    <string name="close_nav_drawer">Fermer</string>
+    <string name="nav_drawer_profil">Profil</string>
+    <string name="nav_drawer_friend">Mes Amis</string>
+    <string name="nav_drawer_quiz">Mes Quiz</string>
+    <string name="nav_demande_amis">Requêtes d\'amis</string>
+    <string name="nav_drawer_a_propos">A propos</string>
+    <string name="nav_drawer_logout">Déconnexion</string>
 
     <!-- dialog a propos -->
-    <string name="txt_a_propos_title">About ...</string>
+    <string name="txt_a_propos_title">A propos ...</string>
     <string name="txt_a_propos_message">Mehdi HAMIDI \nRomain VENEL \n2018-2019</string>
 
     <!-- dashboard -->
@@ -53,42 +53,42 @@
     <!-- end dashboard -->
 
     <!-- quiz -->
-    <string name="tv_quiz_name">Quiz name</string>
-    <string name="btn_quiz_add_part">Add part</string>
-    <string name="tv_quiz_list_part">Your parts :</string>
-    <string name="message_dialog_check_quiz_validator">To validate your quiz, you must have:</string>
-    <string name="message_dialog_check_quiz_quiz">A quiz name and at least one part</string>
-    <string name="message_dialog_check_quiz_part">A part name and at least one question for each part</string>
-    <string name="message_dialog_check_quiz_question">A question name and at least one answer for each question</string>
-    <string name="message_dialog_check_quiz_answer">A answer name and at least a good answer on all the answers</string>
+    <string name="tv_quiz_name">Nom du Quiz</string>
+    <string name="btn_quiz_add_part">Ajouter une partie</string>
+    <string name="tv_quiz_list_part">Vos parties: </string>
+    <string name="message_dialog_check_quiz_validator">Pour valider votre quiz, vous devez avoir: </string>
+    <string name="message_dialog_check_quiz_quiz">Un nom de quiz et au moins une partie</string>
+    <string name="message_dialog_check_quiz_part">Un nom de partie et au moins une partie</string>
+    <string name="message_dialog_check_quiz_question">Un nom de question et au moins une réponse for chaque question</string>
+    <string name="message_dialog_check_quiz_answer">Un no mde réponse et au moins une bonne réponse</string>
     <string name="tv_debut_quiz">Début du quiz dans</string>
-    <string name="message_dialog_delete_part">Are you sure you want to delete this part ?</string>
-    <string name="btn_quiz_finish">Finish</string>
+    <string name="message_dialog_delete_part">Etes vous sûr de vouloir supprimer cette partie?</string>
+    <string name="btn_quiz_finish">Finir le Quiz</string>
 
     <!-- parts -->
-    <string name="tv_part_name">Part name</string>
+    <string name="tv_part_name">Nom de la partie</string>
     <string name="tv_part_desc">Description</string>
-    <string name="tv_part_list_question">Your questions :</string>
-    <string name="message_dialog_delete_question">Are you sure you want to delete this question ?</string>
-    <string name="btn_part_add_question">Add question</string>
+    <string name="tv_part_list_question">Vos questions</string>
+    <string name="message_dialog_delete_question">Etes vous sûr de vouloir supprimer cette question?</string>
+    <string name="btn_part_add_question">Ajouter une question</string>
 
     <!-- question -->
-    <string name="tv_question_type">Question type</string>
-    <string name="tv_question_grade">Grade</string>
-    <string name="tv_question_name">Question name</string>
-    <string name="tv_answer_name">Answer name</string>
-    <string name="btn_question_add_answer">Add answer</string>
-    <string name="btn_question_save_question">Save</string>
-    <string name="et_question_empty_answer">There must have at least 1 answer</string>
-    <string name="et_question_empty_good_answer">There must have at least 1 good answer</string>
-    <string name="et_question_empty_name_answer">All answer name fields of the answers are not filled</string>
+    <string name="tv_question_type">Type de question</string>
+    <string name="tv_question_grade">Note</string>
+    <string name="tv_question_name">Nom de la question</string>
+    <string name="tv_answer_name">Nom de la réponse</string>
+    <string name="btn_question_add_answer">Ajouter une réponse</string>
+    <string name="btn_question_save_question">Sauvegarder</string>
+    <string name="et_question_empty_answer">Il doit y avoir au moins une réponse</string>
+    <string name="et_question_empty_good_answer">Il doit y avoir au moins une bonne réponse</string>
+    <string name="et_question_empty_name_answer">Tout les champs des réponses doivent être remplis</string>
 
     <!-- mes quiz -->
-    <string name="title_activity_mes_quiz">My quizzes</string>
-    <string name="tv_mes_quiz_empty">You have no quiz</string>
-    <string name="tv_mes_quiz_adapteur_date">Validated on</string>
-    <string name="message_dialog_mes_quiz">What do you want to do ?</string>
-    <string name="message_dialog_share_quiz">Do you want to share your quiz with this friend ?</string>
+    <string name="title_activity_mes_quiz">Mes quiz</string>
+    <string name="tv_mes_quiz_empty">Vous n\'avez pas de quiz</string>
+    <string name="tv_mes_quiz_adapteur_date">Validé le</string>
+    <string name="message_dialog_mes_quiz">Que voulez-vous faire?</string>
+    <string name="message_dialog_share_quiz">Voulez-vous partager ce quiz avec un ami?</string>
 
     <!-- mon quiz -->
     <string name="btn_mon_quiz_delete">Supprimer ce quiz</string>
@@ -101,54 +101,54 @@
     <!-- end mon quiz -->
 
     <!-- my friends -->
-    <string name="btn_add_friend">Add friends</string>
-    <string name="message_dialog_delete_friend">Are you sure you want to delete this friend ?</string>
+    <string name="btn_add_friend">Ajouter des amis</string>
+    <string name="message_dialog_delete_friend">Voulez-vous supprimer cet ami?</string>
 
     <!-- friends request -->
-    <string name="counter_friend_requests">friend requests</string>
-    <string name="message_dialog_accept_friend_request">Are you sure you want to accept this friend ?</string>
-    <string name="message_dialog_refuse_friend_request">Are you sure you want to refuse this friend ?</string>
+    <string name="counter_friend_requests">Requêtes d\'amis</string>
+    <string name="message_dialog_accept_friend_request">Voulez-vous accepter cet ami?</string>
+    <string name="message_dialog_refuse_friend_request">Voulez-vous refuser cet ami?</string>
 
     <!-- add friend -->
-    <string name="counter_add_friends">friend(s) found</string>
-    <string name="message_dialog_accept_add_friend">Are you sure you want to add this friend ?</string>
+    <string name="counter_add_friends">ami(s) trouvé(s)</string>
+    <string name="message_dialog_accept_add_friend">Voulez-vous ajouter cet ami?</string>
 
     <!-- warding -->
-    <string name="et_error_empty">The field cannot be empty</string>
+    <string name="et_error_empty">Le champ ne peut pas être vide</string>
     <string name="error_connexion_http">HTTP connection error</string>
     <string name="error_vollet">Volley error</string>
-    <string name="btn_label_back">Back</string>
-    <string name="btn_label_back_maj">BACK</string>
-    <string name="dialog_btn_yes">Yes</string>
-    <string name="dialog_btn_no">No</string>
-    <string name="dialog_btn_partage">Share</string>
-    <string name="dialog_btn_delete">Delete</string>
-    <string name="tv_search">Search</string>
-    <string name="friends_found">Friend(s) found</string>
-    <string name="user_not_found">User not found</string>
-    <string name="check_mail_new_password">Check your email for your new password</string>
-    <string name="change_password">Change password</string>
-    <string name="current_password">Current password</string>
-    <string name="new_password">New password</string>
-    <string name="wrong_password">Wrong password</string>
+    <string name="btn_label_back">Retour</string>
+    <string name="btn_label_back_maj">RETOUR</string>
+    <string name="dialog_btn_yes">Oui</string>
+    <string name="dialog_btn_no">Non</string>
+    <string name="dialog_btn_partage">Partager</string>
+    <string name="dialog_btn_delete">Supprimer</string>
+    <string name="tv_search">Rechercher</string>
+    <string name="friends_found">Ami(s) trouvé(s)</string>
+    <string name="user_not_found">Utilisateur non trouvé</string>
+    <string name="check_mail_new_password">Vérifier vos mails pour récupérer votre nouveau mot de passe</string>
+    <string name="change_password">Changer le mot de passe</string>
+    <string name="current_password">Votre mot de passe actuel</string>
+    <string name="new_password">Nouveau mot de passe</string>
+    <string name="wrong_password">Mauvais mot de passe</string>
 
     <!-- fragment question -->
     <string name="btn_next_part">Partie suivante</string>
-    <string name="validate">Validate</string>
-    <string name="add_img">Add image</string>
-    <string name="delete_img">Delete image</string>
+    <string name="validate">Valider</string>
+    <string name="add_img">Ajouter une image</string>
+    <string name="delete_img">Supprimer une image</string>
 
     <!-- title activities -->
-    <string name="title_activity_register">Register</string>
-    <string name="title_activity_profile">Profile</string>
-    <string name="title_activity_my_friends">My friends</string>
-    <string name="title_activity_add_friends">Add friends</string>
-    <string name="title_activity_friends_request">My friend requests</string>
+    <string name="title_activity_register">Inscription</string>
+    <string name="title_activity_profile">Profil</string>
+    <string name="title_activity_my_friends">Mes amis</string>
+    <string name="title_activity_add_friends">Ajouter des amis</string>
+    <string name="title_activity_friends_request">Mes requêtes d\'amis</string>
     <string name="title_activity_new_quiz">Quiz</string>
-    <string name="title_activity_parts">Part</string>
+    <string name="title_activity_parts">Partie</string>
     <string name="title_activity_question">Question</string>
-    <string name="title_resum_quiz">Summary</string>
-    <string name="title_forget_password">Forget password</string>
-    <string name="title_change_password">Change password</string>
+    <string name="title_resum_quiz">Résumé</string>
+    <string name="title_forget_password">Mot de passe oublié</string>
+    <string name="title_change_password">Changer le mot de passe</string>
 
 </resources>

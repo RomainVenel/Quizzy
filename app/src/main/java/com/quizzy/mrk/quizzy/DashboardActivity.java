@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,8 +79,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private TextView tvBadgeFriendsRequest;
 
     private PieChart pieChart;
-
-    private String[] xData = {"Quiz en cours", "Quiz partagés", "Quiz finis"};
 
     private ArrayList<DataItem> data = new ArrayList<DataItem>();
 
@@ -163,24 +162,19 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private void addDataSet(PieChart pieChart, ListView lvNotFinish, ListView lvShared, ListView lvFinished) {
 
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
-        ArrayList<String> xEntrys = new ArrayList<>();
 
         if (lvFinished.getAdapter() == null) {
             final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), 0};
 
             for (int i = 0; i < yData.length; i++) {
-                yEntrys.add(new PieEntry(yData[i] , i));
+                yEntrys.add(new PieEntry(yData[i], i));
             }
         } else {
             final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), lvFinished.getAdapter().getCount()};
 
             for (int i = 0; i < yData.length; i++) {
-                yEntrys.add(new PieEntry(yData[i] , i));
+                yEntrys.add(new PieEntry(yData[i], i));
             }
-        }
-
-        for (int i = 1; i < xData.length; i++) {
-            xEntrys.add(xData[i]);
         }
 
         // create the data set

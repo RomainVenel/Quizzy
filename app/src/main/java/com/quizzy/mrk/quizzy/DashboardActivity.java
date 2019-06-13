@@ -82,6 +82,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     private ArrayList<DataItem> data = new ArrayList<DataItem>();
 
+    private Integer yData[];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,18 +165,26 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         ArrayList<PieEntry> yEntrys = new ArrayList<>();
 
-        if (lvFinished.getAdapter() == null) {
-            final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), 0};
+        Log.d("APP", "1, 2,12" +  " " + lvFinished.getAdapter() + " " + lvNotFinish.getAdapter() + " " + lvShared.getAdapter());
 
-            for (int i = 0; i < yData.length; i++) {
-                yEntrys.add(new PieEntry(yData[i], i));
+        yData = new Integer[]{0, 0, 0};
+
+        if (lvFinished.getAdapter() == null) {
+            if (lvNotFinish.getAdapter() == null) {
+                if (lvShared.getAdapter() == null) {
+                    yData = new Integer[]{0, 0, 0};
+                } else {
+                    yData = new Integer[]{0, lvShared.getAdapter().getCount(), 0};
+                }
+            } else {
+                yData = new Integer[]{lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), 0};
             }
         } else {
-            final Integer yData[] = {lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), lvFinished.getAdapter().getCount()};
+            yData = new Integer[]{lvNotFinish.getAdapter().getCount(), lvShared.getAdapter().getCount(), lvFinished.getAdapter().getCount()};
+        }
 
-            for (int i = 0; i < yData.length; i++) {
-                yEntrys.add(new PieEntry(yData[i], i));
-            }
+        for (int i = 0; i < yData.length; i++) {
+            yEntrys.add(new PieEntry(yData[i], i));
         }
 
         // create the data set
@@ -258,6 +268,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 ArrayAdapter<String> adaptateurQuizShared = new ArrayAdapter<String>(DashboardActivity.this ,R.layout.dahsboard_custom_white_text, itemQuizShared);
                 lvQuizNotFinish.setAdapter(adaptateurQuizNotFinished);
                 lvQuizShared.setAdapter(adaptateurQuizShared);
+
+                addDataSet(pieChart, lvQuizNotFinish, lvQuizShared, lvQuizCompleted);
 
                 lvQuizNotFinish.setOnItemClickListener(
                         new AdapterView.OnItemClickListener() {
